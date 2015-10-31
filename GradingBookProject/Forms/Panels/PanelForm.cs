@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GradingBookProject
+namespace GradingBookProject.Forms.Panels
 {
-    public partial class Form1 : Form
+    /// <summary>
+    /// Panel Form- master form for all panels, all common controlls for panels are put here (eg. menu)
+    /// </summary>
+    public partial class PanelForm : Form
     {
-        public Form1()
+        public PanelForm()
         {
             InitializeComponent();
         }
