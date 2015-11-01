@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GradingBookProject.Data;
 using GradingBookProject.Forms;
 using Ninject;
 
@@ -12,9 +13,15 @@ namespace GradingBookProject
     {
 
         private static IKernel _kernel;
+
+        public static IKernel GetKernel()
+        {
+            return _kernel;
+        }
         public static void CreateBindings( )
         {
-            //generated method
+            _kernel.Bind<IUsersRepository>().To<UsersRepository>();
+
         }
 
         /// <summary>

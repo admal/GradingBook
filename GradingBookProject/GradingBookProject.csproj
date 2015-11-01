@@ -72,6 +72,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AdoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\IUsersRepository.cs" />
+    <Compile Include="Data\UsersRepository.cs" />
     <Compile Include="Forms\GradesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,9 +109,17 @@
     <Compile Include="Users.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Validation\IStringValidator.cs" />
+    <Compile Include="Validation\Validator.cs" />
     <Compile Include="Years.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RegistrationForm.resx">
+      <DependentUpon>RegistrationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -118,6 +128,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EntityDeploy Include="AdoModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -155,6 +166,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

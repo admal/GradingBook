@@ -117,22 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="addUser" xml:space="preserve">
-    <value>Add user</value>
-  </data>
-  <data name="cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="confirmPasswd" xml:space="preserve">
-    <value>Confirm password</value>
-  </data>
-  <data name="login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="username" xml:space="preserve">
-    <value>Username</value>
-  </data>
 </root>
