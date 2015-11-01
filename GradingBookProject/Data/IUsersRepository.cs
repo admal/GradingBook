@@ -6,5 +6,5 @@ namespace GradingBookProject.Data
     {
         IQueryable<Users> Users { get; }
     }
-    }
+    
 }
