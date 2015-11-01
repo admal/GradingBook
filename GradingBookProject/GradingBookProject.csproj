@@ -84,29 +84,11 @@
     <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Panels\MainPanel.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Panels\MainPanel.Designer.cs">
-      <DependentUpon>MainPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Panels\PanelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Panels\PanelForm.Designer.cs">
-      <DependentUpon>PanelForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Panels\SettingsPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Panels\SettingsPanel.Designer.cs">
-      <DependentUpon>SettingsPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Panels\SubjectsPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Panels\SubjectsPanel.Designer.cs">
-      <DependentUpon>SubjectsPanel.cs</DependentUpon>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RegistrationForm.cs">
       <SubType>Form</SubType>
@@ -128,9 +110,6 @@
     <Compile Include="Years.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\Panels\PanelForm.resx">
-      <DependentUpon>PanelForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

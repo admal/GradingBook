@@ -7,7 +7,7 @@
       <Diagram DiagramId="c5c9485a05444036bb60150432644299" Name="Diagram1">
         <EntityTypeShape EntityType="GradingBookDbModel.Grades" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GradingBookDbModel.Subjects" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GradingBookDbModel.Users" Width="1.5" PointX="4.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookDbModel.Users" Width="1.5" PointX="5.375" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GradingBookDbModel.Years" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="GradingBookDbModel.SubjectDetails" ManuallyRouted="false" />
         <AssociationConnector Association="GradingBookDbModel.UserDetails" ManuallyRouted="false" />
