@@ -158,4 +158,4 @@ $RECYCLE.BIN/
 #========================================
 # App.conig is ignored due to database
 #========================================
-App.config
+./GradingBookProject/App.config
