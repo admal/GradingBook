@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AdoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\IGBUnitOfWork.cs" />
     <Compile Include="Data\IUsersRepository.cs" />
     <Compile Include="Data\UsersRepository.cs" />
     <Compile Include="Forms\GradesForm.cs">
