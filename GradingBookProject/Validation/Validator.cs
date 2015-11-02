@@ -21,7 +21,7 @@ namespace GradingBookProject.Validation
         public string ValidatePassword(string input)
         {
             if (!IsNotEmpty(input)) 
-                throw new Exception("String is empty!"); //throw exception if not proper
+                throw new Exception("Input is empty!"); //throw exception if not proper
 
             var passwordLength = Properties.Settings.Default.PasswordLength;
             if (input.Length < passwordLength) 
