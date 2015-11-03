@@ -15,7 +15,7 @@ namespace GradingBookProject
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GradingBookDbEntities : DbContext, IGbUnitOfWork
+    public partial class GradingBookDbEntities : DbContext//, IGbUnitOfWork
     {
         public GradingBookDbEntities()
             : base("name=GradingBookDbEntities")

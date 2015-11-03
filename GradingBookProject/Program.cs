@@ -21,7 +21,7 @@ namespace GradingBookProject
         public static void CreateBindings( )
         {
             _kernel.Bind<IUsersRepository>().To<UsersRepository>();
-            _kernel.Bind<IGbUnitOfWork>().To<GradingBookDbEntities>();
+            //_kernel.Bind<IGbUnitOfWork>().To<GradingBookDbEntities>();
         }
 
         /// <summary>

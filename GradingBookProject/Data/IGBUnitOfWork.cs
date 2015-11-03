@@ -10,5 +10,6 @@ namespace GradingBookProject.Data
         IDbSet<Users> Users { get; }
         IDbSet<Years> Years { get; }
 
+        void SaveChanges();
     }
 }

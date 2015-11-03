@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GradingBookProject.Data;
 using GradingBookProject.Validation;
+using Ninject;
 
 namespace GradingBookProject.Forms
 {
@@ -16,6 +18,9 @@ namespace GradingBookProject.Forms
         public RegistrationForm()
         {
             InitializeComponent();
+
+            tbPasswd.PasswordChar = '*';
+            tbPasswdConfirm.PasswordChar = '*';
         }
         //----------------------------------------------
         //EVENT HANDLERS
@@ -50,8 +55,21 @@ namespace GradingBookProject.Forms
 
             try
             {
-                var validatedUsername = val.ValidateUsername(username);
-                var validatedPasswd = val.ValidatePassword(password);
+                string validatedUsername = val.ValidateUsername(username);
+                string validatedPasswd = val.ValidatePassword(password);
+
+                val.ValidatePasswordConfirmation(password, confirmPasswd);
+
+                //put proper user to database
+                var uRepo = Program.GetKernel().Get<IUsersRepository>();
+                uRepo.AddUser(new Users()
+                {
+                    passwd = validatedPasswd,
+                    username = validatedUsername,
+                    email = "desktopApp" //temporary mail (cant be basically null)
+                });
+                
+                this.Close();
             }
             catch (Exception exception)
             {

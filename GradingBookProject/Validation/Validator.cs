@@ -32,13 +32,15 @@ namespace GradingBookProject.Validation
             //----------------
 
             //converting data into hashed password
-            var sha1 = new SHA1CryptoServiceProvider();
-            var data = Encoding.ASCII.GetBytes(input);
-            var sha1Data = sha1.ComputeHash(data);
+            var sha256 = new SHA256CryptoServiceProvider();
+            
+            var data = Encoding.UTF8.GetBytes(input);
+            var sha256data = sha256.ComputeHash(data);
 
-            var asciiEnc = new ASCIIEncoding();
+            //var utf8Encoding = new UTF8Encoding();
 
-            var returnInput = asciiEnc.GetString(sha1Data);
+            //var returnInput = utf8Encoding.GetString(sha1Data);
+            var returnInput = Convert.ToBase64String(sha256data); // store it
 
             return returnInput;
         }
@@ -49,6 +51,15 @@ namespace GradingBookProject.Validation
                 return false;
 
             return (input.Length != 0 && input != "");
+        }
+
+        public bool ValidatePasswordConfirmation(string input1, string input2)
+        {
+            if (input1 != input2)
+            {
+                throw new Exception("Password and confirmation must be equal!");
+            }
+            return true;
         }
     }
 }

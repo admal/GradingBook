@@ -1,4 +1,6 @@
-﻿namespace GradingBookProject.Validation
+﻿using System.Windows.Forms;
+
+namespace GradingBookProject.Validation
 {
     public interface IStringValidator
     {
@@ -21,5 +23,13 @@
         /// <param name="input">String to check</param>
         /// <returns>true - if proper</returns>
         bool IsNotEmpty(string input);
+
+        /// <summary>
+        /// Compares both strings
+        /// </summary>
+        /// <param name="input1">Given password</param>
+        /// <param name="input2">Given confirmation of password</param>
+        /// <returns>true - if both are the same</returns>
+        bool ValidatePasswordConfirmation(string input1, string input2);
     }
 }
