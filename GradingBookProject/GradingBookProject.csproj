@@ -99,6 +99,7 @@
     <Compile Include="Forms\RegistrationForm.Designer.cs">
       <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="Grades.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
@@ -110,6 +111,7 @@
     <Compile Include="Users.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Validation\DataEncryptor.cs" />
     <Compile Include="Validation\IStringValidator.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="Years.cs">

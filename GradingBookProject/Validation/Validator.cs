@@ -32,18 +32,13 @@ namespace GradingBookProject.Validation
             //----------------
 
             //converting data into hashed password
-            var sha256 = new SHA256CryptoServiceProvider();
-            
-            var data = Encoding.UTF8.GetBytes(input);
-            var sha256data = sha256.ComputeHash(data);
-
-            //var utf8Encoding = new UTF8Encoding();
-
-            //var returnInput = utf8Encoding.GetString(sha1Data);
-            var returnInput = Convert.ToBase64String(sha256data); // store it
+            var encryptor = new DataEncryptor();
+            var returnInput = encryptor.GetSha256String(input);
 
             return returnInput;
         }
+
+
 
         public bool IsNotEmpty(string input)
         {
