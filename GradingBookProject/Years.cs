@@ -22,8 +22,8 @@ namespace GradingBookProject
     
         public int id { get; set; }
         public string name { get; set; }
-        public System.DateTime start { get; set; }
-        public System.DateTime end_date { get; set; }
+        public DateTime start { get; set; }
+        public DateTime end_date { get; set; }
     
         public virtual ICollection<Users> Users { get; set; }
         public virtual ICollection<Subjects> Subjects { get; set; }
