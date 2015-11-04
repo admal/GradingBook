@@ -42,7 +42,10 @@ namespace GradingBookProject.Data
                 var en = new DataEncryptor();
                 var encryptedPasswd = en.GetSha256String(passwd);
                 if (user.passwd == encryptedPasswd)
+                {
+                    Globals.CurrentUser = user;
                     return true;
+                }
             }
             return false;
         }

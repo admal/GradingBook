@@ -35,6 +35,7 @@ namespace GradingBookProject.Forms
             if (userRepo.LoginUser(username, passwd)) //login success
             {
                 var mainForm = Program.GetKernel().Get<MainForm>();
+                
                 this.Hide();
                 mainForm.Show();
                // this.Close();

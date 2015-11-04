@@ -73,8 +73,12 @@
       <DependentUpon>AdoModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\IGBUnitOfWork.cs" />
+    <Compile Include="Data\ISubjectsRepository.cs" />
     <Compile Include="Data\IUsersRepository.cs" />
+    <Compile Include="Data\IYearsRepository.cs" />
+    <Compile Include="Data\SubjectsRepository.cs" />
     <Compile Include="Data\UsersRepository.cs" />
+    <Compile Include="Data\YearsRepository.cs" />
     <Compile Include="Forms\GradesForm.cs">
       <SubType>Form</SubType>
     </Compile>
