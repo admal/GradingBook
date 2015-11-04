@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GradingBookProject.Validation;
 using Ninject.Infrastructure.Language;
 
 namespace GradingBookProject.Data
@@ -30,7 +31,20 @@ namespace GradingBookProject.Data
             
             context.Users.Add(user);
             context.SaveChanges();
-            
+        }
+
+        public bool LoginUser(string username, string passwd)
+        {
+            var user = context.Users.FirstOrDefault(u => u.username == username);
+
+            if (user != null)
+            {
+                var en = new DataEncryptor();
+                var encryptedPasswd = en.GetSha256String(passwd);
+                if (user.passwd == encryptedPasswd)
+                    return true;
+            }
+            return false;
         }
 
     }

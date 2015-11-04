@@ -55,8 +55,8 @@ namespace GradingBookProject.Forms
 
             try
             {
-                string validatedUsername = val.ValidateUsername(username);
-                string validatedPasswd = val.ValidatePassword(password);
+                var validatedUsername = val.ValidateUsername(username);
+                var validatedPasswd = val.ValidatePassword(password);
 
                 val.ValidatePasswordConfirmation(password, confirmPasswd);
 
@@ -68,12 +68,18 @@ namespace GradingBookProject.Forms
                     username = validatedUsername,
                     email = "desktopApp" //temporary mail (cant be basically null)
                 });
-                
+                MessageBox.Show("User was created properly!", 
+                    "Added user", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
                 this.Close();
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show(exception.Message, 
+                    "Error", 
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }
