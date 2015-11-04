@@ -35,5 +35,7 @@ namespace GradingBookProject.Data
             context.Years.Add(year);
             context.SaveChanges();
         }
+
+
     }
 }

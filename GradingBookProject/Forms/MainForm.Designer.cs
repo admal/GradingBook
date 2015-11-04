@@ -37,9 +37,6 @@
             // 
             this.listYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listYear.FormattingEnabled = true;
-            this.listYear.Items.AddRange(new object[] {
-            "2014",
-            "2015"});
             this.listYear.Location = new System.Drawing.Point(12, 34);
             this.listYear.Name = "listYear";
             this.listYear.Size = new System.Drawing.Size(121, 21);
@@ -53,9 +50,9 @@
             this.lblYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblYear.Location = new System.Drawing.Point(12, 9);
             this.lblYear.Name = "lblYear";
-            this.lblYear.Size = new System.Drawing.Size(132, 22);
+            this.lblYear.Size = new System.Drawing.Size(170, 22);
             this.lblYear.TabIndex = 1;
-            this.lblYear.Text = "Choose a year:";
+            this.lblYear.Text = "Choose a semester:";
             // 
             // tableMarks
             // 
@@ -67,7 +64,7 @@
             this.tableMarks.RowCount = 2;
             this.tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableMarks.Size = new System.Drawing.Size(510, 444);
+            this.tableMarks.Size = new System.Drawing.Size(510, 233);
             this.tableMarks.TabIndex = 2;
             // 
             // MainForm

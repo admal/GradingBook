@@ -39,7 +39,7 @@ namespace GradingBookProject
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(_kernel.Get<MainForm>());
+            Application.Run(_kernel.Get<LoginForm>());
         }
 
     }

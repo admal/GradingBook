@@ -9,18 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ninject;
 using GradingBookProject.Data;
-using GradingBookProject.Glo
 
 namespace GradingBookProject.Forms
 {
     public partial class MainForm : Form
     {
         private int selectedYear;
+        Users user;
         public MainForm()
         {
             InitializeComponent();
+            user = Globals.CurrentUser;
             //set default year to current
             selectedYear = System.DateTime.Today.Year;
+            foreach(var year in user.Years){
+                listYear.Items.Add(year.id);
+            }
+            
         }
 
         /// <summary>
@@ -32,32 +37,28 @@ namespace GradingBookProject.Forms
         {
             ComboBox cmb = (ComboBox)sender;
             var selectedIndex = cmb.SelectedIndex;
-            var selectedValue = int.Parse(cmb.SelectedItem.ToString());
-            selectedYear = selectedValue;
-            UpdateTable();
+            var chosenYear = int.Parse(cmb.SelectedItem.ToString());
+            UpdateTable(chosenYear);
         }
 
         /// <summary>
         /// updates the table of subjects and grades according to the chosen year
         /// </summary>
-        private void UpdateTable()
+        private void UpdateTable(int chosenYear)
         {
-            
+            //clear table
             ClearTableMarks();
 
-            tableMarks.ColumnCount = 2;
-            //ninject
-            var sRepo = Program.GetKernel().Get<ISubjectsRepository>();
-            var subjects = sRepo.Subjects;
+            //get current user and his subjects on chosen year
+            var subjects = user.Years.ElementAt(chosenYear-1).Subjects;
+            
             //transfer subjects to an array of strings
             string[] subjectsArray = new string[subjects.ToArray().Length];
             for (int i = 0; i < subjects.ToArray().Length; i++)
             {
                 subjectsArray[i] = subjects.ElementAt(i).name;
             }
-            foreach(var subject in subjects.ToArray()){
-                
-            }
+
             //populate the Marks table with subjects
             tableMarks.RowCount = subjectsArray.Length;
             for (int i = 0; i < subjectsArray.Length; i++)
@@ -66,12 +67,26 @@ namespace GradingBookProject.Forms
                     Text = subjectsArray[i], Anchor = AnchorStyles.Left, AutoSize = true },0,i);
                 tableMarks.Controls[i].Height = 20;
             }
-                
+
+            //AddRandomDataForChecking();
+
+        }
+
+        private void AddRandomDataForChecking()
+        {
+            var yRepo = Program.GetKernel().Get<IYearsRepository>();
+            Years year = new Years();
+            year.start = DateTime.Now;
+            year.end_date = DateTime.Now;
+            year.name = "semester 1";
+            yRepo.AddYear(year);
+            MessageBox.Show(year.start.ToString());
         }
 
         private void ClearTableMarks()
         {
             tableMarks.Controls.Clear();
+            tableMarks.ColumnCount = 2;
            
         }
     }
