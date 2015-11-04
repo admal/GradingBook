@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ninject;
 using GradingBookProject.Data;
+using GradingBookProject.Glo
 
 namespace GradingBookProject.Forms
 {
@@ -41,6 +42,7 @@ namespace GradingBookProject.Forms
         /// </summary>
         private void UpdateTable()
         {
+            
             ClearTableMarks();
 
             tableMarks.ColumnCount = 2;
@@ -53,12 +55,16 @@ namespace GradingBookProject.Forms
             {
                 subjectsArray[i] = subjects.ElementAt(i).name;
             }
+            foreach(var subject in subjects.ToArray()){
+                
+            }
             //populate the Marks table with subjects
             tableMarks.RowCount = subjectsArray.Length;
             for (int i = 0; i < subjectsArray.Length; i++)
             {
                 tableMarks.Controls.Add(new Label() { 
-                    Text = subjectsArray[i], Anchor = AnchorStyles.Left, AutoSize = true },0,i); 
+                    Text = subjectsArray[i], Anchor = AnchorStyles.Left, AutoSize = true },0,i);
+                tableMarks.Controls[i].Height = 20;
             }
                 
         }
@@ -66,6 +72,7 @@ namespace GradingBookProject.Forms
         private void ClearTableMarks()
         {
             tableMarks.Controls.Clear();
+           
         }
     }
 }
