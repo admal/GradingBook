@@ -14,18 +14,18 @@ namespace GradingBookProject.Forms
 {
     public partial class MainForm : Form
     {
+        //private static int defaultYear = 0;
         private int selectedYear;
         Users user;
         public MainForm()
         {
             InitializeComponent();
             user = Globals.CurrentUser;
-            //set default year to current
-            selectedYear = System.DateTime.Today.Year;
+           
             foreach(var year in user.Years){
                 listYear.Items.Add(year.id);
             }
-            
+            listYear.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -37,20 +37,22 @@ namespace GradingBookProject.Forms
         {
             ComboBox cmb = (ComboBox)sender;
             var selectedIndex = cmb.SelectedIndex;
-            var chosenYear = int.Parse(cmb.SelectedItem.ToString());
-            UpdateTable(chosenYear);
+
+            //TEMPORARY parsing the selected value and subtrackting 1 to reflect index
+            selectedYear = int.Parse(cmb.SelectedItem.ToString()) - 1;
+            UpdateTable();
         }
 
         /// <summary>
         /// updates the table of subjects and grades according to the chosen year
         /// </summary>
-        private void UpdateTable(int chosenYear)
+        private void UpdateTable()
         {
             //clear table
             ClearTableMarks();
 
             //get current user and his subjects on chosen year
-            var subjects = user.Years.ElementAt(chosenYear-1).Subjects;
+            var subjects = user.Years.ElementAt(selectedYear).Subjects;
             
             //transfer subjects to an array of strings
             string[] subjectsArray = new string[subjects.ToArray().Length];
@@ -68,19 +70,6 @@ namespace GradingBookProject.Forms
                 tableMarks.Controls[i].Height = 20;
             }
 
-            //AddRandomDataForChecking();
-
-        }
-
-        private void AddRandomDataForChecking()
-        {
-            var yRepo = Program.GetKernel().Get<IYearsRepository>();
-            Years year = new Years();
-            year.start = DateTime.Now;
-            year.end_date = DateTime.Now;
-            year.name = "semester 1";
-            yRepo.AddYear(year);
-            MessageBox.Show(year.start.ToString());
         }
 
         private void ClearTableMarks()
@@ -88,6 +77,26 @@ namespace GradingBookProject.Forms
             tableMarks.Controls.Clear();
             tableMarks.ColumnCount = 2;
            
+        }
+
+
+        /*----------------------------- MENU STRIP ---------------------------*/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void versionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            MessageBox.Show("Current version: A0.1");
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            Application.Exit();
         }
     }
 }
