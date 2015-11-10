@@ -109,6 +109,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubjectDetails.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subjects.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
@@ -147,18 +150,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AdoModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="AdoModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AdoModel.edmx</DependentUpon>
-      <LastGenOutput>AdoModel.Context.cs</LastGenOutput>
-    </None>
     <None Include="AdoModel.edmx.diagram">
       <DependentUpon>AdoModel.edmx</DependentUpon>
-    </None>
-    <None Include="AdoModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AdoModel.edmx</DependentUpon>
-      <LastGenOutput>AdoModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -178,6 +171,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoModel.edmx</DependentUpon>
+      <LastGenOutput>AdoModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AdoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoModel.edmx</DependentUpon>
+      <LastGenOutput>AdoModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -61,7 +61,7 @@ namespace GradingBookProject.Forms
             if(user.Years.Count != 0 && user.Years.ElementAt(selectedYear).Subjects.Count != 0){
                 //get current user and his subjects on chosen year
                 var subjects = user.Years.ElementAt(selectedYear).Subjects;
-            
+
                 //transfer subjects to an array of strings
                 string[] subjectsArray = new string[subjects.ToArray().Length];
                 for (int i = 0; i < subjects.ToArray().Length; i++)
@@ -86,10 +86,17 @@ namespace GradingBookProject.Forms
 
                     //var grades = user.Years.ElementAt(selectedYear).Subjects.ElementAt(0).Grades;
                     string gradesArray = "";
-                    foreach (var g in subject.Grades)
+                    //foreach (var g in subject.Grades)
+                    //{
+                    //    gradesArray = g.value + ", " + gradesArray;
+                    //}
+
+                    //it compiles with new model //editor: Adam
+                    foreach (var g in subject.SubjectDetails)
                     {
-                        gradesArray = g.value + ", " + gradesArray;
+                        gradesArray = g.Grades.value + ", " + gradesArray;
                     }
+                    ///////////////////////////////////
 
                     tableMarks.Controls.Add(new Label()
                             {

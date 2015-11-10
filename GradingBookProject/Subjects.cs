@@ -14,16 +14,19 @@ namespace GradingBookProject
     
     public partial class Subjects
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Subjects()
         {
-            this.Grades = new HashSet<Grades>();
-            this.Years = new HashSet<Years>();
+            this.SubjectDetails = new HashSet<SubjectDetails>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
+        public string sub_desc { get; set; }
+        public int year_id { get; set; }
     
-        public virtual ICollection<Grades> Grades { get; set; }
-        public virtual ICollection<Years> Years { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }
+        public virtual Years Years { get; set; }
     }
 }

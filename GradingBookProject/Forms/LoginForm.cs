@@ -17,6 +17,7 @@ namespace GradingBookProject.Forms
         public LoginForm()
         {
             InitializeComponent();
+            tbPasswd.PasswordChar = '*';
         }
 
         private void MoveToRegisterForm(object sender, EventArgs e)

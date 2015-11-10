@@ -4,20 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GradingBookDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="GradingBook.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Grades">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="value" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="value" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SubjectDetails">
           <Key>
-            <PropertyRef Name="subject_id" />
-            <PropertyRef Name="grade_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="subject_id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sub_id" Type="int" Nullable="false" />
           <Property Name="grade_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Subjects">
@@ -26,13 +26,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserDetails">
-          <Key>
-            <PropertyRef Name="user_id" />
-            <PropertyRef Name="year_id" />
-          </Key>
-          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="sub_desc" Type="text" />
           <Property Name="year_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
@@ -41,16 +35,10 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="passwd" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="passwd" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="YearDetails">
-          <Key>
-            <PropertyRef Name="year_id" />
-            <PropertyRef Name="subject_id" />
-          </Key>
-          <Property Name="year_id" Type="int" Nullable="false" />
-          <Property Name="subject_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="surname" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Years">
           <Key>
@@ -60,8 +48,10 @@
           <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="start" Type="date" Nullable="false" />
           <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="year_desc" Type="text" />
+          <Property Name="user_id" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__SubjectDe__grade__173876EA">
+        <Association Name="FK__SubjectDe__grade__2C3393D0">
           <End Role="Grades" Type="Self.Grades" Multiplicity="1" />
           <End Role="SubjectDetails" Type="Self.SubjectDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -73,7 +63,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SubjectDe__subje__164452B1">
+        <Association Name="FK__SubjectDe__sub_i__2B3F6F97">
           <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
           <End Role="SubjectDetails" Type="Self.SubjectDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -81,103 +71,79 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="SubjectDetails">
-              <PropertyRef Name="subject_id" />
+              <PropertyRef Name="sub_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserDetai__user___07020F21">
+        <Association Name="FK__Subjects__year_i__267ABA7A">
+          <End Role="Years" Type="Self.Years" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Years">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="year_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Years__user_id__239E4DCF">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <End Role="Years" Type="Self.Years" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="UserDetails">
+            <Dependent Role="Years">
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserDetai__year___07F6335A">
-          <End Role="Years" Type="Self.Years" Multiplicity="1" />
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Years">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="UserDetails">
-              <PropertyRef Name="year_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__YearDetai__subje__0F975522">
-          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
-          <End Role="YearDetails" Type="Self.YearDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subjects">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="YearDetails">
-              <PropertyRef Name="subject_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__YearDetai__year___0EA330E9">
-          <End Role="Years" Type="Self.Years" Multiplicity="1" />
-          <End Role="YearDetails" Type="Self.YearDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Years">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="YearDetails">
-              <PropertyRef Name="year_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="GradingBookDbModelStoreContainer">
+        <EntityContainer Name="GradingBookStoreContainer">
           <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubjectDetails" EntityType="Self.SubjectDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="YearDetails" EntityType="Self.YearDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Years" EntityType="Self.Years" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__SubjectDe__grade__173876EA" Association="Self.FK__SubjectDe__grade__173876EA">
+          <AssociationSet Name="FK__SubjectDe__grade__2C3393D0" Association="Self.FK__SubjectDe__grade__2C3393D0">
             <End Role="Grades" EntitySet="Grades" />
             <End Role="SubjectDetails" EntitySet="SubjectDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubjectDe__subje__164452B1" Association="Self.FK__SubjectDe__subje__164452B1">
+          <AssociationSet Name="FK__SubjectDe__sub_i__2B3F6F97" Association="Self.FK__SubjectDe__sub_i__2B3F6F97">
             <End Role="Subjects" EntitySet="Subjects" />
             <End Role="SubjectDetails" EntitySet="SubjectDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserDetai__user___07020F21" Association="Self.FK__UserDetai__user___07020F21">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UserDetai__year___07F6335A" Association="Self.FK__UserDetai__year___07F6335A">
+          <AssociationSet Name="FK__Subjects__year_i__267ABA7A" Association="Self.FK__Subjects__year_i__267ABA7A">
             <End Role="Years" EntitySet="Years" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__YearDetai__subje__0F975522" Association="Self.FK__YearDetai__subje__0F975522">
             <End Role="Subjects" EntitySet="Subjects" />
-            <End Role="YearDetails" EntitySet="YearDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__YearDetai__year___0EA330E9" Association="Self.FK__YearDetai__year___0EA330E9">
+          <AssociationSet Name="FK__Years__user_id__239E4DCF" Association="Self.FK__Years__user_id__239E4DCF">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Years" EntitySet="Years" />
-            <End Role="YearDetails" EntitySet="YearDetails" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GradingBookDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="GradingBook" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Grades">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="value" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Subjects" Relationship="Self.SubjectDetails" FromRole="Grades" ToRole="Subjects" />
+          <Property Name="value" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubjectDetails" Relationship="Self.FK__SubjectDe__grade__2C3393D0" FromRole="Grades" ToRole="SubjectDetails" />
+        </EntityType>
+        <EntityType Name="SubjectDetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sub_id" Type="Int32" Nullable="false" />
+          <Property Name="grade_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Grades" Relationship="Self.FK__SubjectDe__grade__2C3393D0" FromRole="SubjectDetails" ToRole="Grades" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK__SubjectDe__sub_i__2B3F6F97" FromRole="SubjectDetails" ToRole="Subjects" />
         </EntityType>
         <EntityType Name="Subjects">
           <Key>
@@ -185,8 +151,10 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Grades" Relationship="Self.SubjectDetails" FromRole="Subjects" ToRole="Grades" />
-          <NavigationProperty Name="Years" Relationship="Self.YearDetails" FromRole="Subjects" ToRole="Years" />
+          <Property Name="sub_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="year_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubjectDetails" Relationship="Self.FK__SubjectDe__sub_i__2B3F6F97" FromRole="Subjects" ToRole="SubjectDetails" />
+          <NavigationProperty Name="Years" Relationship="Self.FK__Subjects__year_i__267ABA7A" FromRole="Subjects" ToRole="Years" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -194,9 +162,11 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="passwd" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passwd" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Years" Relationship="Self.UserDetails" FromRole="Users" ToRole="Years" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Years" Relationship="Self.FK__Years__user_id__239E4DCF" FromRole="Users" ToRole="Years" />
         </EntityType>
         <EntityType Name="Years">
           <Key>
@@ -206,36 +176,79 @@
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="start" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Users" Relationship="Self.UserDetails" FromRole="Years" ToRole="Users" />
-          <NavigationProperty Name="Subjects" Relationship="Self.YearDetails" FromRole="Years" ToRole="Subjects" />
+          <Property Name="year_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK__Subjects__year_i__267ABA7A" FromRole="Years" ToRole="Subjects" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Years__user_id__239E4DCF" FromRole="Years" ToRole="Users" />
         </EntityType>
-        <Association Name="SubjectDetails">
-          <End Role="Grades" Type="Self.Grades" Multiplicity="*" />
-          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+        <Association Name="FK__SubjectDe__grade__2C3393D0">
+          <End Role="Grades" Type="Self.Grades" Multiplicity="1" />
+          <End Role="SubjectDetails" Type="Self.SubjectDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grades">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectDetails">
+              <PropertyRef Name="grade_id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="UserDetails">
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <End Role="Years" Type="Self.Years" Multiplicity="*" />
+        <Association Name="FK__SubjectDe__sub_i__2B3F6F97">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="SubjectDetails" Type="Self.SubjectDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectDetails">
+              <PropertyRef Name="sub_id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="YearDetails">
+        <Association Name="FK__Subjects__year_i__267ABA7A">
+          <End Role="Years" Type="Self.Years" Multiplicity="1" />
           <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Years">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="year_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Years__user_id__239E4DCF">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Years" Type="Self.Years" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Years">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <EntityContainer Name="GradingBookDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Grades" EntityType="Self.Grades" />
+          <EntitySet Name="SubjectDetails" EntityType="Self.SubjectDetails" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <EntitySet Name="Years" EntityType="Self.Years" />
-          <AssociationSet Name="SubjectDetails" Association="Self.SubjectDetails">
+          <AssociationSet Name="FK__SubjectDe__grade__2C3393D0" Association="Self.FK__SubjectDe__grade__2C3393D0">
             <End Role="Grades" EntitySet="Grades" />
-            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectDetails" EntitySet="SubjectDetails" />
           </AssociationSet>
-          <AssociationSet Name="UserDetails" Association="Self.UserDetails">
-            <End Role="Users" EntitySet="Users" />
+          <AssociationSet Name="FK__SubjectDe__sub_i__2B3F6F97" Association="Self.FK__SubjectDe__sub_i__2B3F6F97">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectDetails" EntitySet="SubjectDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subjects__year_i__267ABA7A" Association="Self.FK__Subjects__year_i__267ABA7A">
             <End Role="Years" EntitySet="Years" />
-          </AssociationSet>
-          <AssociationSet Name="YearDetails" Association="Self.YearDetails">
             <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Years__user_id__239E4DCF" Association="Self.FK__Years__user_id__239E4DCF">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Years" EntitySet="Years" />
           </AssociationSet>
         </EntityContainer>
@@ -244,67 +257,58 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GradingBookDbModelStoreContainer" CdmEntityContainer="GradingBookDbEntities">
+        <EntityContainerMapping StorageEntityContainer="GradingBookStoreContainer" CdmEntityContainer="GradingBookDbEntities">
           <EntitySetMapping Name="Grades">
-            <EntityTypeMapping TypeName="GradingBookDbModel.Grades">
+            <EntityTypeMapping TypeName="GradingBook.Grades">
               <MappingFragment StoreEntitySet="Grades">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="value" ColumnName="value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SubjectDetails">
+            <EntityTypeMapping TypeName="GradingBook.SubjectDetails">
+              <MappingFragment StoreEntitySet="SubjectDetails">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sub_id" ColumnName="sub_id" />
+                <ScalarProperty Name="grade_id" ColumnName="grade_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Subjects">
-            <EntityTypeMapping TypeName="GradingBookDbModel.Subjects">
+            <EntityTypeMapping TypeName="GradingBook.Subjects">
               <MappingFragment StoreEntitySet="Subjects">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="sub_desc" ColumnName="sub_desc" />
+                <ScalarProperty Name="year_id" ColumnName="year_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="GradingBookDbModel.Users">
+            <EntityTypeMapping TypeName="GradingBook.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="passwd" ColumnName="passwd" />
                 <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Years">
-            <EntityTypeMapping TypeName="GradingBookDbModel.Years">
+            <EntityTypeMapping TypeName="GradingBook.Years">
               <MappingFragment StoreEntitySet="Years">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="start" ColumnName="start" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="year_desc" ColumnName="year_desc" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="SubjectDetails" TypeName="GradingBookDbModel.SubjectDetails" StoreEntitySet="SubjectDetails">
-            <EndProperty Name="Grades">
-              <ScalarProperty Name="id" ColumnName="grade_id" />
-            </EndProperty>
-            <EndProperty Name="Subjects">
-              <ScalarProperty Name="id" ColumnName="subject_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="UserDetails" TypeName="GradingBookDbModel.UserDetails" StoreEntitySet="UserDetails">
-            <EndProperty Name="Users">
-              <ScalarProperty Name="id" ColumnName="user_id" />
-            </EndProperty>
-            <EndProperty Name="Years">
-              <ScalarProperty Name="id" ColumnName="year_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="YearDetails" TypeName="GradingBookDbModel.YearDetails" StoreEntitySet="YearDetails">
-            <EndProperty Name="Subjects">
-              <ScalarProperty Name="id" ColumnName="subject_id" />
-            </EndProperty>
-            <EndProperty Name="Years">
-              <ScalarProperty Name="id" ColumnName="year_id" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

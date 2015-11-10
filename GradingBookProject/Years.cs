@@ -14,18 +14,21 @@ namespace GradingBookProject
     
     public partial class Years
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Years()
         {
-            this.Users = new HashSet<Users>();
             this.Subjects = new HashSet<Subjects>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
-        public DateTime start { get; set; }
-        public DateTime end_date { get; set; }
+        public System.DateTime start { get; set; }
+        public System.DateTime end_date { get; set; }
+        public string year_desc { get; set; }
+        public int user_id { get; set; }
     
-        public virtual ICollection<Users> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subjects> Subjects { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

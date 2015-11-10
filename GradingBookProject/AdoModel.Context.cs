@@ -7,15 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using GradingBookProject.Data;
-
 namespace GradingBookProject
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GradingBookDbEntities : DbContext//, IGbUnitOfWork
+    public partial class GradingBookDbEntities : DbContext
     {
         public GradingBookDbEntities()
             : base("name=GradingBookDbEntities")
@@ -27,9 +25,10 @@ namespace GradingBookProject
             throw new UnintentionalCodeFirstException();
         }
     
-        public IDbSet<Grades> Grades { get; set; }
-        public IDbSet<Subjects> Subjects { get; set; }
-        public IDbSet<Users> Users { get; set; }
-        public IDbSet<Years> Years { get; set; }
+        public virtual DbSet<Grades> Grades { get; set; }
+        public virtual DbSet<SubjectDetails> SubjectDetails { get; set; }
+        public virtual DbSet<Subjects> Subjects { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Years> Years { get; set; }
     }
 }

@@ -73,6 +73,7 @@ namespace GradingBookProject.Forms
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Information);
                 this.Close();
+                
             }
             catch (Exception exception)
             {
