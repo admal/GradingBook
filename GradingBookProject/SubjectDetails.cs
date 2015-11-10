@@ -17,6 +17,8 @@ namespace GradingBookProject
         public int id { get; set; }
         public int sub_id { get; set; }
         public int grade_id { get; set; }
+        public int grade_weight { get; set; }
+        public DateTime grade_date { get; set; }
     
         public virtual Grades Grades { get; set; }
         public virtual Subjects Subjects { get; set; }

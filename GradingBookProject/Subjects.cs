@@ -24,6 +24,7 @@ namespace GradingBookProject
         public string name { get; set; }
         public string sub_desc { get; set; }
         public int year_id { get; set; }
+        public string teacher_mail { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }
