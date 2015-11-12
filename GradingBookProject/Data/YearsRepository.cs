@@ -9,14 +9,22 @@ namespace GradingBookProject.Data
     public class YearsRepository : IYearsRepository
     {
         GradingBookDbEntities context;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_context"></param>
+
         public YearsRepository()
         {
             context = new GradingBookDbEntities();
         }
+
+        /// <summary>
+        /// adds a Year to a database.
+        /// </summary>
+        /// <param name="year">Year to be added to a DB</param>
+        public void AddYear(Years year)
+        {
+            context.Years.Add(year);
+            context.SaveChanges();
+        }
+
         /// <summary>
         /// return Years as a list (IEnumerable)
         /// </summary>
@@ -26,16 +34,25 @@ namespace GradingBookProject.Data
                 return context.Years.ToList();          
             }
         }
-        /// <summary>
-        /// adds a year to a database (not implemented yet)
-        /// </summary>
-        /// <param name="year"></param>
-        public void AddYear(Years year)
+
+        public void UpdateYear(Years year)
         {
-            context.Years.Add(year);
+            context.Years.ElementAt(year.id).name = year.name;
+            context.Years.ElementAt(year.id).start = year.start;
+            context.Years.ElementAt(year.id).end_date = year.end_date;
+            context.Years.ElementAt(year.id).year_desc = year.year_desc;
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes a given Year from a database (cascading).
+        /// </summary>
+        /// <param name="year">Year to be deleted from a DB</param>
+        public void DeleteYear(Years year) 
+        {
+            context.Years.Remove(year);
+            context.SaveChanges();
+        }
 
     }
 }

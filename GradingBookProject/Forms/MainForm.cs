@@ -84,13 +84,7 @@ namespace GradingBookProject.Forms
                 int currRow = 0;
                 foreach (var subject in user.Years.ElementAt(selectedYear).Subjects)
                 {
-
-                    //var grades = user.Years.ElementAt(selectedYear).Subjects.ElementAt(0).Grades;
                     string gradesArray = "";
-                    //foreach (var g in subject.Grades)
-                    //{
-                    //    gradesArray = g.value + ", " + gradesArray;
-                    //}
 
                     //it compiles with new model //editor: Adam
                     foreach (var g in subject.SubjectDetails)
@@ -129,11 +123,6 @@ namespace GradingBookProject.Forms
 
 
         /*----------------------------- MENU STRIP ---------------------------*/
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
 
         private void versionToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -145,6 +134,33 @@ namespace GradingBookProject.Forms
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
             Application.Exit();
+        }
+
+        /*----------------------------- CRUDs ---------------------------*/
+
+        private void btnAddYear_Click(object sender, EventArgs e)
+        {
+            var yearForm = Program.GetKernel().Get<YearForm>();
+            yearForm.ShowDialog();
+        }
+
+        private void btnDeleteYear_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected year?", "Delete a Year", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                user.Years.Remove(user.Years.ElementAt(selectedYear));
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //exit
+            }
+        }
+
+        private void btnEditYear_Click(object sender, EventArgs e)
+        {
+            var yearForm = Program.GetKernel().Get<YearForm>();
+            yearForm.ShowDialog();
         }
         
     }

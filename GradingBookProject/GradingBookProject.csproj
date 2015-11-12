@@ -103,6 +103,12 @@
     <Compile Include="Forms\RegistrationForm.Designer.cs">
       <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\YearForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\YearForm.Designer.cs">
+      <DependentUpon>YearForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Grades.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
@@ -135,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RegistrationForm.resx">
       <DependentUpon>RegistrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\YearForm.resx">
+      <DependentUpon>YearForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
