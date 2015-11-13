@@ -18,6 +18,9 @@ namespace GradingBookProject.Forms
         //private static int defaultYear = 0;
         private int selectedYear;
         Users user;
+        YearsRepository years;
+        SubjectsRepository subjects;
+
         public MainForm()
         {
             InitializeComponent();

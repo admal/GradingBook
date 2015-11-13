@@ -31,16 +31,16 @@ namespace GradingBookProject.Data
         public IEnumerable<Years> Years
         {
             get {
-                return context.Years.ToList();          
+                return context.Years.ToList();       
             }
         }
 
         public void UpdateYear(Years year)
         {
-            context.Years.ElementAt(year.id).name = year.name;
-            context.Years.ElementAt(year.id).start = year.start;
-            context.Years.ElementAt(year.id).end_date = year.end_date;
-            context.Years.ElementAt(year.id).year_desc = year.year_desc;
+            context.Years.FirstOrDefault(y => y.id == year.id).name = year.name;
+            context.Years.FirstOrDefault(y => y.id == year.id).start = year.start;
+            context.Years.FirstOrDefault(y => y.id == year.id).end_date = year.end_date;
+            context.Years.FirstOrDefault(y => y.id == year.id).year_desc = year.year_desc;
             context.SaveChanges();
         }
 

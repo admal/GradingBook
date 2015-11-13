@@ -15,6 +15,23 @@ namespace GradingBookProject.Forms
     {
         private YearsRepository years;
         private bool edit = false;
+        private Years yearChanged;
+
+        public YearForm(Years year)
+        {
+            InitializeComponent();
+            years = new YearsRepository();
+            //u => u.username == user.username
+            if ((yearChanged = years.Years.FirstOrDefault(y => y.id == year.id)) != null)
+            {
+                InitializeComponent();
+                txtYearDesc.Text = yearChanged.year_desc;
+                txtYearEnd.Text = yearChanged.end_date.ToString();
+                txtYearStart.Text = yearChanged.start.ToString();
+                txtYearName.Text = yearChanged.name;
+            }
+            
+        }
 
         public YearForm()
         {
@@ -23,20 +40,10 @@ namespace GradingBookProject.Forms
             txtYearEnd.Text = DateTime.Now.AddDays(100).ToString("d");
         }
 
-        public YearForm(Years year)
-        {
-            InitializeComponent();
-            txtYearDesc.Text = year.year_desc;
-            txtYearEnd.Text = year.end_date.ToString();
-            txtYearStart.Text = year.start.ToString();
-            txtYearName.Text = year.name;
-            edit = true;
-        }
-
         private void btnYearSave_Click(object sender, EventArgs e)
         {
-            
 
+           
         }
     }
 }
