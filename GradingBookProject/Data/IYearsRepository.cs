@@ -9,26 +9,37 @@ namespace GradingBookProject.Data
     public interface IYearsRepository 
     {
         /// <summary>
-        /// adds a Year to the database
+        /// Adds a Year to the database.
         /// </summary>
-        /// <param name="year"></param>
+        /// <param name="year">Year to be added.</param>
+        /// <param name="userid">User to whom the year belongs.</param>
         void AddYear(Years year, int userid);
 
-        /// <summary>
-        /// returns a list of all Years
-        /// </summary>
+       /// <summary>
+       /// Returns the Years of a given user.
+       /// </summary>
+       /// <param name="userid">User to whom requested Years belong.</param>
+       /// <returns></returns>
         IEnumerable<Years> Years(int userid);
 
         /// <summary>
-        /// Update the year in the database
+        /// Returns single Year of given id
         /// </summary>
-        /// <param name="year">values for the update</param>
+        /// <param name="yearid">Id of a requested year.</param>
+        /// <returns></returns>
+        Years Year(int yearid, int userid);
+
+        /// <summary>
+        /// Update the year in the database.
+        /// </summary>
+        /// <param name="year">values for the update.</param>
         void UpdateYear(Years year);
 
         /// <summary>
-        /// deletes a Year from the database
+        /// Deletes a Year from a database
         /// </summary>
-        /// <param name="year">Year to be deleted</param>
+        /// <param name="year">year to be deleted.</param>
+        /// <param name="userid">User to whom the Year belongs.</param>
         void DeleteYear(Years year, int userid);
     }
 }

@@ -121,8 +121,9 @@
             this.btnYearCancel.Name = "btnYearCancel";
             this.btnYearCancel.Size = new System.Drawing.Size(151, 44);
             this.btnYearCancel.TabIndex = 9;
-            this.btnYearCancel.Text = "Cancel";
+            this.btnYearCancel.Text = "Exit";
             this.btnYearCancel.UseVisualStyleBackColor = true;
+            this.btnYearCancel.Click += new System.EventHandler(this.btnYearCancel_Click);
             // 
             // YearForm
             // 

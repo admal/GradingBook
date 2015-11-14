@@ -72,7 +72,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AdoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\GradesRepository.cs" />
     <Compile Include="Data\IGBUnitOfWork.cs" />
+    <Compile Include="Data\IGradesRepository.cs" />
     <Compile Include="Data\ISubjectsRepository.cs" />
     <Compile Include="Data\IUsersRepository.cs" />
     <Compile Include="Data\IYearsRepository.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="Validation\DataEncryptor.cs" />
     <Compile Include="Validation\IStringValidator.cs" />
     <Compile Include="Validation\Validator.cs" />
+    <Compile Include="YearListItem.cs" />
     <Compile Include="Years.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>

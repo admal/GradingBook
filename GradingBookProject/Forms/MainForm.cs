@@ -18,27 +18,50 @@ namespace GradingBookProject.Forms
     {
         //private static int defaultYear = 0;
         private int selectedYear;
-        int userid;
-        IYearsRepository years;
-        ISubjectsRepository subjects;
-
+        private int userid;
+        private IYearsRepository years;
+        private ISubjectsRepository subjects;
+        private IGradesRepository grades;
 
         public MainForm()
         {
             InitializeComponent();
+            // Get id of current user.
             userid = Globals.CurrentUser.id;
-           
-            foreach(var year in user.Years){
-                listYear.Items.Add(year.id);
+            
+            // Initialize repositories.
+            UpdateRepositories();
+            
+            //populate the list of Years
+            UpdateYearList();
+        }
+        /*-----------------------------UPDATING FUNCTIONS-----------------------------*/
+        private  void UpdateRepositories() {
+            years = new YearsRepository();
+            subjects = new SubjectsRepository();
+            grades = new GradesRepository();
+        }
+
+        private void UpdateMainForm() {
+            UpdateRepositories();
+            UpdateYearList();
+            //UpdateTable();
+        }
+
+        private void UpdateYearList(){
+            listYear.Items.Clear();
+            foreach (var year in years.Years(userid))
+            {
+                YearListItem item = new YearListItem(year.name, year.id);
+                listYear.Items.Add(item);
             }
 
             if (listYear.Items.Count != 0)
             {
                 listYear.SelectedIndex = 0;
             }
-
         }
-
+        /*-----------------------------POPULATING FUNCTIONS-----------------------------*/
         /// <summary>
         /// set Year for which the subjects and grades are supposeed to be displayed
         /// </summary>
@@ -47,11 +70,11 @@ namespace GradingBookProject.Forms
         private void listYearSelected(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)sender;
-            var selectedIndex = cmb.SelectedIndex;
-
+            var selectedIndex = (int)cmb.SelectedIndex;
+            var item= (YearListItem)cmb.SelectedItem;
             //TEMPORARY parsing the selected value and subtrackting 1 to reflect index
             //selectedYear = int.Parse(cmb.SelectedItem.ToString());
-            selectedYear = selectedIndex;
+            selectedYear = item.Id;
             UpdateTable();
         }
 
@@ -64,15 +87,15 @@ namespace GradingBookProject.Forms
             ClearTableMarks();
 
             //populate the Marks table with db records check if there are subjects on chosen year
-            if(user.Years.Count != 0 && user.Years.ElementAt(selectedYear).Subjects.Count != 0){
+            if(years.Years(userid).Count() != 0 && subjects.Subjects(selectedYear).Count() != 0){
                 //get current user and his subjects on chosen year
-                var subjects = user.Years.ElementAt(selectedYear).Subjects;
+                var subjectsEnumerated = subjects.Subjects(selectedYear);
 
                 //transfer subjects to an array of strings
-                string[] subjectsArray = new string[subjects.ToArray().Length];
-                for (int i = 0; i < subjects.ToArray().Length; i++)
+                string[] subjectsArray = new string[subjectsEnumerated.ToArray().Length];
+                for (int i = 0; i < subjectsEnumerated.ToArray().Length; i++)
                 {
-                    subjectsArray[i] = subjects.ElementAt(i).name;
+                    subjectsArray[i] = subjectsEnumerated.ElementAt(i).name;
                 }
 
                 //populate the Marks table with subjects
@@ -87,7 +110,7 @@ namespace GradingBookProject.Forms
                 /////////////////////////////
                 //get user grades
                 int currRow = 0;
-                foreach (var subject in user.Years.ElementAt(selectedYear).Subjects)
+                foreach (var subject in subjects.Subjects(selectedYear))
                 {
                     string gradesArray = "";
 
@@ -141,12 +164,13 @@ namespace GradingBookProject.Forms
             Application.Exit();
         }
 
-        /*----------------------------- CRUDs ---------------------------*/
+        /*----------------------------- CRUDs Year---------------------------*/
 
         private void btnAddYear_Click(object sender, EventArgs e)
         {
             var yearForm = Program.GetKernel().Get<YearForm>();
             yearForm.ShowDialog();
+            UpdateMainForm();
         }
 
         private void btnDeleteYear_Click(object sender, EventArgs e)
@@ -154,19 +178,20 @@ namespace GradingBookProject.Forms
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected year?", "Delete a Year", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                user.Years.Remove(user.Years.ElementAt(selectedYear));
+                years.DeleteYear(years.Year(selectedYear, userid), userid);
+                UpdateMainForm();
             }
             else if (dialogResult == DialogResult.No)
             {
-                //exit
+                
             }
         }
 
         private void btnEditYear_Click(object sender, EventArgs e)
         {
-            var yearForm = Program.GetKernel().Get<YearForm>(new ConstructorArgument("year", ));
-            var yearForm = Program.GetKernel().Get<YearForm>();
+            var yearForm = Program.GetKernel().Get<YearForm>(new ConstructorArgument("year", years.Year(selectedYear, userid)));
             yearForm.ShowDialog();
+            UpdateMainForm();
         }
         
     }

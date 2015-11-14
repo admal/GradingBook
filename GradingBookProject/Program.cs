@@ -24,6 +24,7 @@ namespace GradingBookProject
             //_kernel.Bind<IGbUnitOfWork>().To<GradingBookDbEntities>();
             _kernel.Bind<ISubjectsRepository>().To<SubjectsRepository>();
             _kernel.Bind<IYearsRepository>().To<YearsRepository>();
+            _kernel.Bind<IGradesRepository>().To<GradesRepository>();
         }
 
         /// <summary>

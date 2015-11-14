@@ -15,20 +15,21 @@ namespace GradingBookProject.Forms
     {
         private YearsRepository years;
         private bool edit = false;
-        private Years yearChanged;
+        private Years yearLocal;
+        private int userid = Globals.CurrentUser.id;
 
         public YearForm(Years year)
         {
             InitializeComponent();
             years = new YearsRepository();
             //u => u.username == user.username
-            if ((yearChanged = years.Years.FirstOrDefault(y => y.id == year.id)) != null)
+            if ((yearLocal = years.Years(year.user_id).FirstOrDefault(y => y.id == year.id)) != null)
             {
-                InitializeComponent();
-                txtYearDesc.Text = yearChanged.year_desc;
-                txtYearEnd.Text = yearChanged.end_date.ToString();
-                txtYearStart.Text = yearChanged.start.ToString();
-                txtYearName.Text = yearChanged.name;
+                txtYearDesc.Text = yearLocal.year_desc;
+                txtYearEnd.Text = yearLocal.end_date.ToString();
+                txtYearStart.Text = yearLocal.start.ToString();
+                txtYearName.Text = yearLocal.name;
+                edit = true;
             }
             
         }
@@ -36,14 +37,33 @@ namespace GradingBookProject.Forms
         public YearForm()
         {
             InitializeComponent();
+            years = new YearsRepository();
             txtYearStart.Text = DateTime.Now.ToString("d");
             txtYearEnd.Text = DateTime.Now.AddDays(100).ToString("d");
+            yearLocal = new Years();
         }
 
         private void btnYearSave_Click(object sender, EventArgs e)
         {
+            yearLocal.start = DateTime.Parse(txtYearStart.Text);
+            yearLocal.end_date = DateTime.Parse(txtYearEnd.Text);
+            yearLocal.name = txtYearName.Text;
+            yearLocal.year_desc = txtYearDesc.Text;
 
-           
+            if (edit)
+            {
+                years.UpdateYear(yearLocal);
+            }
+            else {
+                years.AddYear(yearLocal, userid);
+            }
+            
+            DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Year", MessageBoxButtons.OK);
+        }
+
+        private void btnYearCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
