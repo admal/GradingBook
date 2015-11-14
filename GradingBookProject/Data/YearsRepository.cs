@@ -19,20 +19,21 @@ namespace GradingBookProject.Data
         /// adds a Year to a database.
         /// </summary>
         /// <param name="year">Year to be added to a DB</param>
-        public void AddYear(Years year)
+        public void AddYear(Years year, int userid)
         {
-            context.Years.Add(year);
+            if (context.Users.FirstOrDefault(u => u.id == userid).Years.FirstOrDefault(y => y.id == year.id) != null)
+                throw new Exception("Such Year already exists!");
+
+            context.Users.FirstOrDefault(u => u.id == userid).Years.Add(year);
             context.SaveChanges();
         }
 
         /// <summary>
         /// return Years as a list (IEnumerable)
         /// </summary>
-        public IEnumerable<Years> Years
+        public IEnumerable<Years> Years(int userid)
         {
-            get {
-                return context.Years.ToList();       
-            }
+            return context.Users.FirstOrDefault(u => u.id == userid).Years;
         }
 
         public void UpdateYear(Years year)
@@ -48,9 +49,9 @@ namespace GradingBookProject.Data
         /// Deletes a given Year from a database (cascading).
         /// </summary>
         /// <param name="year">Year to be deleted from a DB</param>
-        public void DeleteYear(Years year) 
+        public void DeleteYear(Years year, int userid) 
         {
-            context.Years.Remove(year);
+            context.Years.Remove(context.Users.FirstOrDefault(u => u.id == userid).Years.FirstOrDefault(y => y.id == year.id));
             context.SaveChanges();
         }
 

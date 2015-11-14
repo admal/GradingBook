@@ -12,23 +12,23 @@ namespace GradingBookProject.Data
         /// adds a Year to the database
         /// </summary>
         /// <param name="year"></param>
-        void AddYear(Years year);
+        void AddYear(Years year, int userid);
 
         /// <summary>
         /// returns a list of all Years
         /// </summary>
-        IEnumerable<Years> Years { get; }
+        IEnumerable<Years> Years(int userid);
 
         /// <summary>
-        /// 
+        /// Update the year in the database
         /// </summary>
-        /// <param name="year"></param>
+        /// <param name="year">values for the update</param>
         void UpdateYear(Years year);
 
         /// <summary>
         /// deletes a Year from the database
         /// </summary>
-        /// <param name="year"></param>
-        void DeleteYear(Years year);
+        /// <param name="year">Year to be deleted</param>
+        void DeleteYear(Years year, int userid);
     }
 }

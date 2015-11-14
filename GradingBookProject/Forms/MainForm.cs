@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ninject;
 using GradingBookProject.Data;
+using Ninject.Parameters;
 
 namespace GradingBookProject.Forms
 {
@@ -17,14 +18,15 @@ namespace GradingBookProject.Forms
     {
         //private static int defaultYear = 0;
         private int selectedYear;
-        Users user;
-        YearsRepository years;
-        SubjectsRepository subjects;
+        int userid;
+        IYearsRepository years;
+        ISubjectsRepository subjects;
+
 
         public MainForm()
         {
             InitializeComponent();
-            user = Globals.CurrentUser;
+            userid = Globals.CurrentUser.id;
            
             foreach(var year in user.Years){
                 listYear.Items.Add(year.id);
@@ -162,6 +164,7 @@ namespace GradingBookProject.Forms
 
         private void btnEditYear_Click(object sender, EventArgs e)
         {
+            var yearForm = Program.GetKernel().Get<YearForm>(new ConstructorArgument("year", ));
             var yearForm = Program.GetKernel().Get<YearForm>();
             yearForm.ShowDialog();
         }
