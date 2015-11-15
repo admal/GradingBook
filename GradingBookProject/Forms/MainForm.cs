@@ -218,6 +218,13 @@ namespace GradingBookProject.Forms
         {
 
         }
+
+        private void SettingsClick(object sender, EventArgs e)
+        {
+            var settingsForm =
+            Program.GetKernel().Get<SettingsForm>(new ConstructorArgument("user", Globals.CurrentUser));
+            settingsForm.ShowDialog();
+        }
         
     }
 }
