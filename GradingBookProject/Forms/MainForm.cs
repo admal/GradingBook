@@ -102,18 +102,23 @@ namespace GradingBookProject.Forms
                 tableMarks.RowCount = subjectsArray.Length;
                 for (int i = 0; i < subjectsArray.Length; i++)
                 {
-                    tableMarks.Controls.Add(new LinkLabel() { 
+                    LinkLabel temp;
+                    tableMarks.Controls.Add(temp = new LinkLabel() { 
                         Text = subjectsArray[i], 
                         Anchor = AnchorStyles.Left, 
                         AutoSize = false,
                         ActiveLinkColor = Color.Black,
                         LinkColor = Color.Black,
-                        LinkBehavior = LinkBehavior.NeverUnderline
+                        LinkBehavior = LinkBehavior.NeverUnderline,
+                        Tag = subjectsEnumerated.ElementAt(i).id,
+                        
                         }, 0, i);
-
+                    //add event to change all subjects
+                    temp.Click += new System.EventHandler(this.Subject_Click);
                     tableMarks.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
                     tableMarks.Controls[i].Height = 20;
                 }
+                
                 /////////////////////////////
                 //get user grades
                 int currRow = 0;
@@ -151,6 +156,11 @@ namespace GradingBookProject.Forms
                         AutoSize = false,
                     }, 2, i);
 
+                    tableMarks.Controls.Add(new Button() { 
+                        Text = "Add",
+                        Anchor = AnchorStyles.Left,
+                        AutoSize = true
+                    }, 3, i);
                     tableMarks.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
                 }
             }
@@ -216,7 +226,19 @@ namespace GradingBookProject.Forms
 
         private void btnAddSubject_Click(object sender, EventArgs e)
         {
+            var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("yearid", selectedYear));
+            subjectForm.ShowDialog();
+            UpdateMainForm();
+        }
 
+        private void Subject_Click(object sender, EventArgs e) 
+        {
+            LinkLabel link = (LinkLabel)sender;
+            int subjectid = (int)link.Tag;
+            var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("subject", 
+                subjects.Subject(selectedYear, subjectid)));
+            subjectForm.ShowDialog();
+            UpdateMainForm();
         }
 
         private void SettingsClick(object sender, EventArgs e)

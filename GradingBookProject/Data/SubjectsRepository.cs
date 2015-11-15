@@ -33,6 +33,13 @@ namespace GradingBookProject.Data
             return context.Years.FirstOrDefault(y => y.id == yearid).Subjects;
         }
 
+        public Subjects Subject(int yearid, int subjectid) { 
+            if(context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subjectid) == null)
+                throw new Exception("Year doesn't exist!");
+
+            return context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subjectid);
+        }
+
         public void UpdateSubject(Subjects subject, int yearid)
         {
             if (context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subject.id) == null)

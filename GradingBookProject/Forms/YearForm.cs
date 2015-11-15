@@ -22,7 +22,7 @@ namespace GradingBookProject.Forms
         {
             InitializeComponent();
             years = new YearsRepository();
-            //u => u.username == user.username
+
             if ((yearLocal = years.Years(year.user_id).FirstOrDefault(y => y.id == year.id)) != null)
             {
                 txtYearDesc.Text = yearLocal.year_desc;
@@ -31,7 +31,6 @@ namespace GradingBookProject.Forms
                 txtYearName.Text = yearLocal.name;
                 edit = true;
             }
-            
         }
 
         public YearForm()
