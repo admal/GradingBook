@@ -50,18 +50,15 @@ namespace GradingBookProject.Forms
 
         private void UpdateYearList(){
             listYear.Items.Clear();
-            if (years.Years(userid) != null)
+            foreach (var year in years.Years(userid))
             {
-                foreach (var year in years.Years(userid))
-                {
-                    YearListItem item = new YearListItem(year.name, year.id);
-                    listYear.Items.Add(item);
-                }
+                YearListItem item = new YearListItem(year.name, year.id);
+                listYear.Items.Add(item);
+            }
 
-                if (listYear.Items.Count != 0)
-                {
-                    listYear.SelectedIndex = 0;
-                }
+            if (listYear.Items.Count != 0)
+            {
+                listYear.SelectedIndex = 0;
             }
         }
         /*-----------------------------POPULATING FUNCTIONS-----------------------------*/
@@ -105,10 +102,17 @@ namespace GradingBookProject.Forms
                 tableMarks.RowCount = subjectsArray.Length;
                 for (int i = 0; i < subjectsArray.Length; i++)
                 {
-                    tableMarks.Controls.Add(new Label() { 
-                        Text = subjectsArray[i], Anchor = AnchorStyles.Left, AutoSize = false },0,i);
+                    tableMarks.Controls.Add(new LinkLabel() { 
+                        Text = subjectsArray[i], 
+                        Anchor = AnchorStyles.Left, 
+                        AutoSize = false,
+                        ActiveLinkColor = Color.Black,
+                        LinkColor = Color.Black,
+                        LinkBehavior = LinkBehavior.NeverUnderline
+                        }, 0, i);
+
                     tableMarks.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
-                    //tableMarks.Controls[i].Height = 20;
+                    tableMarks.Controls[i].Height = 20;
                 }
                 /////////////////////////////
                 //get user grades
@@ -123,33 +127,44 @@ namespace GradingBookProject.Forms
                         gradesArray = g.Grades.value + ", " + gradesArray;
                     }
                     ///////////////////////////////////
-
-                    tableMarks.Controls.Add(new Label()
+                    //change to add grades as separate links
+                    tableMarks.Controls.Add(new LinkLabel()
                             {
                                 Text = gradesArray,
                                 Anchor = AnchorStyles.Left,
-                                AutoSize = false
+                                AutoSize = false,
+                                ActiveLinkColor = Color.Black,
+                                LinkColor = Color.Black,
+                                LinkBehavior = LinkBehavior.NeverUnderline
                             }, 1, currRow);
 
                     currRow++;
                 }
-            }
-            //////////////////////////////////////////
-            //populate the Marks table with grades
-            foreach (var rowMarks in tableMarks.Controls)
-            {
-            
-            }
+                //////////////////////////////////////////
+                //populate the Marks table with averages and Add buttons
+                for (int i = 0; i < subjectsArray.Length; i++)
+                {
+                    tableMarks.Controls.Add(new Label()
+                    {
+                        Text = "avg",
+                        Anchor = AnchorStyles.Left,
+                        AutoSize = false,
+                    }, 2, i);
 
+                    tableMarks.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
+                }
+            }
 
         }
 
         private void ClearTableMarks()
         {
             tableMarks.Controls.Clear();
-            this.tableMarks.ColumnCount = 2;
+            /*this.tableMarks.ColumnCount = 4;
             this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.AutoSize));
             this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.AutoSize));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.AutoSize));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.AutoSize));*/
         }
 
 
@@ -165,13 +180,6 @@ namespace GradingBookProject.Forms
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
             Application.Exit();
-        }
-
-        private void settingsClick(object sender, EventArgs e)
-        {
-            var settingsForm =
-                Program.GetKernel().Get<SettingsForm>(new ConstructorArgument("user", Globals.CurrentUser));
-            settingsForm.ShowDialog();
         }
 
         /*----------------------------- CRUDs Year---------------------------*/
@@ -204,7 +212,12 @@ namespace GradingBookProject.Forms
             UpdateMainForm();
         }
 
+        /*----------------------------- CRUDs Subject---------------------------*/
 
+        private void btnAddSubject_Click(object sender, EventArgs e)
+        {
+
+        }
         
     }
 }
