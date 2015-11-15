@@ -49,6 +49,34 @@ namespace GradingBookProject.Data
             }
             return false;
         }
+        /// <summary>
+        /// Checks if user with given username already exists
+        /// </summary>
+        /// <param name="username">user name to check</param>
+        /// <returns>true - if alredy exists</returns>
+        public bool userExists(string username)
+        {
+            var user = context.Users.FirstOrDefault(u => u.username == username);
+            return user != null;
+        }
+        /// <summary>
+        /// Edit given user.
+        /// </summary>
+        /// <param name="user">New user's credentials</param>
+        public void EditUser(Users user)
+        {
+            var userToEdit = context.Users.FirstOrDefault(u => u.id == user.id);
+
+            if(userToEdit == null) throw new Exception("Error: no such a user!");
+
+            userToEdit.name = user.name;
+            userToEdit.surname = user.surname;
+            userToEdit.email = user.email;
+            userToEdit.passwd = user.passwd;
+            userToEdit.username = user.username;
+
+            context.SaveChanges();
+        }
 
     }
 }

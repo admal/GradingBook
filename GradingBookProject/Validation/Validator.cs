@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -55,6 +56,20 @@ namespace GradingBookProject.Validation
                 throw new Exception("Password and confirmation must be equal!");
             }
             return true;
+        }
+
+        public bool isValidMail(string input)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(input); //if is no exception then return true
+
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
     }
 }

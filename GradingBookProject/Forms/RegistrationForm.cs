@@ -47,8 +47,8 @@ namespace GradingBookProject.Forms
         /// <param name="e">Event arguments</param>
         private void ValidateData(object sender, EventArgs e)
         {
-            IStringValidator val = new Validator();
-
+            IStringValidator val =  Program.GetKernel().Get<IStringValidator>();
+            
             var username = tbUsername.Text;
             var password = tbPasswd.Text;
             var confirmPasswd = tbPasswdConfirm.Text;

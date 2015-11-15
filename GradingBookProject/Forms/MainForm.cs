@@ -50,15 +50,18 @@ namespace GradingBookProject.Forms
 
         private void UpdateYearList(){
             listYear.Items.Clear();
-            foreach (var year in years.Years(userid))
+            if (years.Years(userid) != null)
             {
-                YearListItem item = new YearListItem(year.name, year.id);
-                listYear.Items.Add(item);
-            }
+                foreach (var year in years.Years(userid))
+                {
+                    YearListItem item = new YearListItem(year.name, year.id);
+                    listYear.Items.Add(item);
+                }
 
-            if (listYear.Items.Count != 0)
-            {
-                listYear.SelectedIndex = 0;
+                if (listYear.Items.Count != 0)
+                {
+                    listYear.SelectedIndex = 0;
+                }
             }
         }
         /*-----------------------------POPULATING FUNCTIONS-----------------------------*/
@@ -164,6 +167,13 @@ namespace GradingBookProject.Forms
             Application.Exit();
         }
 
+        private void settingsClick(object sender, EventArgs e)
+        {
+            var settingsForm =
+                Program.GetKernel().Get<SettingsForm>(new ConstructorArgument("user", Globals.CurrentUser));
+            settingsForm.ShowDialog();
+        }
+
         /*----------------------------- CRUDs Year---------------------------*/
 
         private void btnAddYear_Click(object sender, EventArgs e)
@@ -193,6 +203,8 @@ namespace GradingBookProject.Forms
             yearForm.ShowDialog();
             UpdateMainForm();
         }
+
+
         
     }
 }

@@ -31,6 +31,11 @@ namespace GradingBookProject.Validation
         /// <param name="input2">Given confirmation of password</param>
         /// <returns>true - if both are the same</returns>
         bool ValidatePasswordConfirmation(string input1, string input2);
-
+        /// <summary>
+        /// Checks if given string is an email
+        /// </summary>
+        /// <param name="input">string to check</param>
+        /// <returns>true - if it is mail</returns>
+        bool isValidMail(string input);
     }
 }

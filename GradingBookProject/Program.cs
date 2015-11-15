@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Data;
 using GradingBookProject.Forms;
+using GradingBookProject.Validation;
 using Ninject;
 
 namespace GradingBookProject
@@ -25,6 +26,7 @@ namespace GradingBookProject
             _kernel.Bind<ISubjectsRepository>().To<SubjectsRepository>();
             _kernel.Bind<IYearsRepository>().To<YearsRepository>();
             _kernel.Bind<IGradesRepository>().To<GradesRepository>();
+            _kernel.Bind<IStringValidator>().To<Validator>();
         }
 
         /// <summary>
