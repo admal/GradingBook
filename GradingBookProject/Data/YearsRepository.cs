@@ -26,9 +26,6 @@ namespace GradingBookProject.Data
 
         public IEnumerable<Years> Years(int userid)
         {
-            if (context.Years.FirstOrDefault(u=> u.id == userid) == null)
-                throw new Exception("User has no Years.");
-
             return context.Users.FirstOrDefault(u => u.id == userid).Years;
         }
 
