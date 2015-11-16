@@ -35,11 +35,14 @@ namespace GradingBookProject.Forms
 
             if (userRepo.LoginUser(username, passwd)) //login success
             {
-                var mainForm = Program.GetKernel().Get<MainForm>();
-                
+                /*var mainForm = Program.GetKernel().Get<MainForm>();
+                this.Hide();
+                mainForm.Show();*/
+                //TMP
+                var mainForm = Program.GetKernel().Get<tmpForm>();
                 this.Hide();
                 mainForm.Show();
-               // this.Close();
+
             }
             else
             {

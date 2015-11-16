@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
@@ -9,7 +10,7 @@ namespace GradingBookProject.Validation
     /// Class to validates various types of data.
     /// To add other data type create proper interface and let Validator to inherit from it
     /// </summary>
-    public class Validator : IStringValidator
+    public class Validator : IStringValidator, INumberValidator
     {
         public string ValidateUsername(string input)
         {
@@ -70,6 +71,30 @@ namespace GradingBookProject.Validation
             {
                 return false;
             }
+        }
+
+        public float ValidateNumber(string input)
+        {
+            float num = 0;
+            if (float.TryParse(input, out num))
+            {
+                return num;
+            }
+            throw new Exception("Given input is not a number!");
+        }
+
+        public bool ValidateGrade(float n)
+        {
+
+            var possibleGrades = new List<double>() //temporary solution
+            {
+                3,
+                3.5,
+                4,
+                4.5,
+                5
+            };
+            return possibleGrades.Contains(n);
         }
     }
 }

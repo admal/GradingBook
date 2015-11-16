@@ -10,30 +10,21 @@ namespace GradingBookProject.Data
     {
         private GradingBookDbEntities context;
 
-        
-
-
         public GradesRepository() { 
             context = new GradingBookDbEntities();
         }
 
-        public void AddGrade(SubjectDetails grade, int yearid, int subjectid)
+        public void AddGrade(SubjectDetails grade)
         {
-            /*  grade
-             *  - subject_id
-             *  - grade_id
-             *  - grade_description
-             *  - grade_weight
-             *  - grade_date
-             */
-            if (context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subjectid) == null)
-                throw new Exception("The Subject doesn't exist");
-            
-            context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subjectid).SubjectDetails.Add(grade);
+            context.SubjectDetails.Add(grade);
             context.SaveChanges();
         }
 
-        public IEnumerable<SubjectDetails> Grades(int subjectid)
+        public SubjectDetails GetGrade(int gradeID)
+        {
+            return context.SubjectDetails.FirstOrDefault(g => g.id == gradeID);
+        }
+        public IEnumerable<SubjectDetails> SubjectGrades(int subjectid)
         {
 
             var sub = context.Subjects.FirstOrDefault(s => s.id == subjectid);
@@ -44,14 +35,23 @@ namespace GradingBookProject.Data
             return grades;
         }
 
-        public void UpdateGrade(SubjectDetails grade, int yearid, int subjectid)
+        public void UpdateGrade(SubjectDetails grade)
         {
-            throw new NotImplementedException();
+            var g = context.SubjectDetails.FirstOrDefault(gr => gr.id == grade.id);
+            if (g != null)
+            {
+                g.grade_value = grade.grade_value;
+                g.grade_weight = grade.grade_weight;
+                g.grade_desc = g.grade_desc;
+                g.grade_date = g.grade_date;
+                context.SaveChanges();
+            }
         }
 
-        public void DeleteGrade(SubjectDetails grade, int yearid, int subjectid)
+        public void DeleteGrade(SubjectDetails grade)
         {
-            throw new NotImplementedException();
+            context.SubjectDetails.Remove(grade);
+            context.SaveChanges();
         }
     }
 }

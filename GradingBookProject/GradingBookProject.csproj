@@ -80,6 +80,12 @@
     <Compile Include="Data\SubjectsRepository.cs" />
     <Compile Include="Data\UsersRepository.cs" />
     <Compile Include="Data\YearsRepository.cs" />
+    <Compile Include="Forms\EditGradeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditGradeForm.Designer.cs">
+      <DependentUpon>EditGradeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GradesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,12 +147,16 @@
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Validation\DataEncryptor.cs" />
+    <Compile Include="Validation\INumberValidator.cs" />
     <Compile Include="Validation\IStringValidator.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="YearListItem.cs" />
     <Compile Include="Years.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\EditGradeForm.resx">
+      <DependentUpon>EditGradeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\GradesForm.resx">
       <DependentUpon>GradesForm.cs</DependentUpon>
     </EmbeddedResource>
