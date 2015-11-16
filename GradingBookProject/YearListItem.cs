@@ -25,6 +25,11 @@ namespace GradingBookProject
             get { return id; }
         }
 
+        public void Name(string _name)
+        {
+            name = _name;
+        }
+
         public override string ToString()
         {
             return name;

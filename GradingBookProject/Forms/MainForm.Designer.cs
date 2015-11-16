@@ -43,7 +43,6 @@
             this.btnDeleteYear = new System.Windows.Forms.Button();
             this.btnEditYear = new System.Windows.Forms.Button();
             this.btnAddSubject = new System.Windows.Forms.Button();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,16 +70,15 @@
             // tableMarks
             // 
             this.tableMarks.AutoScroll = true;
-            this.tableMarks.AutoSize = true;
             this.tableMarks.ColumnCount = 4;
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.45098F));
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.843137F));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableMarks.Location = new System.Drawing.Point(12, 96);
             this.tableMarks.Name = "tableMarks";
             this.tableMarks.RowCount = 1;
-            this.tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableMarks.Size = new System.Drawing.Size(579, 289);
             this.tableMarks.TabIndex = 2;
             // 
@@ -188,25 +186,12 @@
             this.btnAddSubject.UseVisualStyleBackColor = true;
             this.btnAddSubject.Click += new System.EventHandler(this.btnAddSubject_Click);
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.ActiveLinkColor = System.Drawing.Color.Black;
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
-            this.linkLabel1.Location = new System.Drawing.Point(308, 44);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(55, 13);
-            this.linkLabel1.TabIndex = 0;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "linkLabel1";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(603, 517);
-            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnAddSubject);
             this.Controls.Add(this.btnEditYear);
             this.Controls.Add(this.btnDeleteYear);
@@ -242,6 +227,5 @@
         private System.Windows.Forms.Button btnDeleteYear;
         private System.Windows.Forms.Button btnEditYear;
         private System.Windows.Forms.Button btnAddSubject;
-        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

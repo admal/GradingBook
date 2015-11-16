@@ -58,6 +58,7 @@ namespace GradingBookProject.Forms
             }
             
             DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Year", MessageBoxButtons.OK);
+            this.Close();
         }
 
         private void btnYearCancel_Click(object sender, EventArgs e)

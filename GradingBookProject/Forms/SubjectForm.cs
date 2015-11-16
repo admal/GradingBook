@@ -53,6 +53,7 @@ namespace GradingBookProject.Forms
             {
                 subjects.UpdateSubject(subjectLocal, subjectLocal.year_id);
                 DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Subject", MessageBoxButtons.OK);
+                this.Close();
             }
             else
             {
