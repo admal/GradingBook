@@ -14,28 +14,29 @@ namespace GradingBookProject.Data
         /// <param name="grade">Grade to be added.</param>
         /// <param name="yearid">Year on which the subject is.</param>
         /// <param name="subjectid">Subject to which we add the grade.</param>
-        void AddGrade(SubjectDetails grade, int yearid, int subjectid);
+        void AddGrade(SubjectDetails grade);
         /// <summary>
-        /// Lists Grades from a given subject
+        /// Lists SubjectGrades from a given subject
         /// </summary>
         /// <param name="yearid">Year on which the subject is.</param>
         /// <param name="subjectid">Subject for which the grades are requested.</param>
         /// <returns></returns>
-        IEnumerable<SubjectDetails> Grades(int subjectid);
+        IEnumerable<SubjectDetails> SubjectGrades(int subjectid);
         /// <summary>
         /// Updates a given Grade.
         /// </summary>
         /// <param name="grade">Grade to be updated.</param>
         /// <param name="yearid">Year on which a subject is.</param>
         /// <param name="subjectid">Subject for which we upgrade a grade.</param>
-        void UpdateGrade(SubjectDetails grade, int yearid, int subjectid);
+        void UpdateGrade(SubjectDetails grade);
+
         /// <summary>
         /// Deletes a grade from a database
         /// </summary>
         /// <param name="grade">Grade to be deleted.</param>
         /// <param name="yearid">year on which the subject is.</param>
         /// <param name="subjectid">Subject for which we delete a grade.</param>
-        void DeleteGrade(SubjectDetails grade, int yearid, int subjectid);
+        void DeleteGrade(SubjectDetails grade);
 
 
     }
