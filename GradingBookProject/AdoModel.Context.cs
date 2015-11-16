@@ -25,7 +25,6 @@ namespace GradingBookProject
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Grades> Grades { get; set; }
         public virtual DbSet<SubjectDetails> SubjectDetails { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<Users> Users { get; set; }

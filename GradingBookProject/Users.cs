@@ -14,7 +14,6 @@ namespace GradingBookProject
     
     public partial class Users
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
             this.Years = new HashSet<Years>();
@@ -27,7 +26,6 @@ namespace GradingBookProject
         public string name { get; set; }
         public string surname { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Years> Years { get; set; }
     }
 }

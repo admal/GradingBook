@@ -73,7 +73,6 @@
       <DependentUpon>AdoModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\GradesRepository.cs" />
-    <Compile Include="Data\IGBUnitOfWork.cs" />
     <Compile Include="Data\IGradesRepository.cs" />
     <Compile Include="Data\ISubjectsRepository.cs" />
     <Compile Include="Data\IUsersRepository.cs" />
@@ -117,6 +116,12 @@
     <Compile Include="Forms\SubjectForm.Designer.cs">
       <DependentUpon>SubjectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\tmpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\tmpForm.Designer.cs">
+      <DependentUpon>tmpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\YearForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,9 +129,6 @@
       <DependentUpon>YearForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
-    <Compile Include="Grades.cs">
-      <DependentUpon>AdoModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubjectDetails.cs">
@@ -163,6 +165,9 @@
     <EmbeddedResource Include="Forms\SubjectForm.resx">
       <DependentUpon>SubjectForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\tmpForm.resx">
+      <DependentUpon>tmpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\YearForm.resx">
       <DependentUpon>YearForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -180,8 +185,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AdoModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="AdoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoModel.edmx</DependentUpon>
+      <LastGenOutput>AdoModel.Context.cs</LastGenOutput>
+    </None>
     <None Include="AdoModel.edmx.diagram">
       <DependentUpon>AdoModel.edmx</DependentUpon>
+    </None>
+    <None Include="AdoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoModel.edmx</DependentUpon>
+      <LastGenOutput>AdoModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -201,18 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AdoModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AdoModel.edmx</DependentUpon>
-      <LastGenOutput>AdoModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="AdoModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AdoModel.edmx</DependentUpon>
-      <LastGenOutput>AdoModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

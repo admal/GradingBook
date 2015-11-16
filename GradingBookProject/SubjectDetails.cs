@@ -16,11 +16,11 @@ namespace GradingBookProject
     {
         public int id { get; set; }
         public int sub_id { get; set; }
-        public int grade_id { get; set; }
+        public string grade_desc { get; set; }
         public int grade_weight { get; set; }
-        public DateTime grade_date { get; set; }
+        public Nullable<System.DateTime> grade_date { get; set; }
+        public double grade_value { get; set; }
     
-        public virtual Grades Grades { get; set; }
         public virtual Subjects Subjects { get; set; }
     }
 }

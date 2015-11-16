@@ -21,7 +21,7 @@ namespace GradingBookProject.Data
         /// <param name="yearid">Year on which the subject is.</param>
         /// <param name="subjectid">Subject for which the grades are requested.</param>
         /// <returns></returns>
-        IEnumerable<SubjectDetails> Grades(int yearid, int subjectid);
+        IEnumerable<SubjectDetails> Grades(int subjectid);
         /// <summary>
         /// Updates a given Grade.
         /// </summary>

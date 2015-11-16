@@ -10,6 +10,9 @@ namespace GradingBookProject.Data
     {
         private GradingBookDbEntities context;
 
+        
+
+
         public GradesRepository() { 
             context = new GradingBookDbEntities();
         }
@@ -30,14 +33,15 @@ namespace GradingBookProject.Data
             context.SaveChanges();
         }
 
-        public IEnumerable<SubjectDetails> Grades(int yearid, int subjectid)
+        public IEnumerable<SubjectDetails> Grades(int subjectid)
         {
-            if (context.Years.FirstOrDefault(y => y.id == yearid) == null)
-                throw new Exception("Such year doesn't exist!");
-            else if (context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subjectid) == null)
-                throw new Exception("Subject doesn't exist");
 
-            return context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subjectid).SubjectDetails;
+            var sub = context.Subjects.FirstOrDefault(s => s.id == subjectid);
+            IEnumerable<SubjectDetails> grades = null;
+            if (sub != null)
+                grades = sub.SubjectDetails;
+
+            return grades;
         }
 
         public void UpdateGrade(SubjectDetails grade, int yearid, int subjectid)

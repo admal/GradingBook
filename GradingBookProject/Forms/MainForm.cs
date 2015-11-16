@@ -129,7 +129,7 @@ namespace GradingBookProject.Forms
                     //it compiles with new model //editor: Adam
                     foreach (var g in subject.SubjectDetails)
                     {
-                        gradesArray = g.Grades.value + ", " + gradesArray;
+                        gradesArray = g.grade_value+ ", " + gradesArray;
                     }
                     ///////////////////////////////////
                     //change to add grades as separate links
