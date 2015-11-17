@@ -86,12 +86,6 @@
     <Compile Include="Forms\EditGradeForm.Designer.cs">
       <DependentUpon>EditGradeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GradesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\GradesForm.Designer.cs">
-      <DependentUpon>GradesForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,9 +150,6 @@
     </Compile>
     <EmbeddedResource Include="Forms\EditGradeForm.resx">
       <DependentUpon>EditGradeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\GradesForm.resx">
-      <DependentUpon>GradesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

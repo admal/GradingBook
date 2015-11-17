@@ -52,6 +52,7 @@ namespace GradingBookProject.Forms
             subjectLocal.year_id = yearid;
         }
 
+        // Saves the data input or edited.
         private void btnSubjectSave_Click(object sender, EventArgs e)
         {
             Validator validator = new Validator();
