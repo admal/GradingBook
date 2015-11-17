@@ -47,7 +47,7 @@ namespace GradingBookProject.Forms
             UpdateRepositories();
             UpdateYearList();
             UpdateTable();
-        }
+        }   
 
         private void UpdateYearList(){
             listYear.Items.Clear();
@@ -136,89 +136,7 @@ namespace GradingBookProject.Forms
                     tableMarks.Controls.Add(btn);
                     tableMarks.RowCount++;
                 }
-                
 
-                #region todelete
-
-                //jedrzeja staff
-                //transfer subjects to an array of strings
-                //string[] subjectsArray = new string[subjectsEnumerated.ToArray().Length];
-                //for (int i = 0; i < subjectsEnumerated.ToArray().Length; i++)
-                //{
-                //    subjectsArray[i] = subjectsEnumerated.ElementAt(i).name;
-                //}
-
-                //populate the Marks table with subjects
-                //tableMarks.RowCount = subjectsArray.Length;
-                /* for (int i = 0; i < subjectsArray.Length; i++)
-                {
-                    tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-
-                    LinkLabel temp;
-                    tableMarks.Controls.Add(temp = new LinkLabel() { 
-                        Text = subjectsArray[i], 
-                        Anchor = AnchorStyles.Left, 
-                        AutoSize = true,//false
-                        ActiveLinkColor = Color.Black,
-                        ///LinkColor = Color.Black,
-                        LinkBehavior = LinkBehavior.NeverUnderline,
-                        Tag = subjectsEnumerated.ElementAt(i).id,
-                        
-                        }, 0, i+1);//i
-                    //add event to change all subjects
-                    temp.Click += new System.EventHandler(this.Subject_Click);
-                    //tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-                }
-                */
-                /////////////////////////////
-                //get user grades
-                /* int currRow = 1; //rows are counted from 1 probably ??????
-                foreach (var subject in subjects.Subjects(selectedYear))
-                {
-                    #region todelete
-                    //string gradesArray = "";
-
-                    //it compiles with new model //editor: Adam
-                    //foreach (var g in subject.SubjectDetails)
-                    //{
-                    //    gradesArray = g.grade_value+ ", " + gradesArray;
-                    //}
-                    /////////////////////////////////////
-                    //change to add grades as separate links
-                   /* tableMarks.Controls.Add(new LinkLabel()
-                            {
-                                Text = gradesArray,
-                                Anchor = AnchorStyles.Left,
-                                AutoSize = false,
-                                ActiveLinkColor = Color.Black,
-                                LinkColor = Color.Black,
-                                LinkBehavior = LinkBehavior.NeverUnderline
-                            }, 1, currRow);
-                    #endregion
-                    CreateGradesLabels(subject,currRow);
-                    
-                    tableMarks.Controls.Add(new Label()
-                    {
-                        Text = "avg",
-                        Anchor = AnchorStyles.Left,
-                        AutoSize = true,
-                    }, 2, currRow);
-                
-                    var btn = new Button()
-                    {
-                        Text = "Add",
-                        Anchor = AnchorStyles.Left,
-                        AutoSize = true,
-                        Tag = subject.id,
-                    };
-                    btn.Click+=AddGradeClick;
-                    tableMarks.Controls.Add(btn, 3, currRow);
-
-                    currRow++;
-                    
-                }*/
-
-                #endregion
             }
 
         }
