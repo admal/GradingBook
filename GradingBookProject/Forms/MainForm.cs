@@ -184,6 +184,7 @@ namespace GradingBookProject.Forms
             this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.Percent, 20));
 
             tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
+            tableMarks.RowCount++;
             tableMarks.Controls.Add(new Label() { Text = "Subject", Anchor = AnchorStyles.Left}, 0, 0);
             tableMarks.Controls.Add(new Label() { Text = "Grades", Anchor = AnchorStyles.None }, 1, 0);
             tableMarks.Controls.Add(new Label() { Text = "Average", Anchor = AnchorStyles.Left }, 2, 0);
