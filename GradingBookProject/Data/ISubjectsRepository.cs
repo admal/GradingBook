@@ -39,6 +39,12 @@ namespace GradingBookProject.Data
         /// <param name="subject">Subject to be deleted.</param>
         /// <param name="yearid">Year(of a user) to which subject belongs.</param>
         void DeleteSubject(Subjects subject, int yearid);
+        /// <summary>
+        /// Get subject with given subject id.
+        /// </summary>
+        /// <param name="subId">id of subject to get</param>
+        /// <returns>Subjects object or null if subject with given id does not exist</returns>
+        Subjects GetSubject(int subId);
 
     }
 }

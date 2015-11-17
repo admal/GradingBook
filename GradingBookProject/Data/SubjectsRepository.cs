@@ -66,5 +66,10 @@ namespace GradingBookProject.Data
             context.Subjects.Remove(context.Years.FirstOrDefault(y => y.id == yearid).Subjects.FirstOrDefault(s => s.id == subject.id));
             context.SaveChanges();
         }
+
+        public Subjects GetSubject(int subId)
+        {
+            return context.Subjects.FirstOrDefault(s => s.id == subId);
+        }
     }
 }

@@ -94,55 +94,98 @@ namespace GradingBookProject.Forms
         {
             //clear table
             ClearTableMarks();
-
+            tableMarks.AutoSize = true;
             //populate the Marks table with db records check if there are subjects on chosen year
             if (years.Years(userid).Count() != 0 && years.Year(selectedYear, userid) != null && subjects.Subjects(selectedYear).Count() != 0)
             {
                 //get current user and his subjects on chosen year
                 var subjectsEnumerated = subjects.Subjects(selectedYear);
-
-                //transfer subjects to an array of strings
-                string[] subjectsArray = new string[subjectsEnumerated.ToArray().Length];
-                for (int i = 0; i < subjectsEnumerated.ToArray().Length; i++)
+                //var row = 0;
+                //var percentHeight = 100/subjectsEnumerated.Count();
+                foreach (var subject in subjectsEnumerated)
                 {
-                    subjectsArray[i] = subjectsEnumerated.ElementAt(i).name;
+                    tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                    LinkLabel temp;
+                    tableMarks.Controls.Add(temp = new LinkLabel()
+                    {
+                        Text = subject.name,
+                        Anchor = AnchorStyles.Left,
+                        AutoSize = true,//false
+                        ActiveLinkColor = Color.Black,
+                        LinkBehavior = LinkBehavior.NeverUnderline,
+                        Tag = subject.id
+                    });
+                    temp.Click += new System.EventHandler(this.Subject_Click);
+
+                    CreateGradesLabels(subject);
+                    
+                    tableMarks.Controls.Add(new Label()
+                    {
+                        Text = "avg",
+                        Anchor = AnchorStyles.Left,
+                        AutoSize = true,
+                    });
+                                        var btn = new Button()
+                    {
+                        Text = "Add",
+                        Anchor = AnchorStyles.Left,
+                        AutoSize = true,
+                        Tag = subject.id,
+                    };
+                    btn.Click+=AddGradeClick;
+                    tableMarks.Controls.Add(btn);
+                    tableMarks.RowCount++;
                 }
+                
+
+                #region todelete
+
+                //jedrzeja staff
+                //transfer subjects to an array of strings
+                //string[] subjectsArray = new string[subjectsEnumerated.ToArray().Length];
+                //for (int i = 0; i < subjectsEnumerated.ToArray().Length; i++)
+                //{
+                //    subjectsArray[i] = subjectsEnumerated.ElementAt(i).name;
+                //}
 
                 //populate the Marks table with subjects
-                tableMarks.RowCount = subjectsArray.Length;
-                for (int i = 0; i < subjectsArray.Length; i++)
+                //tableMarks.RowCount = subjectsArray.Length;
+                /* for (int i = 0; i < subjectsArray.Length; i++)
                 {
+                    tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
                     LinkLabel temp;
                     tableMarks.Controls.Add(temp = new LinkLabel() { 
                         Text = subjectsArray[i], 
                         Anchor = AnchorStyles.Left, 
-                        AutoSize = false,
+                        AutoSize = true,//false
                         ActiveLinkColor = Color.Black,
                         ///LinkColor = Color.Black,
                         LinkBehavior = LinkBehavior.NeverUnderline,
                         Tag = subjectsEnumerated.ElementAt(i).id,
                         
-                        }, 0, i);
+                        }, 0, i+1);//i
                     //add event to change all subjects
                     temp.Click += new System.EventHandler(this.Subject_Click);
-                    tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                    //tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                 }
-                
+                */
                 /////////////////////////////
                 //get user grades
-                int currRow = 0;
+                /* int currRow = 1; //rows are counted from 1 probably ??????
                 foreach (var subject in subjects.Subjects(selectedYear))
                 {
-                    string gradesArray = "";
+                    #region todelete
+                    //string gradesArray = "";
 
                     //it compiles with new model //editor: Adam
-                    foreach (var g in subject.SubjectDetails)
-                    {
-                        gradesArray = g.grade_value+ ", " + gradesArray;
-                    }
-                    ///////////////////////////////////
+                    //foreach (var g in subject.SubjectDetails)
+                    //{
+                    //    gradesArray = g.grade_value+ ", " + gradesArray;
+                    //}
+                    /////////////////////////////////////
                     //change to add grades as separate links
-                    tableMarks.Controls.Add(new LinkLabel()
+                   /* tableMarks.Controls.Add(new LinkLabel()
                             {
                                 Text = gradesArray,
                                 Anchor = AnchorStyles.Left,
@@ -151,39 +194,57 @@ namespace GradingBookProject.Forms
                                 LinkColor = Color.Black,
                                 LinkBehavior = LinkBehavior.NeverUnderline
                             }, 1, currRow);
-
-                    currRow++;
-                }
-                //////////////////////////////////////////
-                //populate the Marks table with averages and Add buttons
-                for (int i = 0; i < subjectsArray.Length; i++)
-                {
+                    #endregion
+                    CreateGradesLabels(subject,currRow);
+                    
                     tableMarks.Controls.Add(new Label()
                     {
                         Text = "avg",
                         Anchor = AnchorStyles.Left,
-                        AutoSize = false,
-                    }, 2, i);
-
-                    tableMarks.Controls.Add(new Button() { 
+                        AutoSize = true,
+                    }, 2, currRow);
+                
+                    var btn = new Button()
+                    {
                         Text = "Add",
                         Anchor = AnchorStyles.Left,
-                        AutoSize = true
-                    }, 3, i);
-                    tableMarks.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
-                }
+                        AutoSize = true,
+                        Tag = subject.id,
+                    };
+                    btn.Click+=AddGradeClick;
+                    tableMarks.Controls.Add(btn, 3, currRow);
+
+                    currRow++;
+                    
+                }*/
+
+                #endregion
             }
 
+        }
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+            UpdateTable();
+        }
+
+        void AddGradeClick(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            var subId = (int) btn.Tag;
+            var sub = subjects.GetSubject(subId);
+            AddGradeToSubject(sub);
         }
 
         private void ClearTableMarks()
         {
             tableMarks.Controls.Clear();
             this.tableMarks.ColumnCount = 4;
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.Percent,20));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.Percent, 50));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.Percent, 10));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.Percent, 20));
         }
 
 
@@ -271,6 +332,89 @@ namespace GradingBookProject.Forms
             Program.GetKernel().Get<SettingsForm>(new ConstructorArgument("user", Globals.CurrentUser));
             settingsForm.ShowDialog();
         }
-        
+
+
+
+
+
+        /*
+         * ===============================================
+         * Grades Author: Adam
+         * ===============================================
+         */
+
+
+        /// <summary>
+        /// Creates link labels with grade values.
+        /// </summary>
+        /// <param name="sub">Subject with grades to show</param>
+        private void CreateGradesLabels(Subjects sub)
+        {
+            var panel = new FlowLayoutPanel(); //panel with grades
+            panel.Name = "panel" + sub.id; //set name of the panel to: "panel+subId"
+            panel.AutoSize = true;
+            tableMarks.Controls.Add(panel); //add panel to tableMarks in proper position
+            //this.Controls.Add(panel);
+            foreach (var grade in sub.SubjectDetails) //populate with labels panel
+            {
+                var lbl = new LinkLabel();
+                lbl.Name = grade.id.ToString();
+                lbl.Text = grade.grade_value.ToString();
+                lbl.LinkClicked += ShowGradePanel; //event handler of click
+                lbl.Tag = new Point(grade.id, sub.id); //just 2d vector with id of grade and subject //tmp solution
+                lbl.AutoSize = true;
+                panel.Controls.Add(lbl);
+            }
+
+           
+        }
+
+
+        /// <summary>
+        /// Calls edit form for grade
+        /// </summary>
+        /// <param name="sub">Subject to which grade will be added</param>
+        private void AddGradeToSubject(Subjects sub)
+        {
+            SubjectDetails grade = new SubjectDetails()
+            {
+                sub_id = sub.id,
+                grade_weight = 1
+            };
+
+            var editForm = new EditGradeForm(grade, true);
+            editForm.ShowDialog();
+        }
+        /// <summary>
+        /// Method that handles click on grade label. Left click shows edit grade form to edit given grade.
+        /// Right click deletes given grade.
+        /// </summary>
+        /// <param name="sender">Clicked object</param>
+        /// <param name="e">Event parameters</param>
+        private void ShowGradePanel(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var lblSender = sender as LinkLabel;
+            var data = (Point)lblSender.Tag;
+
+            var gradesPanel = this.Controls.Find("panel" + data.Y, true).First() as FlowLayoutPanel;
+
+            var repo = new GradesRepository();
+            var g = repo.GetGrade(data.X);
+            if (e.Button == MouseButtons.Left)
+            {
+                if (g == null)
+                    MessageBox.Show("Test");
+                //var editForm = Program.GetKernel().Get<EditGradeForm>(new ConstructorArgument("grade", g));
+                var editForm = new EditGradeForm(g);
+                editForm.ShowDialog();
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                repo.DeleteGrade(g);
+                gradesPanel.Controls.Remove(lblSender);
+                Refresh();
+            }
+        }
+
     }
 }

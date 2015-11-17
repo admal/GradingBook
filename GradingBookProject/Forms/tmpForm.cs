@@ -31,7 +31,10 @@ namespace GradingBookProject.Forms
             CreateGradesLabels(sub);
 
         }
-
+        /// <summary>
+        /// Creates link labels with grade values.
+        /// </summary>
+        /// <param name="sub">Subject with grades to show</param>
         private void CreateGradesLabels(Subjects sub)
         {
             var panel = new FlowLayoutPanel();
@@ -77,7 +80,10 @@ namespace GradingBookProject.Forms
             AddGradeToSubject(subject);
  
         }
-
+        /// <summary>
+        /// Calls edit form for grade
+        /// </summary>
+        /// <param name="sub">Subject to which grade will be added</param>
         private void AddGradeToSubject(Subjects sub)
         {
             SubjectDetails grade = new SubjectDetails()
@@ -88,6 +94,12 @@ namespace GradingBookProject.Forms
             var editForm = new EditGradeForm(grade, true);
             editForm.ShowDialog();
         }
+        /// <summary>
+        /// Method that handles click on grade label. Left click shows edit grade form to edit given grade.
+        /// Right click deletes given grade.
+        /// </summary>
+        /// <param name="sender">Clicked object</param>
+        /// <param name="e">Event parameters</param>
         void ShowGradePanel(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var lblSender = sender as LinkLabel;

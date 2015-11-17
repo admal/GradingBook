@@ -70,16 +70,17 @@
             // tableMarks
             // 
             this.tableMarks.AutoScroll = true;
+            this.tableMarks.AutoSize = true;
             this.tableMarks.ColumnCount = 4;
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableMarks.Location = new System.Drawing.Point(12, 96);
             this.tableMarks.Name = "tableMarks";
             this.tableMarks.RowCount = 1;
-            this.tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableMarks.Size = new System.Drawing.Size(579, 289);
+            this.tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableMarks.Size = new System.Drawing.Size(579, 13);
             this.tableMarks.TabIndex = 2;
             // 
             // menuStrip1
