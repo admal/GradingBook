@@ -119,10 +119,10 @@ namespace GradingBookProject.Forms
                     temp.Click += new System.EventHandler(this.Subject_Click);
 
                     CreateGradesLabels(subject);
-                    
+
                     tableMarks.Controls.Add(new Label()
                     {
-                        Text = "avg",
+                        Text = CalculateAverage(subject).ToString(),
                         Anchor = AnchorStyles.Left,
                         AutoSize = true,
                     });
@@ -139,7 +139,31 @@ namespace GradingBookProject.Forms
                 }
 
             }
+            
+        }
 
+        /// <summary>
+        /// Calculates the weighted average from marks of a given subject.
+        /// </summary>
+        /// <param name="subject">Subject id.</param>
+        /// <returns>WeightAverage from marks</returns>
+        private double CalculateAverage(Subjects subject)
+        {
+            SubjectDetails[] data = grades.SubjectGrades(subject.id).ToArray();
+            if (data.Length != 0)
+            {
+                double sumTop = 0;
+                double sumBot = 0;
+                foreach (var grade in data)
+                {
+                    sumTop = sumTop + (grade.grade_value * grade.grade_weight);
+                    sumBot = sumBot + (grade.grade_weight);
+                }
+
+                return Math.Round((sumTop / sumBot), 2);
+            }
+
+            return 0;
         }
 
         void AddGradeClick(object sender, EventArgs e)

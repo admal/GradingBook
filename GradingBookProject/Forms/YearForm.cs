@@ -18,7 +18,10 @@ namespace GradingBookProject.Forms
         private bool edit = false;
         private Years yearLocal;
         private int userid = Globals.CurrentUser.id;
-
+        /// <summary>
+        /// Constructor taking existing Year and filling in the form.
+        /// </summary>
+        /// <param name="year">Year to edit.</param>
         public YearForm(Years year)
         {
             InitializeComponent();
@@ -33,7 +36,9 @@ namespace GradingBookProject.Forms
                 edit = true;
             }
         }
-
+        /// <summary>
+        /// Pure form for adding a new Year.
+        /// </summary>
         public YearForm()
         {
             InitializeComponent();
@@ -47,7 +52,7 @@ namespace GradingBookProject.Forms
         {
             Validator validator = new Validator();
             
-
+            // Validating the dates.
             if(!(validator.isValidDate(txtYearStart.Text)) || !(validator.isValidDate(txtYearEnd.Text))){
                 MessageBox.Show("Incorrect date. Needs to be in form: \" year-month-day \"", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -57,7 +62,8 @@ namespace GradingBookProject.Forms
             yearLocal.end_date = DateTime.Parse(txtYearEnd.Text);
             yearLocal.name = txtYearName.Text;
             yearLocal.year_desc = txtYearDesc.Text;
-
+            
+            // Depending on whether you add or edit a Year different operation is called.
             if (edit)
             {
                 years.UpdateYear(yearLocal);
