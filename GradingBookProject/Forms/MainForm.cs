@@ -250,9 +250,9 @@ namespace GradingBookProject.Forms
             MessageBox.Show("Current version: A0.1");
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitClick(object sender, EventArgs e)
         {
-            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            //ToolStripMenuItem item = (ToolStripMenuItem)sender;
             Application.Exit();
         }
         /// <summary>
@@ -376,6 +376,7 @@ namespace GradingBookProject.Forms
 
             var editForm = new EditGradeForm(grade, true);
             editForm.ShowDialog();
+            UpdateMainForm();
         }
         /// <summary>
         /// Method that handles click on grade label. Left click shows edit grade form to edit given grade.
@@ -399,13 +400,20 @@ namespace GradingBookProject.Forms
                 //var editForm = Program.GetKernel().Get<EditGradeForm>(new ConstructorArgument("grade", g));
                 var editForm = new EditGradeForm(g);
                 editForm.ShowDialog();
+                UpdateMainForm();
             }
             else if (e.Button == MouseButtons.Right)
             {
                 repo.DeleteGrade(g);
-                gradesPanel.Controls.Remove(lblSender);
-                Refresh();
+                //gradesPanel.Controls.Remove(lblSender);
+                //Refresh();
+                UpdateMainForm();
             }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ExitClick(sender,e);
         }
 
     }

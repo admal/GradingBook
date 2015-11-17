@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Mail;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace GradingBookProject.Validation
 {
@@ -88,6 +86,7 @@ namespace GradingBookProject.Validation
 
             var possibleGrades = new List<double>() //temporary solution
             {
+                2,
                 3,
                 3.5,
                 4,

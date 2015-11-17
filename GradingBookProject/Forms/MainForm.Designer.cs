@@ -44,12 +44,12 @@
             this.lblYear = new System.Windows.Forms.Label();
             this.listYear = new System.Windows.Forms.ComboBox();
             this.topPanel = new System.Windows.Forms.Panel();
+            this.rightSubPanel = new System.Windows.Forms.Panel();
             this.btnAddSubject = new System.Windows.Forms.Button();
-            this.bottomPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.middlePanel.SuspendLayout();
             this.topPanel.SuspendLayout();
-            this.bottomPanel.SuspendLayout();
+            this.rightSubPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -98,7 +98,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitClick);
             // 
             // infoToolStripMenuItem
             // 
@@ -129,16 +129,16 @@
             this.tableMarks.Name = "tableMarks";
             this.tableMarks.RowCount = 1;
             this.tableMarks.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMarks.Size = new System.Drawing.Size(603, 379);
+            this.tableMarks.Size = new System.Drawing.Size(603, 272);
             this.tableMarks.TabIndex = 2;
             // 
             // middlePanel
             // 
             this.middlePanel.Controls.Add(this.tableMarks);
-            this.middlePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.middlePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.middlePanel.Location = new System.Drawing.Point(0, 90);
             this.middlePanel.Name = "middlePanel";
-            this.middlePanel.Size = new System.Drawing.Size(603, 379);
+            this.middlePanel.Size = new System.Drawing.Size(603, 272);
             this.middlePanel.TabIndex = 10;
             // 
             // btnEditYear
@@ -195,6 +195,7 @@
             // 
             // topPanel
             // 
+            this.topPanel.Controls.Add(this.rightSubPanel);
             this.topPanel.Controls.Add(this.listYear);
             this.topPanel.Controls.Add(this.lblYear);
             this.topPanel.Controls.Add(this.btnAddYear);
@@ -206,48 +207,47 @@
             this.topPanel.Size = new System.Drawing.Size(603, 66);
             this.topPanel.TabIndex = 8;
             // 
+            // rightSubPanel
+            // 
+            this.rightSubPanel.Controls.Add(this.btnAddSubject);
+            this.rightSubPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rightSubPanel.Location = new System.Drawing.Point(435, 0);
+            this.rightSubPanel.Name = "rightSubPanel";
+            this.rightSubPanel.Size = new System.Drawing.Size(168, 66);
+            this.rightSubPanel.TabIndex = 8;
+            // 
             // btnAddSubject
             // 
-            this.btnAddSubject.Location = new System.Drawing.Point(3, 6);
+            this.btnAddSubject.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnAddSubject.Location = new System.Drawing.Point(0, 30);
             this.btnAddSubject.Name = "btnAddSubject";
-            this.btnAddSubject.Size = new System.Drawing.Size(149, 36);
+            this.btnAddSubject.Size = new System.Drawing.Size(168, 36);
             this.btnAddSubject.TabIndex = 7;
             this.btnAddSubject.Text = "Add Subject";
             this.btnAddSubject.UseVisualStyleBackColor = true;
             this.btnAddSubject.Click += new System.EventHandler(this.btnAddSubject_Click);
-            // 
-            // bottomPanel
-            // 
-            this.bottomPanel.Controls.Add(this.btnAddSubject);
-            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 469);
-            this.bottomPanel.MaximumSize = new System.Drawing.Size(603, 47);
-            this.bottomPanel.MinimumSize = new System.Drawing.Size(300, 47);
-            this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(603, 47);
-            this.bottomPanel.TabIndex = 11;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(603, 517);
-            this.Controls.Add(this.bottomPanel);
+            this.ClientSize = new System.Drawing.Size(603, 362);
             this.Controls.Add(this.middlePanel);
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(400, 100);
+            this.MinimumSize = new System.Drawing.Size(400, 400);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.middlePanel.ResumeLayout(false);
             this.middlePanel.PerformLayout();
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
-            this.bottomPanel.ResumeLayout(false);
+            this.rightSubPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -272,6 +272,6 @@
         private System.Windows.Forms.ComboBox listYear;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Button btnAddSubject;
-        private System.Windows.Forms.Panel bottomPanel;
+        private System.Windows.Forms.Panel rightSubPanel;
     }
 }
