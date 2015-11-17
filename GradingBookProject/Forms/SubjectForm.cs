@@ -1,4 +1,5 @@
 ﻿using GradingBookProject.Data;
+using GradingBookProject.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,8 +46,15 @@ namespace GradingBookProject.Forms
 
         private void btnSubjectSave_Click(object sender, EventArgs e)
         {
+            Validator validator = new Validator();
             subjectLocal.name = txtSubjectName.Text;
             subjectLocal.teacher_mail = txtSubjectEmail.Text;
+            if (!(validator.isValidMail(subjectLocal.teacher_mail)) && validator.IsNotEmpty(subjectLocal.teacher_mail))
+            {
+                MessageBox.Show("Incorrect email. Needs to be in form: \" name@example.com \"", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             subjectLocal.sub_desc = txtSubjectDesc.Text;
 
             if (edit)

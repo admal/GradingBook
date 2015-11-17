@@ -37,5 +37,11 @@ namespace GradingBookProject.Validation
         /// <param name="input">string to check</param>
         /// <returns>true - if it is mail</returns>
         bool isValidMail(string input);
+        /// <summary>
+        /// Checks if given string is a valid date.
+        /// </summary>
+        /// <param name="input">String to be checked.</param>
+        /// <returns>true - if it is a proper date.</returns>
+        bool isValidDate(string input);
     }
 }

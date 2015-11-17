@@ -1,4 +1,5 @@
 ﻿using GradingBookProject.Data;
+using GradingBookProject.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,8 +27,8 @@ namespace GradingBookProject.Forms
             if ((yearLocal = years.Years(year.user_id).FirstOrDefault(y => y.id == year.id)) != null)
             {
                 txtYearDesc.Text = yearLocal.year_desc;
-                txtYearEnd.Text = yearLocal.end_date.ToString();
-                txtYearStart.Text = yearLocal.start.ToString();
+                txtYearEnd.Text = yearLocal.end_date.ToString("yyyy-MM-dd");
+                txtYearStart.Text = yearLocal.start.ToString("yyyy-MM-dd");
                 txtYearName.Text = yearLocal.name;
                 edit = true;
             }
@@ -44,6 +45,14 @@ namespace GradingBookProject.Forms
 
         private void btnYearSave_Click(object sender, EventArgs e)
         {
+            Validator validator = new Validator();
+            
+
+            if(!(validator.isValidDate(txtYearStart.Text)) || !(validator.isValidDate(txtYearEnd.Text))){
+                MessageBox.Show("Incorrect date. Needs to be in form: \" year-month-day \"", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             yearLocal.start = DateTime.Parse(txtYearStart.Text);
             yearLocal.end_date = DateTime.Parse(txtYearEnd.Text);
             yearLocal.name = txtYearName.Text;

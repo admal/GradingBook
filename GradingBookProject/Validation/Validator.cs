@@ -95,5 +95,16 @@ namespace GradingBookProject.Validation
             };
             return possibleGrades.Contains(n);
         }
+
+
+        public bool isValidDate(string input)
+        {
+            try
+            {
+                DateTime.Parse(input);
+                return true;
+            }
+            catch (Exception e) { return false; }
+        }
     }
 }
