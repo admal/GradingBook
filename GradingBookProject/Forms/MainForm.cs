@@ -141,12 +141,6 @@ namespace GradingBookProject.Forms
 
         }
 
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-            UpdateTable();
-        }
-
         void AddGradeClick(object sender, EventArgs e)
         {
             var btn = sender as Button;
@@ -283,8 +277,6 @@ namespace GradingBookProject.Forms
                 lbl.AutoSize = true;
                 panel.Controls.Add(lbl);
             }
-
-           
         }
 
 
