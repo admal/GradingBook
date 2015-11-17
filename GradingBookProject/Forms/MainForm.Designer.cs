@@ -214,6 +214,7 @@
             this.btnAddSubject.TabIndex = 7;
             this.btnAddSubject.Text = "Add Subject";
             this.btnAddSubject.UseVisualStyleBackColor = true;
+            this.btnAddSubject.Click += new System.EventHandler(this.btnAddSubject_Click);
             // 
             // bottomPanel
             // 

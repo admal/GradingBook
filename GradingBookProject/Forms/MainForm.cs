@@ -359,8 +359,6 @@ namespace GradingBookProject.Forms
                 lbl.AutoSize = true;
                 panel.Controls.Add(lbl);
             }
-
-           
         }
 
 
