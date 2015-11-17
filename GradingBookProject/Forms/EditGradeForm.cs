@@ -83,6 +83,7 @@ namespace GradingBookProject.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
             }
             g.grade_desc = tbDesc.Text;
             if (addGrade) //set date when it was added
