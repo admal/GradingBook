@@ -19,7 +19,11 @@ namespace GradingBookProject.Forms
         private YearsRepository years;
         private Subjects subjectLocal;
         private bool edit = false;
-
+        
+        /// <summary>
+        /// Constructor taking existing Subject and filling in the form.
+        /// </summary>
+        /// <param name="subject">Subject to edit.</param>
         public SubjectForm(Subjects subject)
         {
             InitializeComponent();
@@ -36,6 +40,10 @@ namespace GradingBookProject.Forms
             }
         }
 
+        /// <summary>
+        /// Pure form for adding a new subject.
+        /// </summary>
+        /// <param name="yearid"></param>
         public SubjectForm(int yearid) {
             InitializeComponent();
             subjects = new SubjectsRepository();
@@ -49,6 +57,8 @@ namespace GradingBookProject.Forms
             Validator validator = new Validator();
             subjectLocal.name = txtSubjectName.Text;
             subjectLocal.teacher_mail = txtSubjectEmail.Text;
+
+            // Validating the mail
             if (!(validator.isValidMail(subjectLocal.teacher_mail)) && validator.IsNotEmpty(subjectLocal.teacher_mail))
             {
                 MessageBox.Show("Incorrect email. Needs to be in form: \" name@example.com \"", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -57,6 +67,7 @@ namespace GradingBookProject.Forms
 
             subjectLocal.sub_desc = txtSubjectDesc.Text;
 
+            // Depending on whether adding or editing a Subject differen action performed.
             if (edit)
             {
                 subjects.UpdateSubject(subjectLocal, subjectLocal.year_id);

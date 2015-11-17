@@ -18,14 +18,14 @@ namespace GradingBookProject.Data
         /// List Subjects for a given year.
         /// </summary>
         /// <param name="yearid">Year of subjects.</param>
-        /// <returns></returns>
+        /// <returns>List of subjects as IEnumerable.</returns>
         IEnumerable<Subjects> Subjects(int yearid);
         /// <summary>
         /// Returns requested subject from given year
         /// </summary>
         /// <param name="yearid">Year on which the subject is.</param>
         /// <param name="subjectid">Id of a subject</param>
-        /// <returns></returns>
+        /// <returns>Single Subject</returns>
         Subjects Subject(int yearid, int subjectid);
         /// <summary>
         /// Update given subject's record in a database.
