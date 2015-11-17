@@ -24,6 +24,7 @@ namespace GradingBookProject.Forms
         private ISubjectsRepository subjects;
         private IGradesRepository grades;
 
+        private bool toCloseApp = true;
         public MainForm()
         {
             InitializeComponent();
@@ -168,11 +169,7 @@ namespace GradingBookProject.Forms
             MessageBox.Show("Current version: A0.1");
         }
 
-        private void ExitClick(object sender, EventArgs e)
-        {
-            //ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            Application.Exit();
-        }
+
         /// <summary>
         /// General method to update the form on changes
         /// </summary>
@@ -244,10 +241,6 @@ namespace GradingBookProject.Forms
             Program.GetKernel().Get<SettingsForm>(new ConstructorArgument("user", Globals.CurrentUser));
             settingsForm.ShowDialog();
         }
-
-
-
-
 
         /*
          * ===============================================
@@ -329,9 +322,29 @@ namespace GradingBookProject.Forms
             }
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void ExitClick(object sender, EventArgs e)
         {
-            ExitClick(sender,e);
+            //ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            //if(toCloseApp)
+            //    Application.Exit();
+            toCloseApp = true;
+            this.Close();
+        }
+        private void ExitIconClick(object sender, FormClosedEventArgs e)
+        {
+            //toCloseApp = true;
+            if(toCloseApp)
+                Application.Exit();
+        }
+
+        private void LogoutClick(object sender, EventArgs e)
+        {
+            toCloseApp = false;
+            Globals.CurrentUser = null;
+            
+            var openForms = Application.OpenForms;
+            openForms.OfType<LoginForm>().First().Show(); //show login form
+            this.Close();
         }
 
     }

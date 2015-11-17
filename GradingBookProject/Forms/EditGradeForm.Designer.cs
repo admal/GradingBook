@@ -36,7 +36,7 @@
             this.tbWeight = new System.Windows.Forms.TextBox();
             this.date = new System.Windows.Forms.DateTimePicker();
             this.tbDesc = new System.Windows.Forms.TextBox();
-            this.tbnDelete = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -108,15 +108,15 @@
             this.tbDesc.Size = new System.Drawing.Size(212, 102);
             this.tbDesc.TabIndex = 10;
             // 
-            // tbnDelete
+            // btnDelete
             // 
-            this.tbnDelete.Location = new System.Drawing.Point(300, 11);
-            this.tbnDelete.Name = "tbnDelete";
-            this.tbnDelete.Size = new System.Drawing.Size(60, 23);
-            this.tbnDelete.TabIndex = 11;
-            this.tbnDelete.Text = "Delete";
-            this.tbnDelete.UseVisualStyleBackColor = true;
-            this.tbnDelete.Click += new System.EventHandler(this.DeleteClick);
+            this.btnDelete.Location = new System.Drawing.Point(300, 11);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(60, 23);
+            this.btnDelete.TabIndex = 11;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.DeleteClick);
             // 
             // btnSave
             // 
@@ -145,7 +145,7 @@
             this.ClientSize = new System.Drawing.Size(367, 272);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.tbnDelete);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.tbDesc);
             this.Controls.Add(this.date);
             this.Controls.Add(this.tbWeight);
@@ -173,7 +173,7 @@
         private System.Windows.Forms.TextBox tbWeight;
         private System.Windows.Forms.DateTimePicker date;
         private System.Windows.Forms.TextBox tbDesc;
-        private System.Windows.Forms.Button tbnDelete;
+        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
     }

@@ -26,8 +26,12 @@ namespace GradingBookProject.Forms
             tbGrade.Text = grade.grade_value.ToString("F1");
             tbWeight.Text = grade.grade_weight.ToString();
             tbDesc.Text = grade.grade_desc;
+            date.Enabled = false;
             if (grade.grade_date != null)
                 date.Value = grade.grade_date.Value;
+
+            if (addGrade)
+                btnDelete.Enabled = false;
 
         }
 
@@ -81,7 +85,10 @@ namespace GradingBookProject.Forms
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
             g.grade_desc = tbDesc.Text;
-            g.grade_date = date.Value;
+            if (addGrade) //set date when it was added
+            {
+                g.grade_date = new DateTime();
+            }
 
             var result = MessageBox.Show("Are you sure you want to save changes?", "Save changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
