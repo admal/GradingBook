@@ -11,6 +11,7 @@ namespace GradingBookProject
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Subjects
     {
@@ -22,6 +23,7 @@ namespace GradingBookProject
         public int id { get; set; }
         public string name { get; set; }
         public string sub_desc { get; set; }
+        [Required]
         public int year_id { get; set; }
         public string teacher_mail { get; set; }
     

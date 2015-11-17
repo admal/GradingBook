@@ -125,7 +125,7 @@ namespace GradingBookProject.Forms
                         }, 0, i);
                     //add event to change all subjects
                     temp.Click += new System.EventHandler(this.Subject_Click);
-                    tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                    tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize, 20));
                 }
                 
                 /////////////////////////////
@@ -161,13 +161,13 @@ namespace GradingBookProject.Forms
                     tableMarks.Controls.Add(new Label()
                     {
                         Text = "avg",
-                        Anchor = AnchorStyles.Left,
+                        Anchor = (AnchorStyles.Left),
                         AutoSize = false,
                     }, 2, i);
 
                     tableMarks.Controls.Add(new Button() { 
                         Text = "Add",
-                        Anchor = AnchorStyles.Left,
+                        Anchor = (AnchorStyles.Left),
                         AutoSize = true
                     }, 3, i);
                     tableMarks.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
