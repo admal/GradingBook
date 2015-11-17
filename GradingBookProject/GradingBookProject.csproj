@@ -86,12 +86,6 @@
     <Compile Include="Forms\EditGradeForm.Designer.cs">
       <DependentUpon>EditGradeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GradesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\GradesForm.Designer.cs">
-      <DependentUpon>GradesForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,12 +116,6 @@
     <Compile Include="Forms\SubjectForm.Designer.cs">
       <DependentUpon>SubjectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\tmpForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\tmpForm.Designer.cs">
-      <DependentUpon>tmpForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\YearForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,9 +145,6 @@
     <EmbeddedResource Include="Forms\EditGradeForm.resx">
       <DependentUpon>EditGradeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\GradesForm.resx">
-      <DependentUpon>GradesForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,9 +159,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubjectForm.resx">
       <DependentUpon>SubjectForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\tmpForm.resx">
-      <DependentUpon>tmpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\YearForm.resx">
       <DependentUpon>YearForm.cs</DependentUpon>
