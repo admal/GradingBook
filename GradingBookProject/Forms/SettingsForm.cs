@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Data;
 using GradingBookProject.Validation;
@@ -15,7 +8,14 @@ namespace GradingBookProject.Forms
 {
     public partial class SettingsForm : Form
     {
+        /// <summary>
+        /// Currenlty logged user
+        /// </summary>
         private Users currUser;
+        /// <summary>
+        /// Form constructor
+        /// </summary>
+        /// <param name="user">User that is logged in</param>
         public SettingsForm(Users user)
         {
             currUser = user;
@@ -32,12 +32,20 @@ namespace GradingBookProject.Forms
             tbPasswd.Text = "xxx";
             tbConfPasswd.Text = "xxx";
         }
-
+        /// <summary>
+        /// Button click handler, cancels provided data and closes form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelClick(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// Validates given data and modifies user's credentials
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveChangesClick(object sender, EventArgs e)
         {
             var validator = Program.GetKernel().Get<IStringValidator>();
@@ -105,8 +113,6 @@ namespace GradingBookProject.Forms
             {
                 MessageBox.Show(ex.Message);
             }
-
-            
         }
     }
 }

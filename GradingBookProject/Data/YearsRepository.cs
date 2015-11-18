@@ -41,7 +41,7 @@ namespace GradingBookProject.Data
         {
             if (context.Years.FirstOrDefault(y => y.id == year.id) == null)
                 throw new Exception("Such year does not exist!");
-
+            
             context.Years.FirstOrDefault(y => y.id == year.id).name = year.name;
             context.Years.FirstOrDefault(y => y.id == year.id).start = year.start;
             context.Years.FirstOrDefault(y => y.id == year.id).end_date = year.end_date;

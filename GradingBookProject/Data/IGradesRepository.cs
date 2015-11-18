@@ -38,6 +38,11 @@ namespace GradingBookProject.Data
         /// <param name="subjectid">Subject for which we delete a grade.</param>
         void DeleteGrade(SubjectDetails grade);
 
-
+        /// <summary>
+        /// Get grade with provided id
+        /// </summary>
+        /// <param name="gradeId">id of grade</param>
+        /// <returns>Grade object with id gradeId or null if grade was not found</returns>
+        SubjectDetails GetGrade(int gradeId);
     }
 }

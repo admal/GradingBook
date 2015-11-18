@@ -8,18 +8,24 @@ namespace GradingBookProject.Data
 {
     class GradesRepository : IGradesRepository
     {
+        /// <summary>
+        /// Instance of database context
+        /// </summary>
         private GradingBookDbEntities context;
 
         public GradesRepository() { 
             context = new GradingBookDbEntities();
         }
-
+        /// <summary>
+        /// Add grade to database
+        /// </summary>
+        /// <param name="grade">Grade to add</param>
         public void AddGrade(SubjectDetails grade)
         {
             context.SubjectDetails.Add(grade);
             context.SaveChanges();
         }
-
+   
         public SubjectDetails GetGrade(int gradeID)
         {
             return context.SubjectDetails.FirstOrDefault(g => g.id == gradeID);

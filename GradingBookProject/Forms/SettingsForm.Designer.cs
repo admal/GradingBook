@@ -71,35 +71,35 @@
             this.credentialsPanel.Controls.Add(this.lblUsername);
             this.credentialsPanel.Location = new System.Drawing.Point(40, 50);
             this.credentialsPanel.Name = "credentialsPanel";
-            this.credentialsPanel.Size = new System.Drawing.Size(200, 109);
+            this.credentialsPanel.Size = new System.Drawing.Size(292, 109);
             this.credentialsPanel.TabIndex = 6;
             // 
             // tbSurname
             // 
             this.tbSurname.Location = new System.Drawing.Point(108, 86);
             this.tbSurname.Name = "tbSurname";
-            this.tbSurname.Size = new System.Drawing.Size(89, 20);
+            this.tbSurname.Size = new System.Drawing.Size(181, 20);
             this.tbSurname.TabIndex = 7;
             // 
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(108, 61);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(89, 20);
+            this.tbName.Size = new System.Drawing.Size(181, 20);
             this.tbName.TabIndex = 6;
             // 
             // tbEmail
             // 
             this.tbEmail.Location = new System.Drawing.Point(108, 35);
             this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(89, 20);
+            this.tbEmail.Size = new System.Drawing.Size(181, 20);
             this.tbEmail.TabIndex = 5;
             // 
             // tbUsername
             // 
             this.tbUsername.Location = new System.Drawing.Point(108, 9);
             this.tbUsername.Name = "tbUsername";
-            this.tbUsername.Size = new System.Drawing.Size(89, 20);
+            this.tbUsername.Size = new System.Drawing.Size(181, 20);
             this.tbUsername.TabIndex = 4;
             // 
             // lblSurname
@@ -146,21 +146,21 @@
             this.panel1.Controls.Add(this.lblPasswd);
             this.panel1.Location = new System.Drawing.Point(40, 165);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 58);
+            this.panel1.Size = new System.Drawing.Size(292, 58);
             this.panel1.TabIndex = 7;
             // 
             // tbConfPasswd
             // 
             this.tbConfPasswd.Location = new System.Drawing.Point(108, 32);
             this.tbConfPasswd.Name = "tbConfPasswd";
-            this.tbConfPasswd.Size = new System.Drawing.Size(89, 20);
+            this.tbConfPasswd.Size = new System.Drawing.Size(181, 20);
             this.tbConfPasswd.TabIndex = 9;
             // 
             // tbPasswd
             // 
-            this.tbPasswd.Location = new System.Drawing.Point(107, 7);
+            this.tbPasswd.Location = new System.Drawing.Point(108, 7);
             this.tbPasswd.Name = "tbPasswd";
-            this.tbPasswd.Size = new System.Drawing.Size(89, 20);
+            this.tbPasswd.Size = new System.Drawing.Size(180, 20);
             this.tbPasswd.TabIndex = 8;
             // 
             // lblConfPasswd
@@ -183,7 +183,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(197, 229);
+            this.btnCancel.Location = new System.Drawing.Point(257, 229);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 8;
@@ -193,7 +193,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(116, 229);
+            this.btnSave.Location = new System.Drawing.Point(176, 229);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -205,14 +205,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(349, 261);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.credentialsPanel);
             this.Controls.Add(this.lblTitle);
-            this.MaximumSize = new System.Drawing.Size(300, 300);
-            this.MinimumSize = new System.Drawing.Size(300, 300);
+            this.MaximumSize = new System.Drawing.Size(365, 300);
+            this.MinimumSize = new System.Drawing.Size(365, 300);
             this.Name = "SettingsForm";
             this.Text = "Settings";
             this.credentialsPanel.ResumeLayout(false);

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.Validation
 {
+    /// <summary>
+    /// Encrypts data using implemented hashing algorithms
+    /// </summary>
     public class DataEncryptor
     {
         /// <summary>

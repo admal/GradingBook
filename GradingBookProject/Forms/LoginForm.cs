@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Data;
 using Ninject;
@@ -14,18 +7,29 @@ namespace GradingBookProject.Forms
 {
     public partial class LoginForm : Form
     {
+        /// <summary>
+        /// Constructor of the form
+        /// </summary>
         public LoginForm()
         {
             InitializeComponent();
             tbPasswd.PasswordChar = '*';
         }
-
+        /// <summary>
+        /// Button click handler, opens RegisterForm
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoveToRegisterForm(object sender, EventArgs e)
         {
             var regForm = Program.GetKernel().Get<RegistrationForm>();
             regForm.ShowDialog();
         }
-
+        /// <summary>
+        /// Button click hanlder, it checks provided user credentials and if are proper opens MainForm and refuses to open if not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoginUser(object sender, EventArgs e)
         {
             var username = tbLogin.Text;
@@ -38,12 +42,6 @@ namespace GradingBookProject.Forms
                 var mainForm = Program.GetKernel().Get<MainForm>();
                 this.Hide();
                 mainForm.Show();
-                //TMP
-                /*
-                var mainForm = Program.GetKernel().Get<tmpForm>();
-                this.Hide();
-                mainForm.Show();*/
-
             }
             else
             {
@@ -53,7 +51,5 @@ namespace GradingBookProject.Forms
                     MessageBoxIcon.Error);
             }
         }
-
-        
     }
 }

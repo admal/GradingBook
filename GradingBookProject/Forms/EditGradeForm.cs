@@ -12,10 +12,25 @@ using GradingBookProject.Validation;
 
 namespace GradingBookProject.Forms
 {
+
+    /// <summary>
+    /// Form for editing given grade
+    /// </summary>
     public partial class EditGradeForm : Form
     {
+        /// <summary>
+        /// Grade to edit
+        /// </summary>
         private SubjectDetails grade;
+        /// <summary>
+        /// Specifies if we edit new added grade or edit existing one
+        /// </summary>
         private bool addGrade;
+        /// <summary>
+        /// Constructor of the form
+        /// </summary>
+        /// <param name="_grade">grade to edit/add</param>
+        /// <param name="add">specifies if provided grade is a new or existing one</param>
         public EditGradeForm(SubjectDetails _grade, bool add = false)
         {
             this.grade = _grade;
@@ -34,12 +49,20 @@ namespace GradingBookProject.Forms
                 btnDelete.Enabled = false;
 
         }
-
+        /// <summary>
+        /// Button click handler, it cancels all provided changes and closes form
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">event parameters</param>
         private void CancelChanges(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// Button click handler, it deletes existing grade
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteClick(object sender, EventArgs e)
         {
              DialogResult result = MessageBox.Show("Are you sure you want to delete given grade?","Delete grade?",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
@@ -51,7 +74,11 @@ namespace GradingBookProject.Forms
                 this.Close();
             }
         }
-
+        /// <summary>
+        /// Button cick handler, it saves all provided changes and create all edit grade
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveClick(object sender, EventArgs e)
         {
             Validator validator = new Validator();
