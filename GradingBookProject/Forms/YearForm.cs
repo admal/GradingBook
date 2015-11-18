@@ -12,11 +12,26 @@ using System.Windows.Forms;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Form for Adding or Editing a Year to the database.
+    /// </summary>
     public partial class YearForm : Form
     {
+        /// <summary>
+        /// Repository of Years of current user.
+        /// </summary>
         private YearsRepository years;
+        /// <summary>
+        /// Determines wether we edit a Year or add a new one.
+        /// </summary>
         private bool edit = false;
+        /// <summary>
+        /// Local variable for storing a input/edit Year.
+        /// </summary>
         private Years yearLocal;
+        /// <summary>
+        /// Current user.
+        /// </summary>
         private int userid = Globals.CurrentUser.id;
         /// <summary>
         /// Constructor taking existing Year and filling in the form.
@@ -47,7 +62,11 @@ namespace GradingBookProject.Forms
             txtYearEnd.Text = DateTime.Now.AddDays(100).ToString("d");
             yearLocal = new Years();
         }
-
+        /// <summary>
+        /// Saves either a new Year to database or edited existing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnYearSave_Click(object sender, EventArgs e)
         {
             Validator validator = new Validator();
@@ -76,6 +95,11 @@ namespace GradingBookProject.Forms
             this.Close();
         }
 
+        /// <summary>
+        /// Closes the form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnYearCancel_Click(object sender, EventArgs e)
         {
             this.Close();

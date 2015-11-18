@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.Data
 {
+    /// <summary>
+    /// Iterface For CRUDs for repository of Years.
+    /// </summary>
     public interface IYearsRepository 
     {
         /// <summary>

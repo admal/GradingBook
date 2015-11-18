@@ -14,6 +14,9 @@ using Ninject.Parameters;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Main form displaying all Years, Subjects and Grades for a logged in User.
+    /// </summary>
     public partial class MainForm : Form
     {
         //private static int defaultYear = 0;
@@ -25,6 +28,9 @@ namespace GradingBookProject.Forms
         private IGradesRepository grades;
 
         private bool toCloseApp = true;
+        /// <summary>
+        /// Initializes the form updates repositories and list of years.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -38,18 +44,25 @@ namespace GradingBookProject.Forms
             UpdateYearList();
         }
         /*-----------------------------UPDATING FUNCTIONS-----------------------------*/
+        /// <summary>
+        /// Updates repositories.
+        /// </summary>
         private  void UpdateRepositories() {
             years = new YearsRepository();
             subjects = new SubjectsRepository();
             grades = new GradesRepository();
         }
-
+        /// <summary>
+        /// Updates Main Form.
+        /// </summary>
         private void UpdateMainForm() {
             UpdateRepositories();
             UpdateYearList();
             UpdateTable();
         }   
-
+        /// <summary>
+        /// Updates list of years.
+        /// </summary>
         private void UpdateYearList(){
             listYear.Items.Clear();
             foreach (var year in years.Years(userid))
@@ -173,7 +186,9 @@ namespace GradingBookProject.Forms
             var sub = subjects.GetSubject(subId);
             AddGradeToSubject(sub);
         }
-
+        /// <summary>
+        /// Clears the Table and sets titles for columns.
+        /// </summary>
         private void ClearTableMarks()
         {
             tableMarks.Controls.Clear();
@@ -193,7 +208,11 @@ namespace GradingBookProject.Forms
 
 
         /*----------------------------- MENU STRIP ---------------------------*/
-
+        /// <summary>
+        /// Displays current version of a program.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void versionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
@@ -212,7 +231,11 @@ namespace GradingBookProject.Forms
         }
 
         /*----------------------------- CRUDs Year---------------------------*/
-
+        /// <summary>
+        /// Opens a Form for adding a Year.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddYear_Click(object sender, EventArgs e)
         {
             var yearForm = Program.GetKernel().Get<YearForm>();
@@ -221,7 +244,11 @@ namespace GradingBookProject.Forms
         }
 
 
-
+        /// <summary>
+        /// Deletes a currently selected Year.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDeleteYear_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected year?", "Delete a Year", MessageBoxButtons.YesNo);
@@ -238,7 +265,11 @@ namespace GradingBookProject.Forms
                 
             }
         }
-
+        /// <summary>
+        /// Opens a Form for Editing a Year (Injects itself into the form).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEditYear_Click(object sender, EventArgs e)
         {
             var yearForm = Program.GetKernel().Get<YearForm>(new ConstructorArgument("year", years.Year(selectedYear, userid)));
@@ -248,14 +279,22 @@ namespace GradingBookProject.Forms
         }
 
         /*----------------------------- CRUDs Subject---------------------------*/
-
+        /// <summary>
+        /// Opens a Form for adding a Subject.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddSubject_Click(object sender, EventArgs e)
         {
             var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("yearid", selectedYear));
             subjectForm.FormClosed += new FormClosedEventHandler(this.Form_Close);
             subjectForm.ShowDialog();
         }            
-
+        /// <summary>
+        /// Opens a form for editing a Subject.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Subject_Click(object sender, EventArgs e) 
         {
             LinkLabel link = (LinkLabel)sender;

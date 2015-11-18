@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.Data
 {
+    /// <summary>
+    /// Class implementing Repository Pattern for Years.
+    /// </summary>
     public class YearsRepository : IYearsRepository
     {
         GradingBookDbEntities context;

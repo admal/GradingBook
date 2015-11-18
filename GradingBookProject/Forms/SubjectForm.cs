@@ -12,12 +12,30 @@ using System.Windows.Forms;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Form for Editing/Adding/Deleting a Subject to the database.
+    /// </summary>
     public partial class SubjectForm : Form
     {
+        /// <summary>
+        /// Current user.
+        /// </summary>
         private int userid = Globals.CurrentUser.id;
+        /// <summary>
+        /// Repository of Subjects of current user.
+        /// </summary>
         private SubjectsRepository subjects;
+        /// <summary>
+        /// Repository of Years of current user.
+        /// </summary>
         private YearsRepository years;
+        /// <summary>
+        /// Local variable for storing an Edited/Added/Deleted Subject.
+        /// </summary>
         private Subjects subjectLocal;
+        /// <summary>
+        /// Determines wether we Add or Edit a Subject.
+        /// </summary>
         private bool edit = false;
         
         /// <summary>
@@ -43,7 +61,7 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Pure form for adding a new subject.
         /// </summary>
-        /// <param name="yearid"></param>
+        /// <param name="yearid">Id of a Year for which we get Subjects.</param>
         public SubjectForm(int yearid) {
             InitializeComponent();
             subjects = new SubjectsRepository();
@@ -52,7 +70,12 @@ namespace GradingBookProject.Forms
             subjectLocal.year_id = yearid;
         }
 
-        // Saves the data input or edited.
+        /// <summary>
+        /// Saves the edited or new Subject.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+ 
         private void btnSubjectSave_Click(object sender, EventArgs e)
         {
             Validator validator = new Validator();
@@ -83,12 +106,20 @@ namespace GradingBookProject.Forms
             }
 
         }
-
+        /// <summary>
+        /// Exits a form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSubjectCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// Deletes a Subject from a database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSubjectDelete_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected Subject?", "Delete a Subject", MessageBoxButtons.YesNo);

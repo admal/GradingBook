@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.Data
 {
+    /// <summary>
+    /// Interface for repository of Subjects.
+    /// </summary>
     public interface ISubjectsRepository
     {
         /// <summary>

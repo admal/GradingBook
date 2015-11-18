@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.Data
 {
+    /// <summary>
+    /// Class implementing Repository Pattern for Subjects.
+    /// </summary>
     public class SubjectsRepository : ISubjectsRepository
     {
         
