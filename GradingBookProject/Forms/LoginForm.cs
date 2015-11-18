@@ -5,6 +5,9 @@ using Ninject;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Form to login to the application
+    /// </summary>
     public partial class LoginForm : Form
     {
         /// <summary>

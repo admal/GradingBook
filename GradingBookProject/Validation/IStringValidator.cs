@@ -2,6 +2,9 @@
 
 namespace GradingBookProject.Validation
 {
+    /// <summary>
+    /// Interface providing definitions of functions to validate strings
+    /// </summary>
     public interface IStringValidator
     {
         /// <summary>

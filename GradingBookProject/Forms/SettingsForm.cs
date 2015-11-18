@@ -6,6 +6,9 @@ using Ninject;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Window to edit user's credentials
+    /// </summary>
     public partial class SettingsForm : Form
     {
         /// <summary>
