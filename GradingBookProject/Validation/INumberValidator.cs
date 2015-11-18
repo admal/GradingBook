@@ -1,5 +1,8 @@
 ﻿namespace GradingBookProject.Validation
 {
+    /// <summary>
+    /// Interface providing definitions of functions to validate numbers
+    /// </summary>
     public interface INumberValidator
     {
         /// <summary>

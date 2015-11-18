@@ -12,13 +12,22 @@ namespace GradingBookProject
 {
     static class Program
     {
-
+        /// <summary>
+        /// Ninject kernel to inject objects to interfaces
+        /// </summary>
         private static IKernel _kernel;
 
+        /// <summary>
+        /// Get Ninject kernel
+        /// </summary>
+        /// <returns>Ninject kernel</returns>
         public static IKernel GetKernel()
         {
             return _kernel;
         }
+        /// <summary>
+        /// Create all bindings between interfaces and classes
+        /// </summary>
         public static void CreateBindings( )
         {
             _kernel.Bind<IUsersRepository>().To<UsersRepository>();
