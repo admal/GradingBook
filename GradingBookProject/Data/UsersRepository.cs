@@ -35,7 +35,17 @@ namespace GradingBookProject.Data
 
         public bool LoginUser(string username, string passwd)
         {
-            var user = context.Users.FirstOrDefault(u => u.username == username);
+            Users user = null;
+            try
+            {
+               user = context.Users.FirstOrDefault(u => u.username == username);
+            }
+            catch (Exception e)
+            {
+
+                System.Windows.Forms.MessageBox.Show("Unknnown error occured!");
+            }
+            
 
             if (user != null)
             {

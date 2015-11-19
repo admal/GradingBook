@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject", "GradingBookProject\GradingBookProject.csproj", "{9252014E-701F-411C-A3BF-54F4C56F8C2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject.Tests", "GradingBookProject.Tests\GradingBookProject.Tests.csproj", "{E3888FF5-78AA-4468-A6FB-4C4554679991}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7D3423EA-BE37-46FF-A162-E216CBEC0FC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9BDA62A5-ACBE-404B-8DDA-C1A9FEE4DCAE}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\GradingBook.mdf = ..\..\..\Downloads\GradingBook.mdf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

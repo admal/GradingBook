@@ -44,7 +44,7 @@ namespace GradingBookProject.Tests
             Assert.AreEqual(true,good);
             Assert.AreEqual("f60d0f815030db12c14495d0e8545b271a82f19de213623a42e9ee29e65b42a9",output1);
         }
-
+        [TestMethod]
         public void CanValidateEmail()
         {
             var email1 = "example@example.com";
@@ -59,8 +59,9 @@ namespace GradingBookProject.Tests
 
             Assert.AreEqual(true, out1);
             Assert.AreEqual(false, out2);
-            Assert.AreEqual(false, out3);
+            Assert.AreEqual(true, out3);
         }
+        [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void CanValidateNumber( )
         {
@@ -80,7 +81,7 @@ namespace GradingBookProject.Tests
             Assert.AreEqual(15.5, out3);
             
         }
-
+        [TestMethod]
         public void CanValidateGrade()
         {
             INumberValidator validator = new Validator();
@@ -99,7 +100,7 @@ namespace GradingBookProject.Tests
             Assert.AreEqual(false, out3);
             Assert.AreEqual(false, out4);
         }
-
+        [TestMethod]
         public void CanValidateDate( )
         {
             var date1 = new DateTime();

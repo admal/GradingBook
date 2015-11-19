@@ -1,6 +1,8 @@
 ﻿using System;
 using GradingBookProject.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace GradingBookProject.Tests
 {
@@ -13,7 +15,14 @@ namespace GradingBookProject.Tests
             var encryptor = new DataEncryptor();
             string input = "password123";
             string output = encryptor.GetSha256String(input);
-            string properOutput = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f";
+
+            var sha256 = new SHA256CryptoServiceProvider();
+
+            var data = Encoding.UTF8.GetBytes(input);
+            var sha256data = sha256.ComputeHash(data);
+
+            var properOutput = Convert.ToBase64String(sha256data);
+
 
             Assert.AreEqual( properOutput, output);  
         }
