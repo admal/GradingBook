@@ -115,7 +115,7 @@ namespace GradingBookProject.Forms
             g.grade_desc = tbDesc.Text;
             if (addGrade) //set date when it was added
             {
-                g.grade_date = new DateTime();
+                g.grade_date = DateTime.Now;
             }
 
             var result = MessageBox.Show("Are you sure you want to save changes?", "Save changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
