@@ -83,12 +83,15 @@ namespace GradingBookProject.Forms
             subjectLocal.teacher_mail = txtSubjectEmail.Text;
 
             // Validating the mail
-            if (!(validator.isValidMail(subjectLocal.teacher_mail)) && validator.IsNotEmpty(subjectLocal.teacher_mail))
+            if (validator.IsNotEmpty(subjectLocal.teacher_mail))
             {
-                MessageBox.Show("Incorrect email. Needs to be in form: \" name@example.com \"", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                if (!(validator.isValidMail(subjectLocal.teacher_mail)))
+                {
+                    MessageBox.Show("Incorrect email. Needs to be in form: \" name@example.com \"", "Error!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
-
             subjectLocal.sub_desc = txtSubjectDesc.Text;
 
             // Depending on whether adding or editing a Subject differen action performed.

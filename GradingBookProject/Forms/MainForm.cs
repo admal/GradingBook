@@ -73,6 +73,7 @@ namespace GradingBookProject.Forms
 
             if (listYear.Items.Count != 0)
             {
+                btnAddSubject.Enabled = true;
                 if (selectedYearListItem != null)
                 {
                     listYear.SelectedIndex = listYear.Items.IndexOf(selectedYearListItem);
@@ -82,6 +83,8 @@ namespace GradingBookProject.Forms
                     listYear.SelectedIndex = 0;
                 }
             }
+            else
+               btnAddSubject.Enabled = false;
         }
         /*-----------------------------POPULATING FUNCTIONS-----------------------------*/
         /// <summary>
@@ -112,6 +115,7 @@ namespace GradingBookProject.Forms
             //populate the Marks table with db records check if there are subjects on chosen year
             if (years.Years(userid).Count() != 0 && years.Year(selectedYear, userid) != null && subjects.Subjects(selectedYear).Count() != 0)
             {
+                
                 //get current user and his subjects on chosen year
                 var subjectsEnumerated = subjects.Subjects(selectedYear);
                 //var row = 0;
@@ -152,7 +156,6 @@ namespace GradingBookProject.Forms
                 }
 
             }
-            
         }
 
         /// <summary>
