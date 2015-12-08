@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject", "GradingBookProject\GradingBookProject.csproj", "{9252014E-701F-411C-A3BF-54F4C56F8C2B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{791B8F6A-AA6B-4155-A652-9EE38AA157D2} = {791B8F6A-AA6B-4155-A652-9EE38AA157D2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject.Tests", "GradingBookProject.Tests\GradingBookProject.Tests.csproj", "{E3888FF5-78AA-4468-A6FB-4C4554679991}"
 EndProject
