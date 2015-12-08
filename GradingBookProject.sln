@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject", "GradingBookProject\GradingBookProject.csproj", "{9252014E-701F-411C-A3BF-54F4C56F8C2B}"
 EndProject
@@ -9,10 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject.Tests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7D3423EA-BE37-46FF-A162-E216CBEC0FC6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9BDA62A5-ACBE-404B-8DDA-C1A9FEE4DCAE}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Downloads\GradingBook.mdf = ..\..\..\Downloads\GradingBook.mdf
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookApi", "GradingBookApi\GradingBookApi.csproj", "{791B8F6A-AA6B-4155-A652-9EE38AA157D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookApi.Tests", "GradingBookApi.Tests\GradingBookApi.Tests.csproj", "{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +27,14 @@ Global
 		{E3888FF5-78AA-4468-A6FB-4C4554679991}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3888FF5-78AA-4468-A6FB-4C4554679991}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3888FF5-78AA-4468-A6FB-4C4554679991}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791B8F6A-AA6B-4155-A652-9EE38AA157D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791B8F6A-AA6B-4155-A652-9EE38AA157D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791B8F6A-AA6B-4155-A652-9EE38AA157D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791B8F6A-AA6B-4155-A652-9EE38AA157D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,20 +12,42 @@ namespace GradingBookProject
     using System;
     using System.Collections.Generic;
     
+    /// <summary>
+    /// Year class
+    /// </summary>
     public partial class Years
     {
         public Years()
         {
             this.Subjects = new HashSet<Subjects>();
         }
-    
+        /// <summary>
+        /// Year id
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// Year's name
+        /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// Date when the year starts
+        /// </summary>
         public System.DateTime start { get; set; }
+        /// <summary>
+        /// Date when the year ends
+        /// </summary>
         public System.DateTime end_date { get; set; }
+        /// <summary>
+        /// Description of the year
+        /// </summary>
         public string year_desc { get; set; }
+        /// <summary>
+        /// To which user year is assigned
+        /// </summary>
         public int user_id { get; set; }
-    
+        /// <summary>
+        /// Year's subjects
+        /// </summary>
         public virtual ICollection<Subjects> Subjects { get; set; }
         public virtual Users Users { get; set; }
     }

@@ -12,6 +12,9 @@ namespace GradingBookProject
     using System;
     using System.Collections.Generic;
     
+    /// <summary>
+    /// User's class
+    /// </summary>
     public partial class Users
     {
         public Users()
@@ -19,11 +22,29 @@ namespace GradingBookProject
             this.Years = new HashSet<Years>();
         }
     
+        /// <summary>
+        /// User id
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// User's name (login)
+        /// </summary>
         public string username { get; set; }
+        /// <summary>
+        /// User's password
+        /// </summary>
         public string passwd { get; set; }
+        /// <summary>
+        /// User's email
+        /// </summary>
         public string email { get; set; }
+        /// <summary>
+        /// User's name
+        /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// User's surname
+        /// </summary>
         public string surname { get; set; }
     
         public virtual ICollection<Years> Years { get; set; }
