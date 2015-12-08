@@ -79,9 +79,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,21 +94,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdoModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AdoModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AdoModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AdoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AdoModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AdoModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Data\GradesRepository.cs" />
     <Compile Include="Data\IGradesRepository.cs" />
     <Compile Include="Data\ISubjectsRepository.cs" />
@@ -158,25 +145,40 @@
       <DependentUpon>YearForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
+    <Compile Include="Models\AdoModel.Context.cs">
+      <DependentUpon>AdoModel.Context.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\AdoModel.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\AdoModel.Designer.cs">
+      <DependentUpon>AdoModel.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\SubjectDetails.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Subjects.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Users.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Years.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubjectDetails.cs">
-      <DependentUpon>AdoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Subjects.cs">
-      <DependentUpon>AdoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Users.cs">
-      <DependentUpon>AdoModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Validation\DataEncryptor.cs" />
     <Compile Include="Validation\INumberValidator.cs" />
     <Compile Include="Validation\IStringValidator.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="YearListItem.cs" />
-    <Compile Include="Years.cs">
-      <DependentUpon>AdoModel.tt</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Forms\EditGradeForm.resx">
       <DependentUpon>EditGradeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -208,19 +210,19 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EntityDeploy Include="AdoModel.edmx">
+    <EntityDeploy Include="Models\AdoModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AdoModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="AdoModel.Context.tt">
+    <None Include="Models\AdoModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>AdoModel.edmx</DependentUpon>
       <LastGenOutput>AdoModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="AdoModel.edmx.diagram">
+    <None Include="Models\AdoModel.edmx.diagram">
       <DependentUpon>AdoModel.edmx</DependentUpon>
     </None>
-    <None Include="AdoModel.tt">
+    <None Include="Models\AdoModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>AdoModel.edmx</DependentUpon>
       <LastGenOutput>AdoModel.cs</LastGenOutput>
@@ -261,6 +263,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GradingBookApi\GradingBookApi.csproj">
+      <Project>{791b8f6a-aa6b-4155-a652-9ee38aa157d2}</Project>
+      <Name>GradingBookApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

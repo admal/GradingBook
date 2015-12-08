@@ -1,4 +1,6 @@
-﻿namespace GradingBookProject
+﻿using GradingBookProject.Models;
+
+namespace GradingBookProject
 {
     /// <summary>
     /// Global variables

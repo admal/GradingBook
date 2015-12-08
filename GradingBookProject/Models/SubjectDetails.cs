@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GradingBookProject
+using System;
+
+namespace GradingBookProject.Models
 {
-    using System;
-    using System.Collections.Generic;
     /// <summary>
     /// Class of a grade
     /// </summary>

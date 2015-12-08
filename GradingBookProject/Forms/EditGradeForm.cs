@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Data;
+using GradingBookProject.Models;
 using GradingBookProject.Validation;
 
 namespace GradingBookProject.Forms

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GradingBookApi.Models;
 using GradingBookProject.Data;
 using GradingBookProject.Forms;
 using GradingBookProject.Validation;
@@ -46,6 +47,13 @@ namespace GradingBookProject
         {
             _kernel = new StandardKernel();
             CreateBindings();
+
+            //GradingBookApi.Models.GradingBookEntities entities = new GradingBookEntities();
+            //GradingBookApi.Models.Users user = new GradingBookApi.Models.Users();
+            //user.name = "ADAM";
+            //user.username = "ADAM";
+            //entities.Users.Add(user);
+            //entities.SaveChanges();
 
             Globals.CurrentUser = null;
 

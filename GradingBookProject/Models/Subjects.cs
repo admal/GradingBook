@@ -7,48 +7,46 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GradingBookProject
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace GradingBookProject.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
     /// <summary>
-    /// Year class
+    /// Subject class
     /// </summary>
-    public partial class Years
+    public partial class Subjects
     {
-        public Years()
+        public Subjects()
         {
-            this.Subjects = new HashSet<Subjects>();
+            this.SubjectDetails = new HashSet<SubjectDetails>();
         }
+    
         /// <summary>
-        /// Year id
+        /// Subject id
         /// </summary>
         public int id { get; set; }
         /// <summary>
-        /// Year's name
+        /// Name of the subject
         /// </summary>
         public string name { get; set; }
         /// <summary>
-        /// Date when the year starts
+        /// Description of the subject
         /// </summary>
-        public System.DateTime start { get; set; }
+        public string sub_desc { get; set; }
         /// <summary>
-        /// Date when the year ends
+        /// Year id in which subject is
         /// </summary>
-        public System.DateTime end_date { get; set; }
+        [Required]
+        public int year_id { get; set; }
         /// <summary>
-        /// Description of the year
+        /// Mail to the teacher who conducts classes
         /// </summary>
-        public string year_desc { get; set; }
+        public string teacher_mail { get; set; }
         /// <summary>
-        /// To which user year is assigned
+        /// Set of grades
         /// </summary>
-        public int user_id { get; set; }
-        /// <summary>
-        /// Year's subjects
-        /// </summary>
-        public virtual ICollection<Subjects> Subjects { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }
+        public virtual Years Years { get; set; }
     }
 }

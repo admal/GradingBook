@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GradingBookProject
+namespace GradingBookApi.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GradingBookDbEntities : DbContext
+    public partial class GradingBookEntities : DbContext
     {
-        public GradingBookDbEntities()
-            : base("name=GradingBookDbEntities")
+        public GradingBookEntities()
+            : base("name=GradingBookEntities")
         {
         }
     
