@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using GradingBookApi.Models;
 using GradingBookProject.Data;
 using GradingBookProject.Forms;
+using GradingBookProject.Http;
 using GradingBookProject.Validation;
 using Ninject;
 
@@ -47,14 +48,16 @@ namespace GradingBookProject
         {
             _kernel = new StandardKernel();
             CreateBindings();
-
-            //GradingBookApi.Models.GradingBookEntities entities = new GradingBookEntities();
-            //GradingBookApi.Models.Users user = new GradingBookApi.Models.Users();
-            //user.name = "ADAM";
-            //user.username = "ADAM";
-            //entities.Users.Add(user);
-            //entities.SaveChanges();
-
+            //part just to show that it works
+            HttpRequestService<Users> usersService = new HttpRequestService<Users>();
+            var users = usersService.GetAll().Result;
+            string s = "";
+            foreach (var user in users)
+            {
+                s += user.username + ", ";
+            }
+            MessageBox.Show(s);
+            ////////////////////////////////////
             Globals.CurrentUser = null;
 
             Application.EnableVisualStyles();

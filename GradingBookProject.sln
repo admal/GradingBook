@@ -11,6 +11,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject.Tests", "GradingBookProject.Tests\GradingBookProject.Tests.csproj", "{E3888FF5-78AA-4468-A6FB-4C4554679991}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7D3423EA-BE37-46FF-A162-E216CBEC0FC6}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookApi", "GradingBookApi\GradingBookApi.csproj", "{791B8F6A-AA6B-4155-A652-9EE38AA157D2}"
 EndProject
