@@ -70,7 +70,7 @@ namespace GradingBookProject.Http
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //GET T/{id} to get specific
-                HttpResponseMessage response = await client.GetAsync(url + "/" + id.ToString());
+                HttpResponseMessage response = await client.GetAsync(url + id.ToString());
                 if (response.IsSuccessStatusCode)
                 {
                     T responseObject = await response.Content.ReadAsAsync<T>();
@@ -84,7 +84,7 @@ namespace GradingBookProject.Http
         }
 
 
-        public async Task<T> PostOne(T o) {
+        public async Task<T> PostOne(T obj) {
            
 
             using (var client = new HttpClient())
@@ -94,7 +94,7 @@ namespace GradingBookProject.Http
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 
                 //POST to create new
-                HttpResponseMessage response = await client.PostAsJsonAsync(url, o);
+                HttpResponseMessage response = await client.PostAsJsonAsync(url, obj);
                 if (response.IsSuccessStatusCode)
                 {
                     T responseObject = await response.Content.ReadAsAsync<T>();
@@ -108,11 +108,9 @@ namespace GradingBookProject.Http
 
         public async Task<T> UpdateOne(int id, T o)
         {
-            
-            
             using (var client = new HttpClient())
             {
-                string updateUrl = url + "/" + id.ToString();
+                string updateUrl = url  + id.ToString();
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -124,6 +122,8 @@ namespace GradingBookProject.Http
                     T responseObject = await response.Content.ReadAsAsync<T>();
                     //PUT to update
                     response = await client.PutAsJsonAsync(updateUrl, o);
+                    if(!response.IsSuccessStatusCode)
+                        throw new Exception("Bad response!");
                     return responseObject;
                 }
                 else

@@ -113,10 +113,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AdoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\GroupDetails.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Groups.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SubjectDetails.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Subjects.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Users.cs">

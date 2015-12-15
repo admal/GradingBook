@@ -11,7 +11,7 @@ namespace GradingBookApi.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class SubjectDetails
     {
         public int id { get; set; }

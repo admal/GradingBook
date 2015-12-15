@@ -13,10 +13,10 @@ namespace GradingBookApi.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GradingBookEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public GradingBookEntities()
-            : base("name=GradingBookEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -25,8 +25,11 @@ namespace GradingBookApi.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<GroupDetails> GroupDetails { get; set; }
+        public virtual DbSet<Groups> Groups { get; set; }
         public virtual DbSet<SubjectDetails> SubjectDetails { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Years> Years { get; set; }
     }

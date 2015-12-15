@@ -11,10 +11,13 @@ namespace GradingBookApi.Models
 {
     using System;
     using System.Collections.Generic;
+    
     public partial class Users
     {
         public Users()
         {
+            this.GroupDetails = new HashSet<GroupDetails>();
+            this.Groups = new HashSet<Groups>();
             this.Years = new HashSet<Years>();
         }
     
@@ -25,6 +28,8 @@ namespace GradingBookApi.Models
         public string name { get; set; }
         public string surname { get; set; }
     
+        public virtual ICollection<GroupDetails> GroupDetails { get; set; }
+        public virtual ICollection<Groups> Groups { get; set; }
         public virtual ICollection<Years> Years { get; set; }
     }
 }

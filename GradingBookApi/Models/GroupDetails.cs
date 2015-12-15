@@ -12,20 +12,13 @@ namespace GradingBookApi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Subjects
+    public partial class GroupDetails
     {
-        public Subjects()
-        {
-            this.SubjectDetails = new HashSet<SubjectDetails>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
-        public string sub_desc { get; set; }
-        public int year_id { get; set; }
-        public string teacher_mail { get; set; }
+        public int user_id { get; set; }
+        public int group_id { get; set; }
     
-        public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }
-        public virtual Years Years { get; set; }
+        public virtual Groups Groups { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace GradingBookApi.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Years
     {
         public Years()
@@ -25,7 +25,9 @@ namespace GradingBookApi.Models
         public System.DateTime end_date { get; set; }
         public string year_desc { get; set; }
         public int user_id { get; set; }
+        public Nullable<int> group_id { get; set; }
     
+        public virtual Groups Groups { get; set; }
         public virtual ICollection<Subjects> Subjects { get; set; }
         public virtual Users Users { get; set; }
     }
