@@ -14,8 +14,8 @@ namespace GradingBookApi
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            
+            GlobalConfiguration.Configure(WebApiConfig.Register);   
+
         }
     }
 }

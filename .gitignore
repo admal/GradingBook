@@ -1,8 +1,10 @@
 #========================================
-# App.conig is ignored due to database
+# App.conig is ignored due to database as well as Web.config
 #========================================
+.gitignore
 GradingBookProject/App.config
-
+GradingBookApi/Web.config
+packages/
 
 
 ## Ignore Visual Studio temporary files, build results, and
