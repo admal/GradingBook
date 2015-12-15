@@ -113,11 +113,23 @@
     <Compile Include="Data\SubjectsRepository.cs" />
     <Compile Include="Data\UsersRepository.cs" />
     <Compile Include="Data\YearsRepository.cs" />
+    <Compile Include="Forms\CreateGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateGroupForm.Designer.cs">
+      <DependentUpon>CreateGroupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EditGradeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\EditGradeForm.Designer.cs">
       <DependentUpon>EditGradeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GroupViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GroupViewForm.Designer.cs">
+      <DependentUpon>GroupViewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -155,6 +167,12 @@
     <Compile Include="Forms\YearForm.Designer.cs">
       <DependentUpon>YearForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\YourGroupsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\YourGroupsForm.Designer.cs">
+      <DependentUpon>YourGroupsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Http\HttpRequestService.cs" />
     <Compile Include="Models\AdoModel.Context.cs">
@@ -191,8 +209,14 @@
     <Compile Include="Validation\IStringValidator.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="YearListItem.cs" />
+    <EmbeddedResource Include="Forms\CreateGroupForm.resx">
+      <DependentUpon>CreateGroupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditGradeForm.resx">
       <DependentUpon>EditGradeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GroupViewForm.resx">
+      <DependentUpon>GroupViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -211,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\YearForm.resx">
       <DependentUpon>YearForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\YourGroupsForm.resx">
+      <DependentUpon>YourGroupsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

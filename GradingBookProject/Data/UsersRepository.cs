@@ -10,9 +10,6 @@ namespace GradingBookProject.Data
     public class UsersRepository : IUsersRepository
     {
 
-        //TODO: check if is possible to improve it
-        //private GradingBookDbEntities context = new GradingBookDbEntities();
-
         private GradingBookDbEntities context = new GradingBookDbEntities();
 
         //public UsersRepository(IGbUnitOfWork _context)
