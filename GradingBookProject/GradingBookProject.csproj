@@ -167,6 +167,12 @@
     <Compile Include="Forms\YearForm.Designer.cs">
       <DependentUpon>YearForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\YearInGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\YearInGroupForm.Designer.cs">
+      <DependentUpon>YearInGroupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\YourGroupsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\YearForm.resx">
       <DependentUpon>YearForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\YearInGroupForm.resx">
+      <DependentUpon>YearInGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\YourGroupsForm.resx">
       <DependentUpon>YourGroupsForm.cs</DependentUpon>
