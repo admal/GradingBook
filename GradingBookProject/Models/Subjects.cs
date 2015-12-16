@@ -7,45 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
 namespace GradingBookProject.Models
 {
-    /// <summary>
-    /// Subject class
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    
     public partial class Subjects
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Subjects()
         {
             this.SubjectDetails = new HashSet<SubjectDetails>();
         }
     
-        /// <summary>
-        /// Subject id
-        /// </summary>
         public int id { get; set; }
-        /// <summary>
-        /// Name of the subject
-        /// </summary>
         public string name { get; set; }
-        /// <summary>
-        /// Description of the subject
-        /// </summary>
         public string sub_desc { get; set; }
-        /// <summary>
-        /// Year id in which subject is
-        /// </summary>
-        [Required]
         public int year_id { get; set; }
-        /// <summary>
-        /// Mail to the teacher who conducts classes
-        /// </summary>
         public string teacher_mail { get; set; }
-        /// <summary>
-        /// Set of grades
-        /// </summary>
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }
         public virtual Years Years { get; set; }
     }

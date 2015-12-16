@@ -7,27 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GradingBookApi.Models
+namespace GradingBookProject.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Groups
+    public partial class GroupDetails
     {
-        public Groups()
-        {
-            this.GroupDetails = new HashSet<GroupDetails>();
-            this.Years = new HashSet<Years>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
-        public int owner_id { get; set; }
-        public System.DateTime created_at { get; set; }
-        public string description { get; set; }
+        public int user_id { get; set; }
+        public int group_id { get; set; }
     
-        public virtual ICollection<GroupDetails> GroupDetails { get; set; }
+        public virtual Groups Groups { get; set; }
         public virtual Users Users { get; set; }
-        public virtual ICollection<Years> Years { get; set; }
     }
 }

@@ -7,46 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace GradingBookProject.Models
 {
-    /// <summary>
-    /// Year class
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    
     public partial class Years
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Years()
         {
             this.Subjects = new HashSet<Subjects>();
         }
-        /// <summary>
-        /// Year id
-        /// </summary>
+    
         public int id { get; set; }
-        /// <summary>
-        /// Year's name
-        /// </summary>
         public string name { get; set; }
-        /// <summary>
-        /// Date when the year starts
-        /// </summary>
         public System.DateTime start { get; set; }
-        /// <summary>
-        /// Date when the year ends
-        /// </summary>
         public System.DateTime end_date { get; set; }
-        /// <summary>
-        /// Description of the year
-        /// </summary>
         public string year_desc { get; set; }
-        /// <summary>
-        /// To which user year is assigned
-        /// </summary>
         public int user_id { get; set; }
-        /// <summary>
-        /// Year's subjects
-        /// </summary>
+        public Nullable<int> group_id { get; set; }
+    
+        public virtual Groups Groups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subjects> Subjects { get; set; }
         public virtual Users Users { get; set; }
     }

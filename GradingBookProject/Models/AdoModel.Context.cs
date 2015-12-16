@@ -7,9 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using GradingBookProject.Models;
-
-namespace GradingBookProject
+namespace GradingBookProject.Models
 {
     using System;
     using System.Data.Entity;
@@ -27,6 +25,8 @@ namespace GradingBookProject
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<GroupDetails> GroupDetails { get; set; }
+        public virtual DbSet<Groups> Groups { get; set; }
         public virtual DbSet<SubjectDetails> SubjectDetails { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<Users> Users { get; set; }

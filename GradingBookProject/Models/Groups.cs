@@ -7,29 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GradingBookApi.Models
+namespace GradingBookProject.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Groups
     {
-        public Users()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Groups()
         {
             this.GroupDetails = new HashSet<GroupDetails>();
-            this.Groups = new HashSet<Groups>();
             this.Years = new HashSet<Years>();
         }
     
         public int id { get; set; }
-        public string username { get; set; }
-        public string passwd { get; set; }
-        public string email { get; set; }
         public string name { get; set; }
-        public string surname { get; set; }
+        public int owner_id { get; set; }
+        public System.DateTime created_at { get; set; }
+        public string description { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GroupDetails> GroupDetails { get; set; }
-        public virtual ICollection<Groups> Groups { get; set; }
+        public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Years> Years { get; set; }
     }
 }

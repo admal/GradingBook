@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using GradingBookApi.Models;
+//using GradingBookApi.Models;
+using GradingBookProject.Models;
 
 namespace GradingBookProject.Http
 {

@@ -9,48 +9,49 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+//using GradingBookApi.Models;
 using GradingBookProject.Models;
 
 namespace GradingBookApi.Controllers
 {
-    public class YearsController : ApiController
+    public class GroupsController : ApiController
     {
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
-        // GET: api/Years
-        public IQueryable<Years> GetYears()
+        // GET: api/Groups
+        public IQueryable<Groups> GetGroups()
         {
-            return db.Years;
+            return db.Groups;
         }
 
-        // GET: api/Years/5
-        [ResponseType(typeof(Years))]
-        public async Task<IHttpActionResult> GetYears(int id)
+        // GET: api/Groups/5
+        [ResponseType(typeof(Groups))]
+        public async Task<IHttpActionResult> GetGroups(int id)
         {
-            Years years = await db.Years.FindAsync(id);
-            if (years == null)
+            Groups groups = await db.Groups.FindAsync(id);
+            if (groups == null)
             {
                 return NotFound();
             }
 
-            return Ok(years);
+            return Ok(groups);
         }
 
-        // PUT: api/Years/5
+        // PUT: api/Groups/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutYears(int id, Years years)
+        public async Task<IHttpActionResult> PutGroups(int id, Groups groups)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != years.id)
+            if (id != groups.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(years).State = EntityState.Modified;
+            db.Entry(groups).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +59,7 @@ namespace GradingBookApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!YearsExists(id))
+                if (!GroupsExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +72,35 @@ namespace GradingBookApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Years
-        [ResponseType(typeof(Years))]
-        public async Task<IHttpActionResult> PostYears(Years years)
+        // POST: api/Groups
+        [ResponseType(typeof(Groups))]
+        public async Task<IHttpActionResult> PostGroups(Groups groups)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Years.Add(years);
+            db.Groups.Add(groups);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = years.id }, years);
+            return CreatedAtRoute("DefaultApi", new { id = groups.id }, groups);
         }
 
-        // DELETE: api/Years/5
-        [ResponseType(typeof(Years))]
-        public async Task<IHttpActionResult> DeleteYears(int id)
+        // DELETE: api/Groups/5
+        [ResponseType(typeof(Groups))]
+        public async Task<IHttpActionResult> DeleteGroups(int id)
         {
-            Years years = await db.Years.FindAsync(id);
-            if (years == null)
+            Groups groups = await db.Groups.FindAsync(id);
+            if (groups == null)
             {
                 return NotFound();
             }
 
-            db.Years.Remove(years);
+            db.Groups.Remove(groups);
             await db.SaveChangesAsync();
 
-            return Ok(years);
+            return Ok(groups);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +112,9 @@ namespace GradingBookApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool YearsExists(int id)
+        private bool GroupsExists(int id)
         {
-            return db.Years.Count(e => e.id == id) > 0;
+            return db.Groups.Count(e => e.id == id) > 0;
         }
     }
 }

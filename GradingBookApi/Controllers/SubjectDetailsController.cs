@@ -9,13 +9,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using GradingBookApi.Models;
+using GradingBookProject.Models;
 
 namespace GradingBookApi.Controllers
 {
     public class SubjectDetailsController : ApiController
     {
-        private GradingBookEntities db = new GradingBookEntities();
+        private GradingBookDbEntities db = new GradingBookDbEntities();
 
         // GET: api/SubjectDetails
         public IQueryable<SubjectDetails> GetSubjectDetails()

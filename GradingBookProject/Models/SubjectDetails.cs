@@ -7,38 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace GradingBookProject.Models
 {
-    /// <summary>
-    /// Class of a grade
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    
     public partial class SubjectDetails
     {
-        /// <summary>
-        /// Grade id
-        /// </summary>
         public int id { get; set; }
-        /// <summary>
-        /// Subject id in which grade is stored
-        /// </summary>
         public int sub_id { get; set; }
-        /// <summary>
-        /// Description of the grade
-        /// </summary>
         public string grade_desc { get; set; }
-        /// <summary>
-        /// Weight of the grade
-        /// </summary>
         public int grade_weight { get; set; }
-        /// <summary>
-        /// Date when grade was added
-        /// </summary>
         public Nullable<System.DateTime> grade_date { get; set; }
-        /// <summary>
-        /// Value of the grade (possible values: 2,3,3.5,4,4.5,6)
-        /// </summary>
         public double grade_value { get; set; }
     
         public virtual Subjects Subjects { get; set; }

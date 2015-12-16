@@ -7,45 +7,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace GradingBookProject.Models
 {
-    /// <summary>
-    /// User's class
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    
     public partial class Users
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
+            this.GroupDetails = new HashSet<GroupDetails>();
+            this.Groups = new HashSet<Groups>();
             this.Years = new HashSet<Years>();
         }
     
-        /// <summary>
-        /// User id
-        /// </summary>
         public int id { get; set; }
-        /// <summary>
-        /// User's name (login)
-        /// </summary>
         public string username { get; set; }
-        /// <summary>
-        /// User's password
-        /// </summary>
         public string passwd { get; set; }
-        /// <summary>
-        /// User's email
-        /// </summary>
         public string email { get; set; }
-        /// <summary>
-        /// User's name
-        /// </summary>
         public string name { get; set; }
-        /// <summary>
-        /// User's surname
-        /// </summary>
         public string surname { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GroupDetails> GroupDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Groups> Groups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Years> Years { get; set; }
     }
 }
