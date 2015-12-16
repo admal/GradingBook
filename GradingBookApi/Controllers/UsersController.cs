@@ -107,7 +107,7 @@ namespace GradingBookApi.Controllers
         [ResponseType(typeof(Users))]
         public async Task<IHttpActionResult> GetUserByUsername(string username )
         {
-            Users users = await db.Users.FindAsync(username);
+            var users = await db.Users.FirstOrDefaultAsync(u => u.username == username);
             if (users == null)
             {
                 return NotFound();

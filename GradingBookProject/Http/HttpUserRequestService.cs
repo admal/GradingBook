@@ -15,6 +15,11 @@ namespace GradingBookProject.Http
         {
             
         }
+        /// <summary>
+        /// Find user by username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>User with given username, null if there is no such a user.</returns>
         public async Task<Users> GetUserByUsername(string username)
         {
             using (var client = new HttpClient())

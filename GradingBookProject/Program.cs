@@ -31,7 +31,8 @@ namespace GradingBookProject
         /// </summary>
         public static void CreateBindings( )
         {
-            _kernel.Bind<IUsersRepository>().To<UsersRepository>();
+            //_kernel.Bind<IUsersRepository>().To<UsersRepository>();
+            _kernel.Bind<IUsersRepository>().To<HttpUsersRepository>();
             //_kernel.Bind<IGbUnitOfWork>().To<GradingBookDbEntities>();
             _kernel.Bind<ISubjectsRepository>().To<SubjectsRepository>();
             _kernel.Bind<IYearsRepository>().To<YearsRepository>();
