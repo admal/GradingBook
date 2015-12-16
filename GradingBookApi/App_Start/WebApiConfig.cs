@@ -19,6 +19,11 @@ namespace GradingBookApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Routes.MapHttpRoute(
+                name: "ActionApiUsername",
+                routeTemplate: "api/{controller}/{action}/{username}"
+                );
+
         }
     }
 }

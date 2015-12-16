@@ -10,8 +10,8 @@ namespace GradingBookProject.Http
 {
     public class  HttpRequestService <T>
     {
-        private const string baseUrl = "http://localhost:53716/";
-        private string url;
+        protected const string baseUrl = "http://localhost:53716/";
+        protected string url;
 
         public HttpRequestService()
         {

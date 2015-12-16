@@ -102,6 +102,19 @@ namespace GradingBookApi.Controllers
             return Ok(users);
         }
 
+        [HttpGet]
+        [ActionName("GetByUsername")]
+        [ResponseType(typeof(Users))]
+        public async Task<IHttpActionResult> GetUserByUsername(string username )
+        {
+            Users users = await db.Users.FindAsync(username);
+            if (users == null)
+            {
+                return NotFound();
+            }
+            return Ok(users);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

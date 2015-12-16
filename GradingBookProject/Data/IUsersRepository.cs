@@ -12,6 +12,10 @@ namespace GradingBookProject.Data
         /// </summary>
         /// <param name="user">New user</param>
         void AddUser(Users user);
+
+        bool LoginUser(string username, string passwd);
+        bool userExists(string username);
+        void EditUser(Users user);
     }
     
 }

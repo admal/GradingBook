@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Http\HttpRequestService.cs" />
+    <Compile Include="Http\HttpUserRequestService.cs" />
     <Compile Include="Models\AdoModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
