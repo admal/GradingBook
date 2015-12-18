@@ -25,19 +25,19 @@ namespace GradingBookProject.Data
             await requestService.PostOne(user);
         }
 
-        public bool LoginUser(string username, string passwd)
+        public  bool LoginUser(string username, string passwd)
         {
             Users user = null;
             try
             {
-                user = requestService.GetUserByUsername(username).Result;
+                user =  requestService.GetUserByUsername(username).Result;
+                
             }
             catch (Exception e)
             {
 
                 System.Windows.Forms.MessageBox.Show("Unknnown error occured!");
             }
-
 
             if (user != null)
             {

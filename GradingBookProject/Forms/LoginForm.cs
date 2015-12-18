@@ -38,7 +38,8 @@ namespace GradingBookProject.Forms
             var username = tbLogin.Text;
             var passwd = tbPasswd.Text;
 
-            var userRepo = new UsersRepository();
+            //var userRepo = new UsersRepository();
+            IUsersRepository userRepo = Program.GetKernel().Get<IUsersRepository>();
 
             if (userRepo.LoginUser(username, passwd)) //login success
             {

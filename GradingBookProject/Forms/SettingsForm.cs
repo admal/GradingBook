@@ -62,8 +62,10 @@ namespace GradingBookProject.Forms
             var passwd = tbPasswd.Text;
             var confPasswd = tbConfPasswd.Text;
 
-            
-            var repo = new UsersRepository();
+
+            //var repo = new UsersRepository();
+            IUsersRepository repo = Program.GetKernel().Get<IUsersRepository>();
+           
             try
             {
                 username = validator.ValidateUsername(username);
