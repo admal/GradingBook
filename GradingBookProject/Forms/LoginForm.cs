@@ -33,15 +33,16 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LoginUser(object sender, EventArgs e)
+        private async void LoginUser(object sender, EventArgs e)
         {
             var username = tbLogin.Text;
             var passwd = tbPasswd.Text;
 
             //var userRepo = new UsersRepository();
-            IUsersRepository userRepo = Program.GetKernel().Get<IUsersRepository>();
+            //IUsersRepository userRepo = Program.GetKernel().Get<IUsersRepository>();
+            HttpUsersRepository userRepo = new HttpUsersRepository();
 
-            if (userRepo.LoginUser(username, passwd)) //login success
+            if (await userRepo.LoginUser(username, passwd)) //login success
             {
                 var mainForm = Program.GetKernel().Get<MainForm>();
                 this.Hide();

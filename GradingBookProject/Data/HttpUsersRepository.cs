@@ -9,7 +9,7 @@ using GradingBookProject.Validation;
 
 namespace GradingBookProject.Data
 {
-    class HttpUsersRepository : IUsersRepository
+    class HttpUsersRepository 
     {
         private HttpUserRequestService requestService = new HttpUserRequestService();
 
@@ -25,12 +25,12 @@ namespace GradingBookProject.Data
             await requestService.PostOne(user);
         }
 
-        public  bool LoginUser(string username, string passwd)
+        public async Task<bool> LoginUser(string username, string passwd)
         {
             Users user = null;
             try
             {
-                user =  requestService.GetUserByUsername(username).Result;
+                user = await requestService.GetUserByUsername(username);
                 
             }
             catch (Exception e)

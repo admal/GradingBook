@@ -29,6 +29,7 @@ namespace GradingBookProject.Http
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.GetAsync(url + "GetByUsername/" + username);
+
                 if (response.IsSuccessStatusCode)
                 {
                     Users responseUsers = await response.Content.ReadAsAsync<Users>();
