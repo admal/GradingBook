@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +14,19 @@ namespace GradingBookProject.Data
     {
         private HttpUserRequestService requestService = new HttpUserRequestService();
 
-        public IQueryable<Users> Users
+        //public async Task<List<Users>> Users
+        //{
+        //    get { return await requestService.GetAll(); }
+        //}
+
+        public async Task<IQueryable<Users>> getUsers()
         {
-            get { return requestService.GetAll().Result.AsQueryable(); }
+            return await requestService.GetAll();
         }
 
-        public async void AddUser(Users user)
+        public async Task AddUser(Users user)
         {
-            if (this.Users.FirstOrDefault(u => u.id == user.id) != null)
+            if ((await getUsers()).FirstOrDefault(u => u.id == user.id) != null)
                 throw new Exception("There is already such a user!");
             await requestService.PostOne(user);
         }
@@ -52,13 +58,13 @@ namespace GradingBookProject.Data
             return false;
         }
 
-        public bool userExists(string username)
+        public async Task<bool> userExists(string username)
         {
-            var user = requestService.GetUserByUsername(username).Result;
+            var user = await requestService.GetUserByUsername(username);
             return user != null;
         }
 
-        public async void EditUser(Users user)
+        public async Task EditUser(Users user)
         {
             await requestService.UpdateOne(user.id, user);
         }

@@ -45,7 +45,7 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender">Object that created the event </param>
         /// <param name="e">Event arguments</param>
-        private void ValidateData(object sender, EventArgs e)
+        private async void ValidateData(object sender, EventArgs e)
         {
             IStringValidator val =  Program.GetKernel().Get<IStringValidator>();
             
@@ -61,8 +61,9 @@ namespace GradingBookProject.Forms
                 val.ValidatePasswordConfirmation(password, confirmPasswd);
 
                 //put proper user to database
-                var uRepo = Program.GetKernel().Get<IUsersRepository>();
-                uRepo.AddUser(new Users()
+                //var uRepo = Program.GetKernel().Get<IUsersRepository>();
+                var uRepo = new HttpUsersRepository();
+                await uRepo.AddUser(new Users()
                 {
                     passwd = validatedPasswd,
                     username = validatedUsername,

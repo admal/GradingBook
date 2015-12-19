@@ -61,7 +61,7 @@ namespace GradingBookProject.Validation
         {
             try
             {
-                MailAddress m = new MailAddress(input); //if is no exception then return true
+                 MailAddress m = new MailAddress(input); //if is no exception then return true
 
                 return true;
             }

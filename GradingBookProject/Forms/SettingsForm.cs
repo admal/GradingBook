@@ -50,7 +50,7 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveChangesClick(object sender, EventArgs e)
+        private async void SaveChangesClick(object sender, EventArgs e)
         {
             var validator = Program.GetKernel().Get<IStringValidator>();
             //var currUser = Globals.CurrentUser;
@@ -64,14 +64,15 @@ namespace GradingBookProject.Forms
 
 
             //var repo = new UsersRepository();
-            IUsersRepository repo = Program.GetKernel().Get<IUsersRepository>();
+            //IUsersRepository repo = Program.GetKernel().Get<IUsersRepository>();
+            HttpUsersRepository repo = new HttpUsersRepository();
            
             try
             {
                 username = validator.ValidateUsername(username);
                 if (username != currUser.username) //only edit if any changes were provided
                 {
-                    if (repo.userExists(username))
+                    if (await repo.userExists(username))
                     {
                         MessageBox.Show("Such a user already exists!");
                         return;
@@ -112,7 +113,7 @@ namespace GradingBookProject.Forms
                     }
 
                 }
-                repo.EditUser(currUser);
+                await repo.EditUser(currUser);
                 this.Close();
             }
             catch (Exception ex)

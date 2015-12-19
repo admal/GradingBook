@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace GradingBookProject.Http
         }
 
 
-        public async Task<List<T>> GetAll( )
+        public async Task<IQueryable<T>> GetAll( )
         {
             using (var client = new HttpClient())
             {
@@ -53,7 +54,7 @@ namespace GradingBookProject.Http
                 if (response.IsSuccessStatusCode)
                 {
                     List<T> responseObject = await response.Content.ReadAsAsync<List<T>>();
-                    return responseObject;
+                    return responseObject.AsQueryable();
                 }
                 else
                 {
