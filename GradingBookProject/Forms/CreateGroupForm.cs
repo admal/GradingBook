@@ -58,6 +58,8 @@ namespace GradingBookProject.Forms
             currGroup.description = tbDesc.Text;
             currGroup.name = tbTitle.Text;
             currGroup.owner_id = Globals.CurrentUser.id;
+            currGroup.Users = null;
+            
 
             foreach (Users user in usersBindingSource)
             {
@@ -77,7 +79,16 @@ namespace GradingBookProject.Forms
 
             if (edit)
             {
-                await repo.EditGroup(currGroup);
+                try
+                {
+                    await repo.EditGroup(currGroup);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unknown error occured!: " + ex.Message);
+                    return;
+                }
+               
             }
             else
             {
@@ -90,9 +101,9 @@ namespace GradingBookProject.Forms
                     parent.UpdateGridView();
                     this.Close();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Unknown error occured!");
+                    MessageBox.Show("Unknown error occured!: " + ex.Message);
                     return;
                 }
 
