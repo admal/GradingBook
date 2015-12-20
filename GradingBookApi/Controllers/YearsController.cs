@@ -36,6 +36,17 @@ namespace GradingBookApi.Controllers
             return Ok(years);
         }
 
+        [ActionName("GetByUsername")]
+        public IQueryable<Years> GetYearsOfUsername(string username)
+        {
+
+            var years = db.Users.FirstOrDefault(u => u.username == username).Years;
+
+            if(years.Count > 0)
+                return years.AsQueryable();
+            return Enumerable.Empty<Years>().AsQueryable();
+        }
+
         // PUT: api/Years/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutYears(int id, Years years)

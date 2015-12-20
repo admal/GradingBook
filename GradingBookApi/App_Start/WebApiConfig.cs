@@ -23,7 +23,10 @@ namespace GradingBookApi
                 name: "ActionApiUsername",
                 routeTemplate: "api/{controller}/{action}/{username}"
                 );
-
+            config.Routes.MapHttpRoute(
+                name: "ActionApiId",
+                routeTemplate: "api/{controller}/{action}/{id}"
+                );
         }
     }
 }

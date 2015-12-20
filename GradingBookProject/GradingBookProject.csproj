@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Data\GradesRepository.cs" />
     <Compile Include="Data\HttpUsersRepository.cs" />
+    <Compile Include="Data\HttpYearsRepository.cs" />
     <Compile Include="Data\IGradesRepository.cs" />
     <Compile Include="Data\ISubjectsRepository.cs" />
     <Compile Include="Data\IUsersRepository.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Globals.cs" />
     <Compile Include="Http\HttpRequestService.cs" />
     <Compile Include="Http\HttpUserRequestService.cs" />
+    <Compile Include="Http\HttpYearRequestService.cs" />
     <Compile Include="Models\AdoModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

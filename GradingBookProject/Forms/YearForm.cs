@@ -21,7 +21,7 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Repository of Years of current user.
         /// </summary>
-        private YearsRepository years;
+        private HttpYearsRepository yearsRepo;
         /// <summary>
         /// Determines wether we edit a Year or add a new one.
         /// </summary>
@@ -41,9 +41,11 @@ namespace GradingBookProject.Forms
         public YearForm(Years year)
         {
             InitializeComponent();
-            years = new YearsRepository();
-
-            if ((yearLocal = years.Years(year.user_id).FirstOrDefault(y => y.id == year.id)) != null)
+            LoadData(year);
+        }
+        private async void LoadData(Years year) {
+            yearsRepo = new HttpYearsRepository();
+            if ((yearLocal = await yearsRepo.GetYear(year.id)) != null)
             {
                 txtYearDesc.Text = yearLocal.year_desc;
                 txtYearEnd.Text = yearLocal.end_date.ToString("yyyy-MM-dd");
@@ -58,17 +60,18 @@ namespace GradingBookProject.Forms
         public YearForm()
         {
             InitializeComponent();
-            years = new YearsRepository();
+            yearsRepo = new HttpYearsRepository();
             txtYearStart.Text = DateTime.Now.ToString("d");
             txtYearEnd.Text = DateTime.Now.AddDays(100).ToString("d");
             yearLocal = new Years();
+            yearLocal.user_id = Globals.CurrentUser.id;
         }
         /// <summary>
         /// Saves either a new Year to database or edited existing.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnYearSave_Click(object sender, EventArgs e)
+        private async void btnYearSave_Click(object sender, EventArgs e)
         {
             Validator validator = new Validator();
             
@@ -82,18 +85,27 @@ namespace GradingBookProject.Forms
             yearLocal.end_date = DateTime.Parse(txtYearEnd.Text);
             yearLocal.name = txtYearName.Text;
             yearLocal.year_desc = txtYearDesc.Text;
-            
-            // Depending on whether you add or edit a Year different operation is called.
-            if (edit)
+            yearLocal.user_id = Globals.CurrentUser.id;
+
+            try
             {
-                years.UpdateYear(yearLocal);
+                // Depending on whether you add or edit a Year different operation is called.
+                if (edit)
+                    await yearsRepo.UpdateYear(yearLocal);
+                else
+                    await yearsRepo.AddYear(yearLocal);
+
+                DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Year", MessageBoxButtons.OK);
+                this.Close();
             }
-            else {
-                years.AddYear(yearLocal, userid);
-            }
+            catch (Exception exception){
+                MessageBox.Show(exception.Message,
+                     "Error",
+                     MessageBoxButtons.OK,
+                     MessageBoxIcon.Error);
             
-            DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Year", MessageBoxButtons.OK);
-            this.Close();
+            }
+       
         }
 
         /// <summary>
