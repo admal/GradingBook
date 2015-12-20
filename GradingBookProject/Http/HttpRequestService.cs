@@ -9,6 +9,11 @@ using GradingBookProject.Models;
 
 namespace GradingBookProject.Http
 {
+    /// <summary>
+    /// Class containing methods for all Grading Book API interactions.
+    /// </summary>
+    /// <typeparam name="T">Class can handle multiple data types(Users, 
+    /// Years, Subjects, Grades)</typeparam>
     public class  HttpRequestService <T>
     {
         protected const string baseUrl = "http://localhost:53716/";
@@ -41,7 +46,10 @@ namespace GradingBookProject.Http
             }
         }
 
-
+        /// <summary>
+        /// Gets all objects of given type from API.
+        /// </summary>
+        /// <returns>IQueryable of objects</returns>
         public async Task<IQueryable<T>> GetAll( )
         {
             using (var client = new HttpClient())
@@ -62,7 +70,11 @@ namespace GradingBookProject.Http
                 }
             }
         }
-
+        /// <summary>
+        /// Gets a specific object based of ID from API.
+        /// </summary>
+        /// <param name="id">Objects unique id.</param>
+        /// <returns>A requested Object</returns>
         public async Task<T> GetOne(int id)
         {
             using (var client = new HttpClient())
@@ -85,7 +97,11 @@ namespace GradingBookProject.Http
             }
         }
 
-
+        /// <summary>
+        /// Sends an object to API to be saved.
+        /// </summary>
+        /// <param name="obj">Object to be send.</param>
+        /// <returns></returns>
         public async Task<T> PostOne(T obj) {
            
 
@@ -108,6 +124,13 @@ namespace GradingBookProject.Http
             }
         }
 
+
+        /// <summary>
+        /// Sends an object to API to be updated.
+        /// </summary>
+        /// <param name="id">Objects unique id.</param>
+        /// <param name="o">Object to be updated</param>
+        /// <returns></returns>
         public async Task<T> UpdateOne(int id, T o)
         {
             using (var client = new HttpClient())
@@ -135,6 +158,11 @@ namespace GradingBookProject.Http
             }
         }
 
+        /// <summary>
+        /// Requests the object to be deleted.
+        /// </summary>
+        /// <param name="id">Objects unique id.</param>
+        /// <returns></returns>
         public async Task<T> DeleteOne(int id)
         {
 

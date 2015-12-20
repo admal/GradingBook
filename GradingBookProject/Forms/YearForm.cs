@@ -43,6 +43,10 @@ namespace GradingBookProject.Forms
             InitializeComponent();
             LoadData(year);
         }
+        /// <summary>
+        /// Loads data from given year to a form.
+        /// </summary>
+        /// <param name="year">Year to be displayed</param>
         private async void LoadData(Years year) {
             yearsRepo = new HttpYearsRepository();
             if ((yearLocal = await yearsRepo.GetYear(year.id)) != null)
