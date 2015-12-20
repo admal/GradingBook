@@ -35,6 +35,16 @@ namespace GradingBookApi.Controllers
 
             return Ok(subjects);
         }
+        // GET: api/subjects/getbyyearid/4
+        [ActionName("GetByYearId")]
+        public IQueryable<Subjects> GetSubjectsOfYear(int id) {
+            
+            var subjects = db.Years.FirstOrDefault(y => y.id == id).Subjects;
+
+            if (subjects.Count > 0)
+                return subjects.AsQueryable();
+            return Enumerable.Empty<Subjects>().AsQueryable();
+        }
 
         // PUT: api/Subjects/5
         [ResponseType(typeof(void))]
