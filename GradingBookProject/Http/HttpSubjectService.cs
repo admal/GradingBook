@@ -9,7 +9,7 @@ using GradingBookProject.Models;
 
 namespace GradingBookProject.Http
 {
-    class HttpSubjectRequestService : HttpRequestService<Years>
+    class HttpSubjectRequestService : HttpRequestService<Subjects>
     {
         public HttpSubjectRequestService()
             : base()
