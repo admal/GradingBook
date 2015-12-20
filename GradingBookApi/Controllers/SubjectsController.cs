@@ -37,8 +37,8 @@ namespace GradingBookApi.Controllers
         }
         // GET: api/subjects/getbyyearid/4
         [ActionName("GetByYearId")]
-        public IQueryable<Subjects> GetSubjectsOfYear(string yearId) {
-            int id= Int32.Parse(yearId);
+        public IQueryable<Subjects> GetSubjectsOfYear(int id) {
+            
             var subjects = db.Years.FirstOrDefault(y => y.id == id).Subjects;
 
             if (subjects.Count > 0)

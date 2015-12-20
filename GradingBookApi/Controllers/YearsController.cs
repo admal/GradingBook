@@ -13,17 +13,29 @@ using GradingBookProject.Models;
 
 namespace GradingBookApi.Controllers
 {
+    /// <summary>
+    /// Controller containing all Year methods.
+    /// </summary>
     public class YearsController : ApiController
     {
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
         // GET: api/Years
+        /// <summary>
+        /// Sends all Years from database.
+        /// </summary>
+        /// <returns>All years</returns>
         public IQueryable<Years> GetYears()
         {
             return db.Years;
         }
 
         // GET: api/Years/5
+        /// <summary>
+        /// Sends a chosen Year from database.
+        /// </summary>
+        /// <param name="id">Years unique id</param>
+        /// <returns>Single Year.</returns>
         [ResponseType(typeof(Years))]
         public async Task<IHttpActionResult> GetYears(int id)
         {
@@ -35,7 +47,12 @@ namespace GradingBookApi.Controllers
 
             return Ok(years);
         }
-
+        // GET: api/Years/getByUsername/jedrek
+        /// <summary>
+        /// Sends all Years of a given User.
+        /// </summary>
+        /// <param name="username">Username of a User we want years of.</param>
+        /// <returns>Years of a User.</returns>
         [ActionName("GetByUsername")]
         public IQueryable<Years> GetYearsOfUsername(string username)
         {
@@ -48,6 +65,12 @@ namespace GradingBookApi.Controllers
         }
 
         // PUT: api/Years/5
+        /// <summary>
+        /// Updates a given year.
+        /// </summary>
+        /// <param name="id">ID of a year to be updated.</param>
+        /// <param name="years">Year to be updated.</param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutYears(int id, Years years)
         {
@@ -83,6 +106,11 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/Years
+        /// <summary>
+        /// Saves a given year.
+        /// </summary>
+        /// <param name="years">ID of a Year to be saved.</param>
+        /// <returns>Year to be saved</returns>
         [ResponseType(typeof(Years))]
         public async Task<IHttpActionResult> PostYears(Years years)
         {
@@ -98,6 +126,11 @@ namespace GradingBookApi.Controllers
         }
 
         // DELETE: api/Years/5
+        /// <summary>
+        /// Deletes a Year.
+        /// </summary>
+        /// <param name="id">Id of a Year to be deleted.</param>
+        /// <returns></returns>
         [ResponseType(typeof(Years))]
         public async Task<IHttpActionResult> DeleteYears(int id)
         {
@@ -112,7 +145,10 @@ namespace GradingBookApi.Controllers
 
             return Ok(years);
         }
-
+        /// <summary>
+        /// Disposes of database connection.
+        /// </summary>
+        /// <param name="disposing">If positive -> dispose</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -121,7 +157,11 @@ namespace GradingBookApi.Controllers
             }
             base.Dispose(disposing);
         }
-
+        /// <summary>
+        /// Checks if Year exists.
+        /// </summary>
+        /// <param name="id">Id of a Year.</param>
+        /// <returns>Wether a given year existts.</returns>
         private bool YearsExists(int id)
         {
             return db.Years.Count(e => e.id == id) > 0;

@@ -59,9 +59,9 @@ namespace GradingBookProject.Data
         
         }
         /// <summary>
-        /// 
+        /// Deletes a given Year.
         /// </summary>
-        /// <param name="year"></param>
+        /// <param name="year">Year to be deleted.</param>
         /// <returns></returns>
         public async Task DeleteYear(Years year){
             if(await requestService.GetOne(year.id) == null)
