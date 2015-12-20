@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\GradesRepository.cs" />
+    <Compile Include="Data\HttpGroupsRepository.cs" />
     <Compile Include="Data\HttpUsersRepository.cs" />
     <Compile Include="Data\IGradesRepository.cs" />
     <Compile Include="Data\ISubjectsRepository.cs" />
@@ -275,6 +276,10 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
+    <None Include="Properties\DataSources\GradingBookProject.Models.GroupDetails.datasource" />
+    <None Include="Properties\DataSources\GradingBookProject.Models.Groups.datasource" />
+    <None Include="Properties\DataSources\GradingBookProject.Models.Subjects.datasource" />
+    <None Include="Properties\DataSources\GradingBookProject.Models.Years.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

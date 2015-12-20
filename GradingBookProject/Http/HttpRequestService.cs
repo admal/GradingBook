@@ -35,6 +35,14 @@ namespace GradingBookProject.Http
             {
                 url += "api/SubjectDetails/";
             }
+            else if (t == typeof(Groups))
+            {
+                url += "api/Groups/";
+            }
+            else if (t == typeof(GroupDetails))
+            {
+                url += "api/GroupDetails/";
+            }
             else
             {
                 url = "";

@@ -315,6 +315,11 @@ namespace GradingBookProject.Forms
             Program.GetKernel().Get<SettingsForm>(new ConstructorArgument("user", Globals.CurrentUser));
             settingsForm.ShowDialog();
         }
+        private void SeeGroupsMenuClick(object sender, EventArgs e)
+        {
+            var groupForm = new YourGroupsForm();
+            groupForm.Show();
+        }
 
         /*
          * ===============================================
@@ -420,6 +425,8 @@ namespace GradingBookProject.Forms
             openForms.OfType<LoginForm>().First().Show(); //show login form
             this.Close();
         }
+
+
 
     }
 }

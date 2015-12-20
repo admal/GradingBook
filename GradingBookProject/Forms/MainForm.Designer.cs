@@ -45,6 +45,7 @@
             this.topPanel = new System.Windows.Forms.Panel();
             this.rightSubPanel = new System.Windows.Forms.Panel();
             this.btnAddSubject = new System.Windows.Forms.Button();
+            this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.middlePanel.SuspendLayout();
             this.topPanel.SuspendLayout();
@@ -65,6 +66,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.groupsToolStripMenuItem,
             this.settingsToolStripMenuItem1,
             this.logoutToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -220,6 +222,13 @@
             this.btnAddSubject.UseVisualStyleBackColor = true;
             this.btnAddSubject.Click += new System.EventHandler(this.btnAddSubject_Click);
             // 
+            // groupsToolStripMenuItem
+            // 
+            this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.groupsToolStripMenuItem.Text = "Groups";
+            this.groupsToolStripMenuItem.Click += new System.EventHandler(this.SeeGroupsMenuClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,5 +274,6 @@
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Button btnAddSubject;
         private System.Windows.Forms.Panel rightSubPanel;
+        private System.Windows.Forms.ToolStripMenuItem groupsToolStripMenuItem;
     }
 }
