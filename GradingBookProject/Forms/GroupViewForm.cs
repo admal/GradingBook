@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GradingBookProject.Http;
 using GradingBookProject.Models;
 
 namespace GradingBookProject.Forms
@@ -46,6 +47,21 @@ namespace GradingBookProject.Forms
         private void BackClick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private async void LeaveGroupClick(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to leave the group?","?",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                HttpRequestService<GroupDetails> repo = new HttpRequestService<GroupDetails>();
+
+                await
+                    repo.DeleteOne(
+                        (await repo.GetAll()).FirstOrDefault(
+                            u => u.user_id == Globals.CurrentUser.id && currGroup.id == u.group_id).id);
+                this.Close();
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbDesc = new System.Windows.Forms.TextBox();
@@ -36,7 +37,12 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnAddUser = new System.Windows.Forms.Button();
             this.tbUser = new System.Windows.Forms.TextBox();
-            this.tableUsers = new System.Windows.Forms.TableLayoutPanel();
+            this.usersDataView = new System.Windows.Forms.DataGridView();
+            this.usernameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.emailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.usersDataView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tbTitle
@@ -77,7 +83,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(332, 277);
+            this.btnCancel.Location = new System.Drawing.Point(413, 277);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -86,12 +92,13 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(413, 277);
+            this.btnSave.Location = new System.Drawing.Point(332, 276);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 6;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.SaveChangesClick);
             // 
             // btnAddUser
             // 
@@ -101,6 +108,7 @@
             this.btnAddUser.TabIndex = 7;
             this.btnAddUser.Text = "Add user";
             this.btnAddUser.UseVisualStyleBackColor = true;
+            this.btnAddUser.Click += new System.EventHandler(this.AddUserClick);
             // 
             // tbUser
             // 
@@ -109,26 +117,45 @@
             this.tbUser.Size = new System.Drawing.Size(155, 20);
             this.tbUser.TabIndex = 8;
             // 
-            // tableUsers
+            // usersDataView
             // 
-            this.tableUsers.AutoScroll = true;
-            this.tableUsers.ColumnCount = 2;
-            this.tableUsers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableUsers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableUsers.Location = new System.Drawing.Point(248, 53);
-            this.tableUsers.Name = "tableUsers";
-            this.tableUsers.RowCount = 1;
-            this.tableUsers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableUsers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableUsers.Size = new System.Drawing.Size(240, 189);
-            this.tableUsers.TabIndex = 9;
+            this.usersDataView.AllowUserToAddRows = false;
+            this.usersDataView.AutoGenerateColumns = false;
+            this.usersDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.usersDataView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.usernameDataGridViewTextBoxColumn,
+            this.emailDataGridViewTextBoxColumn});
+            this.usersDataView.DataSource = this.usersBindingSource;
+            this.usersDataView.Location = new System.Drawing.Point(248, 49);
+            this.usersDataView.Name = "usersDataView";
+            this.usersDataView.ReadOnly = true;
+            this.usersDataView.Size = new System.Drawing.Size(240, 193);
+            this.usersDataView.TabIndex = 9;
+            // 
+            // usernameDataGridViewTextBoxColumn
+            // 
+            this.usernameDataGridViewTextBoxColumn.DataPropertyName = "username";
+            this.usernameDataGridViewTextBoxColumn.HeaderText = "username";
+            this.usernameDataGridViewTextBoxColumn.Name = "usernameDataGridViewTextBoxColumn";
+            this.usernameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // emailDataGridViewTextBoxColumn
+            // 
+            this.emailDataGridViewTextBoxColumn.DataPropertyName = "email";
+            this.emailDataGridViewTextBoxColumn.HeaderText = "email";
+            this.emailDataGridViewTextBoxColumn.Name = "emailDataGridViewTextBoxColumn";
+            this.emailDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // usersBindingSource
+            // 
+            this.usersBindingSource.DataSource = typeof(GradingBookProject.Models.Users);
             // 
             // CreateGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(496, 306);
-            this.Controls.Add(this.tableUsers);
+            this.Controls.Add(this.usersDataView);
             this.Controls.Add(this.tbUser);
             this.Controls.Add(this.btnAddUser);
             this.Controls.Add(this.btnSave);
@@ -141,6 +168,8 @@
             this.MinimumSize = new System.Drawing.Size(512, 344);
             this.Name = "CreateGroupForm";
             this.Text = "Create new group";
+            ((System.ComponentModel.ISupportInitialize)(this.usersDataView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,6 +185,9 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnAddUser;
         private System.Windows.Forms.TextBox tbUser;
-        private System.Windows.Forms.TableLayoutPanel tableUsers;
+        private System.Windows.Forms.DataGridView usersDataView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn usernameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource usersBindingSource;
     }
 }

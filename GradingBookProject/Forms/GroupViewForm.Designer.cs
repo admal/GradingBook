@@ -94,6 +94,7 @@
             this.btnLeave.TabIndex = 5;
             this.btnLeave.Text = "Leave group";
             this.btnLeave.UseVisualStyleBackColor = true;
+            this.btnLeave.Click += new System.EventHandler(this.LeaveGroupClick);
             // 
             // btnBack
             // 

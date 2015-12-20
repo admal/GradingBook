@@ -102,6 +102,17 @@ namespace GradingBookApi.Controllers
             return Ok(groupDetails);
         }
 
+        [ResponseType(typeof(GroupDetails))]
+        public async Task<IHttpActionResult> DeleteGroupDetails(int userId, int groupId)
+        {
+            var groupDetail =
+                await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId);
+            if (groupDetail == null)
+                return NotFound();
+
+            return Ok(groupDetail);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

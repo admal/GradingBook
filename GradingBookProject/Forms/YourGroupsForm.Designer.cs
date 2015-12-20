@@ -35,6 +35,7 @@
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEditGridView = new System.Windows.Forms.DataGridViewButtonColumn();
             this.usersDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).BeginInit();
@@ -70,7 +71,8 @@
             this.name,
             this.id,
             this.created_at,
-            this.usersDataGridViewTextBoxColumn});
+            this.usersDataGridViewTextBoxColumn,
+            this.btnEditGridView});
             this.groupsGridView.DataSource = this.groupsBindingSource;
             this.groupsGridView.Location = new System.Drawing.Point(12, 12);
             this.groupsGridView.Name = "groupsGridView";
@@ -99,6 +101,12 @@
             this.created_at.HeaderText = "Created at";
             this.created_at.Name = "created_at";
             this.created_at.ReadOnly = true;
+            // 
+            // btnEditGridView
+            // 
+            this.btnEditGridView.HeaderText = "Edit";
+            this.btnEditGridView.Name = "btnEditGridView";
+            this.btnEditGridView.ReadOnly = true;
             // 
             // usersDataGridViewTextBoxColumn
             // 
@@ -137,5 +145,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn created_at;
         private System.Windows.Forms.DataGridViewTextBoxColumn usersDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn btnEditGridView;
     }
 }

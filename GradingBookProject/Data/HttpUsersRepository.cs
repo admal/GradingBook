@@ -18,7 +18,10 @@ namespace GradingBookProject.Data
         //{
         //    get { return await requestService.GetAll(); }
         //}
-
+        public async Task<Users> getUser(int id)
+        {
+            return await requestService.GetOne(id);
+        }
         public async Task<IQueryable<Users>> getUsers()
         {
             return await requestService.GetAll();
@@ -36,7 +39,7 @@ namespace GradingBookProject.Data
             Users user = null;
             try
             {
-                user = await requestService.GetUserByUsername(username);
+                user = await GetUser(username);
                 
             }
             catch (Exception e)
@@ -56,6 +59,12 @@ namespace GradingBookProject.Data
                 }
             }
             return false;
+        }
+
+        public async Task<Users> GetUser(string username)
+        {
+            var user = await requestService.GetUserByUsername(username);
+            return user;
         }
 
         public async Task<bool> userExists(string username)
