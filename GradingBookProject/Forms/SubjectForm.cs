@@ -23,13 +23,9 @@ namespace GradingBookProject.Forms
         /// </summary>
         private int userid = Globals.CurrentUser.id;
         /// <summary>
-        /// Repository of Subjects of current user.
+        /// HttpRepository of Subjects of current user.
         /// </summary>
-        private SubjectsRepository subjects;
-        /// <summary>
-        /// Repository of Years of current user.
-        /// </summary>
-        private YearsRepository years;
+        private HttpSubjectsRepository subjects;
         /// <summary>
         /// Local variable for storing an Edited/Added/Deleted Subject.
         /// </summary>
@@ -46,27 +42,30 @@ namespace GradingBookProject.Forms
         public SubjectForm(Subjects subject)
         {
             InitializeComponent();
-            subjects = new SubjectsRepository();
-            years = new YearsRepository();
-
-            if ((subjectLocal = subjects.Subject(subject.year_id, subject.id)) != null)
+            LoadData(subject);
+        }
+        /// <summary>
+        /// Loads data from given subject to a form.
+        /// </summary>
+        /// <param name="subject">Subject to be displayed</param>
+        private async void LoadData(Subjects subject)
+        {
+            subjects = new HttpSubjectsRepository();
+            if ((subjectLocal = await subjects.GetSubject(subject.id)) != null)
             {
                 txtSubjectDesc.Text = subjectLocal.sub_desc;
                 txtSubjectEmail.Text = subjectLocal.teacher_mail;
                 txtSubjectName.Text = subjectLocal.name;
-
                 edit = true;
             }
         }
-
         /// <summary>
         /// Pure form for adding a new subject.
         /// </summary>
         /// <param name="yearid">Id of a Year for which we get Subjects.</param>
         public SubjectForm(int yearid) {
             InitializeComponent();
-            subjects = new SubjectsRepository();
-            years = new YearsRepository();
+            subjects = new HttpSubjectsRepository();
             subjectLocal = new Subjects();
             subjectLocal.year_id = yearid;
         }
@@ -77,7 +76,7 @@ namespace GradingBookProject.Forms
         /// <param name="sender"></param>
         /// <param name="e"></param>
  
-        private void btnSubjectSave_Click(object sender, EventArgs e)
+        private async void btnSubjectSave_Click(object sender, EventArgs e)
         {
             Validator validator = new Validator();
             subjectLocal.name = txtSubjectName.Text;
@@ -95,18 +94,27 @@ namespace GradingBookProject.Forms
             }
             subjectLocal.sub_desc = txtSubjectDesc.Text;
 
-            // Depending on whether adding or editing a Subject differen action performed.
-            if (edit)
+            try
             {
-                subjects.UpdateSubject(subjectLocal, subjectLocal.year_id);
-                DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Subject", MessageBoxButtons.OK);
-                this.Close();
+                // Depending on whether adding or editing a Subject differen action performed.
+                if (edit)
+                {
+                    await subjects.UpdateSubject(subjectLocal);
+                    DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Subject", MessageBoxButtons.OK);
+                    this.Close();
+                }
+                else
+                {
+                    await subjects.AddSubject(subjectLocal);
+                    DialogResult dialogResult = MessageBox.Show("Subject added successfuly.", "Subject", MessageBoxButtons.OK);
+                    this.Close();
+                }
             }
-            else
-            {
-                subjects.AddSubject(subjectLocal, subjectLocal.year_id);
-                DialogResult dialogResult = MessageBox.Show("Subject added successfuly.", "Subject", MessageBoxButtons.OK);
-                this.Close();
+            catch (Exception exception) {
+                MessageBox.Show(exception.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
             }
 
         }
@@ -124,12 +132,12 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSubjectDelete_Click(object sender, EventArgs e)
+        private async void btnSubjectDelete_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected Subject?", "Delete a Subject", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                subjects.DeleteSubject(subjects.Subject(subjectLocal.year_id, subjectLocal.id), subjectLocal.year_id);
+                await subjects.DeleteSubject(subjectLocal);
                 MessageBox.Show("Subject deleted successfuly", "Delete a Subject", MessageBoxButtons.OK);
                 this.Close();
             }
