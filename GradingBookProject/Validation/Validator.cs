@@ -42,6 +42,7 @@ namespace GradingBookProject.Validation
 
         public bool IsNotEmpty(string input)
         {
+            input = input.Trim();
             if (input == null) 
                 return false;
 

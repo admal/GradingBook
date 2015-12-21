@@ -40,14 +40,14 @@ namespace GradingBookApi.Controllers
         [HttpGet]
         [Route("api/subjectDetails/getbysubjectid/{id:int}")]
         [ActionName("getbysubjectid")]
-        public IQueryable<Subjects> GetGradesOfYear(int id)
+        public IQueryable<SubjectDetails> GetGradesOfSubject(int id)
         {
 
-            var subjects = db.Years.FirstOrDefault(y => y.id == id).Subjects;
+            var grades = db.Subjects.FirstOrDefault(s => s.id == id).SubjectDetails;
 
-            if (subjects != null)
-                return subjects.AsQueryable();
-            return Enumerable.Empty<Subjects>().AsQueryable();
+            if (grades.Count > 0)
+                return grades.AsQueryable();
+            return Enumerable.Empty<SubjectDetails>().AsQueryable();
         }
 
         // PUT: api/SubjectDetails/5

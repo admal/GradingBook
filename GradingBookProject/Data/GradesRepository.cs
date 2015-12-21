@@ -36,7 +36,6 @@ namespace GradingBookProject.Data
         }
         public IEnumerable<SubjectDetails> SubjectGrades(int subjectid)
         {
-
             var sub = context.Subjects.FirstOrDefault(s => s.id == subjectid);
             IEnumerable<SubjectDetails> grades = null;
             if (sub != null)

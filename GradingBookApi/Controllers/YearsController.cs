@@ -86,6 +86,11 @@ namespace GradingBookApi.Controllers
 
             db.Entry(years).State = EntityState.Modified;
 
+           /*(await db.Years.FirstOrDefaultAsync(y => y.id == id)).name = years.name;
+           (await db.Years.FirstOrDefaultAsync(y => y.id == id)).year_desc = years.year_desc;
+           (await db.Years.FirstOrDefaultAsync(y => y.id == id)).start = years.start;
+           (await db.Years.FirstOrDefaultAsync(y => y.id == id)).end_date = years.end_date;*/
+
             try
             {
                 await db.SaveChangesAsync();

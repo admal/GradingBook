@@ -19,6 +19,10 @@ namespace GradingBookProject.Forms
     public partial class SubjectForm : Form
     {
         /// <summary>
+        /// Validator for checking user input.
+        /// </summary>
+        Validator validator = new Validator();
+        /// <summary>
         /// Current user.
         /// </summary>
         private int userid = Globals.CurrentUser.id;
@@ -43,6 +47,7 @@ namespace GradingBookProject.Forms
         {
             InitializeComponent();
             LoadData(subject);
+            btnSubjectDelete.Enabled = true;
         }
         /// <summary>
         /// Loads data from given subject to a form.
@@ -68,6 +73,7 @@ namespace GradingBookProject.Forms
             subjects = new HttpSubjectsRepository();
             subjectLocal = new Subjects();
             subjectLocal.year_id = yearid;
+            btnSubjectDelete.Enabled = false;
         }
 
         /// <summary>
@@ -91,6 +97,11 @@ namespace GradingBookProject.Forms
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+            }
+            if (!validator.IsNotEmpty(txtSubjectName.Text)) {
+                MessageBox.Show("Name of the subject can not be empty.", "Error!",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             subjectLocal.sub_desc = txtSubjectDesc.Text;
 
@@ -137,9 +148,16 @@ namespace GradingBookProject.Forms
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected Subject?", "Delete a Subject", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                await subjects.DeleteSubject(subjectLocal);
-                MessageBox.Show("Subject deleted successfuly", "Delete a Subject", MessageBoxButtons.OK);
-                this.Close();
+                try
+                {
+                    await subjects.DeleteSubject(subjectLocal);
+                    MessageBox.Show("Subject deleted successfuly", "Delete a Subject", MessageBoxButtons.OK);
+                    this.Close();
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             else if (dialogResult == DialogResult.No)
             {

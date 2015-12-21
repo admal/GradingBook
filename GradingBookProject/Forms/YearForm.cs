@@ -19,6 +19,10 @@ namespace GradingBookProject.Forms
     public partial class YearForm : Form
     {
         /// <summary>
+        /// Validator for checking user input.
+        /// </summary>
+        private Validator validator = new Validator();
+        /// <summary>
         /// Repository of Years of current user.
         /// </summary>
         private HttpYearsRepository yearsRepo;
@@ -76,12 +80,14 @@ namespace GradingBookProject.Forms
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void btnYearSave_Click(object sender, EventArgs e)
-        {
-            Validator validator = new Validator();
-            
+        {            
             // Validating the dates.
             if(!(validator.isValidDate(txtYearStart.Text)) || !(validator.isValidDate(txtYearEnd.Text))){
                 MessageBox.Show("Incorrect date. Needs to be in form: \" year-month-day \"", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!(validator.IsNotEmpty(txtYearName.Text))) {
+                MessageBox.Show("Name of the year can not be empty.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

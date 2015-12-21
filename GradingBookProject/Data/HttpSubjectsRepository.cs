@@ -59,7 +59,7 @@ namespace GradingBookProject.Data
         {
             if (await requestService.GetOne(subject.id) == null)
                 throw new Exception("Such subject does not exist!");
-            await requestService.UpdateOne(subject.id, subject);
+            await requestService.UpdateOne(subject.id, new Subjects {id = subject.id, name = subject.name, sub_desc = subject.sub_desc , SubjectDetails = subject.SubjectDetails, teacher_mail = subject.teacher_mail, year_id = subject.year_id, Years = subject.Years });
         }
         /// <summary>
         /// Deletes a given Subject.

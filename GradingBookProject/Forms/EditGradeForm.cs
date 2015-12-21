@@ -20,6 +20,10 @@ namespace GradingBookProject.Forms
     public partial class EditGradeForm : Form
     {
         /// <summary>
+        /// Http repository for managing grades.
+        /// </summary>
+        private HttpSubjectDetailsRepository grades;
+        /// <summary>
         /// Grade to edit
         /// </summary>
         private SubjectDetails grade;
@@ -34,6 +38,7 @@ namespace GradingBookProject.Forms
         /// <param name="add">specifies if provided grade is a new or existing one</param>
         public EditGradeForm(SubjectDetails _grade, bool add = false)
         {
+            grades = new HttpSubjectDetailsRepository();
             this.grade = _grade;
             addGrade = add;
             InitializeComponent();
@@ -64,14 +69,13 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteClick(object sender, EventArgs e)
+        private async void DeleteClick(object sender, EventArgs e)
         {
              DialogResult result = MessageBox.Show("Are you sure you want to delete given grade?","Delete grade?",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                var repo = new GradesRepository();
-                repo.DeleteGrade(grade);
+                await grades.DeleteSubjectDetail(grade);
                 this.Close();
             }
         }
@@ -80,7 +84,7 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveClick(object sender, EventArgs e)
+        private async void SaveClick(object sender, EventArgs e)
         {
             Validator validator = new Validator();
             var g = grade;
@@ -89,13 +93,13 @@ namespace GradingBookProject.Forms
                 if (!(validator.IsNotEmpty(tbGrade.Text)
                       && validator.IsNotEmpty(tbWeight.Text)))
                 {
-                    MessageBox.Show("All inputs must be filles", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("All inputs must be filled", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 float val = validator.ValidateNumber(tbGrade.Text);
                 if (!validator.ValidateGrade(val))
                 {
-                    MessageBox.Show("Given value is not a proper grade!","Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("Given value is not a proper grade, [2, 5]!","Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
                     return;
                 }
                 g.grade_value = val;
@@ -122,12 +126,18 @@ namespace GradingBookProject.Forms
             var result = MessageBox.Show("Are you sure you want to save changes?", "Save changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                var repo = new GradesRepository();
-                if(!addGrade)
-                    repo.UpdateGrade(g);
-                else
-                    repo.AddGrade(g);
-                this.Close();
+                try
+                {
+                    if (!addGrade)
+                        await grades.UpdateSubjectDetail(g);
+                    else
+                        await grades.AddSubjectDetail(g);
+                    this.Close();
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
         }
     }

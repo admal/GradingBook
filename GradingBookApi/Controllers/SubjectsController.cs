@@ -43,7 +43,7 @@ namespace GradingBookApi.Controllers
             
             var subjects = db.Years.FirstOrDefault(y => y.id == id).Subjects;
 
-            if (subjects != null)
+            if (subjects.Count > 0)
                 return subjects.AsQueryable();
             return Enumerable.Empty<Subjects>().AsQueryable();
         }
@@ -63,6 +63,14 @@ namespace GradingBookApi.Controllers
             }
 
             db.Entry(subjects).State = EntityState.Modified;
+
+            /*Subjects o = await db.Subjects.FirstOrDefaultAsync(s => s.id == id );
+            o.name = subjects.name;
+            o.sub_desc = subjects.sub_desc;
+            o.teacher_mail = subjects.teacher_mail;
+            o.year_id = subjects.year_id;
+
+            db.Entry(o).State = EntityState.Modified;*/
 
             try
             {
