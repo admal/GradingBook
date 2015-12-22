@@ -53,7 +53,7 @@ namespace GradingBookProject.Forms
         /// <param name="year">Year to be displayed</param>
         private async void LoadData(Years year) {
             yearsRepo = new HttpYearsRepository();
-            if ((yearLocal = await yearsRepo.GetYear(year.id)) != null)
+            if ((yearLocal = await yearsRepo.GetOne(year.id)) != null)
             {
                 txtYearDesc.Text = yearLocal.year_desc;
                 txtYearEnd.Text = yearLocal.end_date.ToString("yyyy-MM-dd");
@@ -101,9 +101,9 @@ namespace GradingBookProject.Forms
             {
                 // Depending on whether you add or edit a Year different operation is called.
                 if (edit)
-                    await yearsRepo.UpdateYear(yearLocal);
+                    await yearsRepo.EditOne(yearLocal);
                 else
-                    await yearsRepo.AddYear(yearLocal);
+                    await yearsRepo.AddOne(yearLocal);
 
                 DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Year", MessageBoxButtons.OK);
                 this.Close();

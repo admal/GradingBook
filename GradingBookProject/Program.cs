@@ -84,7 +84,7 @@ namespace GradingBookProject
             ////update user
             //var editUser = users[0];
             //editUser.username = "Edited";
-            //usersService.UpdateOne(editUser.id, editUser);
+            //usersService.EditOne(editUser.id, editUser);
 
             //users = usersService.GetAll().Result;
             ////s = ret.id +"."+ ret.username + "|  ";

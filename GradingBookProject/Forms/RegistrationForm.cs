@@ -56,6 +56,7 @@ namespace GradingBookProject.Forms
             try
             {
                 var validatedUsername = val.ValidateUsername(username);
+                
                 var validatedPasswd = val.ValidatePassword(password);
 
                 val.ValidatePasswordConfirmation(password, confirmPasswd);
@@ -63,7 +64,11 @@ namespace GradingBookProject.Forms
                 //put proper user to database
                 //var uRepo = Program.GetKernel().Get<IUsersRepository>();
                 var uRepo = new HttpUsersRepository();
-                await uRepo.AddUser(new Users()
+
+                if(await uRepo.UserExists(validatedUsername))
+                    throw new Exception("Such a user already exists!");
+
+                await uRepo.AddOne(new Users()
                 {
                     passwd = validatedPasswd,
                     username = validatedUsername,

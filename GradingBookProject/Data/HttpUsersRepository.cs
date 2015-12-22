@@ -10,30 +10,8 @@ using GradingBookProject.Validation;
 
 namespace GradingBookProject.Data
 {
-    class HttpUsersRepository 
+    class HttpUsersRepository : HttpRepository<Users, HttpUserRequestService>
     {
-        private HttpUserRequestService requestService = new HttpUserRequestService();
-
-        //public async Task<List<Users>> Users
-        //{
-        //    get { return await requestService.GetAll(); }
-        //}
-        public async Task<Users> getUser(int id)
-        {
-            return await requestService.GetOne(id);
-        }
-        public async Task<IQueryable<Users>> getUsers()
-        {
-            return await requestService.GetAll();
-        }
-
-        public async Task AddUser(Users user)
-        {
-            if ((await getUsers()).FirstOrDefault(u => u.id == user.id) != null)
-                throw new Exception("There is already such a user!");
-            await requestService.PostOne(user);
-        }
-
         public async Task<bool> LoginUser(string username, string passwd)
         {
             Users user = null;
@@ -67,16 +45,10 @@ namespace GradingBookProject.Data
             return user;
         }
 
-        public async Task<bool> userExists(string username)
+        public async Task<bool> UserExists(string username)
         {
             var user = await requestService.GetUserByUsername(username);
             return user != null;
         }
-
-        public async Task EditUser(Users user)
-        {
-            await requestService.UpdateOne(user.id, user);
-        }
-
     }
 }

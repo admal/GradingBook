@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GradingBookProject.Http;
 using GradingBookProject.Models;
 
-namespace GradingBookProject.Data
+namespace GradingBookProject.Http
 {
-    public class GroupDetailsRepository : HttpRepository<GroupDetails, HttpGroupDetailsRequestService>
+    public class HttpGroupDetailsRequestService : HttpRequestService<GroupDetails>
     {
 
     }

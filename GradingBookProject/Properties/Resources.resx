@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="addUser" xml:space="preserve">
-    <value>Add user</value>
+    <value>Add entity</value>
   </data>
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>

@@ -75,7 +75,7 @@ namespace GradingBookProject.Forms
 
             if (result == DialogResult.Yes)
             {
-                await grades.DeleteSubjectDetail(grade);
+                await grades.DeleteOne(grade);
                 this.Close();
             }
         }
@@ -129,9 +129,9 @@ namespace GradingBookProject.Forms
                 try
                 {
                     if (!addGrade)
-                        await grades.UpdateSubjectDetail(g);
+                        await grades.EditOne(g);
                     else
-                        await grades.AddSubjectDetail(g);
+                        await grades.AddOne(g);
                     this.Close();
                 }
                 catch (Exception ex) {

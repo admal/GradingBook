@@ -72,7 +72,7 @@ namespace GradingBookProject.Forms
                 username = validator.ValidateUsername(username);
                 if (username != currUser.username) //only edit if any changes were provided
                 {
-                    if (await repo.userExists(username))
+                    if (await repo.UserExists(username))
                     {
                         MessageBox.Show("Such a user already exists!");
                         return;
@@ -113,7 +113,7 @@ namespace GradingBookProject.Forms
                     }
 
                 }
-                await repo.EditUser(currUser);
+                await repo.EditOne(currUser);
                 this.Close();
             }
             catch (Exception ex)

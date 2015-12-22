@@ -12,7 +12,7 @@ namespace GradingBookProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Subjects
+    public partial class Subjects : DataEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Subjects()
@@ -20,7 +20,7 @@ namespace GradingBookProject.Models
             this.SubjectDetails = new HashSet<SubjectDetails>();
         }
     
-        public int id { get; set; }
+        //public int id { get; set; }
         public string name { get; set; }
         public string sub_desc { get; set; }
         public int year_id { get; set; }

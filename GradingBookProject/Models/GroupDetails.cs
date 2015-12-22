@@ -12,9 +12,9 @@ namespace GradingBookProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class GroupDetails
+    public partial class GroupDetails : DataEntity
     {
-        public int id { get; set; }
+        //public int id { get; set; }
         public int user_id { get; set; }
         public int group_id { get; set; }
     

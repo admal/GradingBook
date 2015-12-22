@@ -56,7 +56,7 @@ namespace GradingBookProject.Forms
         private async void LoadData(Subjects subject)
         {
             subjects = new HttpSubjectsRepository();
-            if ((subjectLocal = await subjects.GetSubject(subject.id)) != null)
+            if ((subjectLocal = await subjects.GetOne(subject.id)) != null)
             {
                 txtSubjectDesc.Text = subjectLocal.sub_desc;
                 txtSubjectEmail.Text = subjectLocal.teacher_mail;
@@ -110,13 +110,13 @@ namespace GradingBookProject.Forms
                 // Depending on whether adding or editing a Subject differen action performed.
                 if (edit)
                 {
-                    await subjects.UpdateSubject(subjectLocal);
+                    await subjects.EditOne(subjectLocal);
                     DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Subject", MessageBoxButtons.OK);
                     this.Close();
                 }
                 else
                 {
-                    await subjects.AddSubject(subjectLocal);
+                    await subjects.AddOne(subjectLocal);
                     DialogResult dialogResult = MessageBox.Show("Subject added successfuly.", "Subject", MessageBoxButtons.OK);
                     this.Close();
                 }
@@ -150,7 +150,7 @@ namespace GradingBookProject.Forms
             {
                 try
                 {
-                    await subjects.DeleteSubject(subjectLocal);
+                    await subjects.DeleteOne(subjectLocal);
                     MessageBox.Show("Subject deleted successfuly", "Delete a Subject", MessageBoxButtons.OK);
                     this.Close();
                 }
