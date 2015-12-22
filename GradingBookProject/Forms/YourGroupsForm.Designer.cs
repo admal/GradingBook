@@ -35,8 +35,8 @@
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEditGridView = new System.Windows.Forms.DataGridViewButtonColumn();
             this.usersDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEditGridView = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).BeginInit();
@@ -65,6 +65,7 @@
             // groupsGridView
             // 
             this.groupsGridView.AllowUserToAddRows = false;
+            this.groupsGridView.AllowUserToDeleteRows = false;
             this.groupsGridView.AutoGenerateColumns = false;
             this.groupsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.groupsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -102,18 +103,18 @@
             this.created_at.Name = "created_at";
             this.created_at.ReadOnly = true;
             // 
-            // btnEditGridView
-            // 
-            this.btnEditGridView.HeaderText = "Edit";
-            this.btnEditGridView.Name = "btnEditGridView";
-            this.btnEditGridView.ReadOnly = true;
-            // 
             // usersDataGridViewTextBoxColumn
             // 
             this.usersDataGridViewTextBoxColumn.DataPropertyName = "Users";
             this.usersDataGridViewTextBoxColumn.HeaderText = "Owner";
             this.usersDataGridViewTextBoxColumn.Name = "usersDataGridViewTextBoxColumn";
             this.usersDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // btnEditGridView
+            // 
+            this.btnEditGridView.HeaderText = "Edit";
+            this.btnEditGridView.Name = "btnEditGridView";
+            this.btnEditGridView.ReadOnly = true;
             // 
             // groupsBindingSource
             // 

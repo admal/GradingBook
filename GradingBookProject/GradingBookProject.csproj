@@ -106,7 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\GradesRepository.cs" />
-    <Compile Include="Data\GroupDetailsRepository.cs" />
+    <Compile Include="Data\HttpGroupDetailsRepository.cs" />
     <Compile Include="Data\HttpRepository.cs" />
     <Compile Include="Data\HttpSubjectDetailsRepository.cs" />
     <Compile Include="Data\HttpSubjectsRepository.cs" />

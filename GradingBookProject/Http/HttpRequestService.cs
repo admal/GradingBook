@@ -155,8 +155,8 @@ namespace GradingBookProject.Http
                     T responseObject = await response.Content.ReadAsAsync<T>();
                     //PUT to update
                     response = await client.PutAsJsonAsync(updateUrl, o);
-                    if(!response.IsSuccessStatusCode)
-                        throw new Exception("Bad response!");
+                    //if(!response.IsSuccessStatusCode)
+                    //    throw new Exception("Bad response!");
                     return responseObject;
                 }
                 else

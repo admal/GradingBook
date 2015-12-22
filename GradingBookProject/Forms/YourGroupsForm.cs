@@ -18,19 +18,29 @@ namespace GradingBookProject.Forms
         public YourGroupsForm()
         {
             InitializeComponent();
-
-            
+            currUser = Globals.CurrentUser;
+            UpdateGridView();
+            groupsGridView.CellContentClick += EditGroupClick;
         }
 
         public void UpdateGridView()
         {
-
+            foreach (var groupDetail in currUser.GroupDetails)
+            {
+                groupsBindingSource.Add(groupDetail.Groups);
+            }
         }
 
 
         private void EditGroupClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            var senderGrid = (DataGridView)sender;
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                Groups group = (Groups)groupsBindingSource[e.RowIndex];
+                var createForm = new CreateGroupForm(group, true);
+                createForm.ShowDialog();
+            }
         }
 
         void SeeGroupDetailsClick(object sender, DataGridViewCellEventArgs e)
@@ -45,6 +55,8 @@ namespace GradingBookProject.Forms
 
         private void NewGroupClick(object sender, EventArgs e)
         {
+            var createForm = new CreateGroupForm(new Groups(), false);
+            createForm.ShowDialog();
         }
 
     }

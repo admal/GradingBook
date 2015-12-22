@@ -17,6 +17,26 @@ namespace GradingBookApi.Controllers
     {
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
+        [HttpGet]
+        [ActionName("DetailExists")]
+        public async Task<bool> DetailExists(int groupId, int userId )
+        {
+            return (await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId) != null);
+        }
+
+        [HttpGet]
+        [ActionName("RemoveDetail")]
+        public async Task<IHttpActionResult> RemoveDetail(int groupId, int userId)
+        {
+            var detail = await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId);
+            if (detail == null)
+            {
+                return NotFound();
+            }
+            db.GroupDetails.Remove(detail);
+            return Ok(detail);
+        }
+
         // GET: api/GroupDetails
         public IQueryable<GroupDetails> GetGroupDetails()
         {
