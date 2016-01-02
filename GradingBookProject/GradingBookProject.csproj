@@ -70,6 +70,9 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -233,6 +236,10 @@
     <Compile Include="Validation\INumberValidator.cs" />
     <Compile Include="Validation\IStringValidator.cs" />
     <Compile Include="Validation\Validator.cs" />
+    <Compile Include="ViewModels\EntityViewModel.cs" />
+    <Compile Include="ViewModels\GroupDetailsViewModel.cs" />
+    <Compile Include="ViewModels\GroupsViewModel.cs" />
+    <Compile Include="ViewModels\UsersViewModel.cs" />
     <Compile Include="YearListItem.cs" />
     <EmbeddedResource Include="Forms\CreateGroupForm.resx">
       <DependentUpon>CreateGroupForm.cs</DependentUpon>

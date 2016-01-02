@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutoMapper;
 using GradingBookProject.Data;
 using GradingBookProject.Forms;
 using GradingBookProject.Http;
+using GradingBookProject.Models;
 using GradingBookProject.Validation;
+using GradingBookProject.ViewModels;
 using Ninject;
 
 namespace GradingBookProject
@@ -48,55 +52,14 @@ namespace GradingBookProject
         {
             _kernel = new StandardKernel();
             CreateBindings();
-            //part just to show that it works
-            //HttpRequestService<Users> usersService = new HttpRequestService<Users>();
-            ////show all
-            //var users = usersService.GetAll().Result;
-            //string s = "";
-            //foreach (var user in users)
-            //{
-            //    s += user.username + ", ";
-            //}
-            //MessageBox.Show(s);
-
-            ////show one
-            //var user1 = usersService.GetOne(1).Result;
-            //MessageBox.Show(user1.id+ " " +user1.username);
-            ////add new user
-            //var toAdd = new Users()
-            //{
-            //    username = "AddedUser",
-            //    email = "example@gmail.com",
-            //    passwd = "passwd"
-            //};
-            //var ret = usersService.PostOne(toAdd).Result;
             
-            ////show new user
-            //users = usersService.GetAll().Result;
-            ////s = ret.id +"."+ ret.username + "|  ";
-            //s = "";
-            //foreach (var user in users)
-            //{
-            //    s += user.username + ", ";
-            //}
-            //MessageBox.Show(s);
-
-            ////update user
-            //var editUser = users[0];
-            //editUser.username = "Edited";
-            //usersService.EditOne(editUser.id, editUser);
-
-            //users = usersService.GetAll().Result;
-            ////s = ret.id +"."+ ret.username + "|  ";
-            //s = "";
-            //foreach (var user in users)
-            //{
-            //    s += user.username + ", ";
-            //}
-            //MessageBox.Show(s);
-
-            ////////////////////////////////////
             Globals.CurrentUser = null;
+
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Users, UsersViewModel>();
+                config.CreateMap<GroupDetails, GroupDetailsViewModel>();
+            });
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

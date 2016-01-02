@@ -8,9 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutoMapper;
 using Ninject;
 using GradingBookProject.Data;
 using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 using Ninject.Parameters;
 
 namespace GradingBookProject.Forms
@@ -35,6 +37,7 @@ namespace GradingBookProject.Forms
         public MainForm()
         {
             InitializeComponent();
+
             // Get id of current user.
             userid = Globals.CurrentUser.id;
             
@@ -339,6 +342,10 @@ namespace GradingBookProject.Forms
             panel.AutoSize = true;
             tableMarks.Controls.Add(panel); //add panel to tableMarks in proper position
             //this.Controls.Add(panel);
+            if (sub.SubjectDetails == null)
+            {
+                return;
+            }
             foreach (var grade in sub.SubjectDetails) //populate with labels panel
             {
                 var lbl = new LinkLabel();
