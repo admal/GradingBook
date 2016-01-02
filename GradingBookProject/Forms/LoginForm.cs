@@ -46,17 +46,17 @@ namespace GradingBookProject.Forms
             if (await userRepo.LoginUser(username, passwd)) //login success
             {
 
-                //TMP
-                // Mapper.CreateMap<Users, UsersViewModel>();
-                var tmp = AutoMapper.Mapper.Map<UsersViewModel>(Globals.CurrentUser);
-                var s = "";
-                foreach (var d in (await tmp.Details()))
-                {
-                    s += "Group: " + d.group_id + "; User: " + d.user_id + ";\n";
-                }
-                MessageBox.Show(s);
+                ////TMP
+                //// Mapper.CreateMap<Users, UsersViewModel>();
+                //var tmp = AutoMapper.Mapper.Map<UsersViewModel>(Globals.CurrentUser);
+                //var s = "";
+                //foreach (var d in (await tmp.Details()))
+                //{
+                //    s += "Group: " + d.group_id + "; User: " + d.user_id + ";\n";
+                //}
+                //MessageBox.Show(s);
 
-                //end tmp
+                ////end tmp
 
 
                 var mainForm = Program.GetKernel().Get<MainForm>();

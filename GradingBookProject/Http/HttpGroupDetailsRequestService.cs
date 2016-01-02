@@ -5,11 +5,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
+
 
 namespace GradingBookProject.Http
 {
-    public class HttpGroupDetailsRequestService : HttpRequestService<GroupDetails>
+    public class HttpGroupDetailsRequestService : HttpRequestService<GroupDetailsViewModel>
     {
         /// <summary>
         /// Get response from server if GroupDetail with given ids exists.
@@ -37,7 +38,7 @@ namespace GradingBookProject.Http
                 }
             }
         }
-        public async Task<GroupDetails> RemoveDetail(int groupId, int userId)
+        public async Task<GroupDetailsViewModel> RemoveDetail(int groupId, int userId)
         {
             using (var client = new HttpClient())
             {
@@ -48,12 +49,12 @@ namespace GradingBookProject.Http
                 HttpResponseMessage response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
-                    GroupDetails responseObject = await response.Content.ReadAsAsync<GroupDetails>();
+                    GroupDetailsViewModel responseObject = await response.Content.ReadAsAsync<GroupDetailsViewModel>();
                     return responseObject;
                 }
                 else
                 {
-                    return default(GroupDetails);
+                    return default(GroupDetailsViewModel);
                 }
             }
         }

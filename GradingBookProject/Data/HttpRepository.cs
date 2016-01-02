@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GradingBookProject.Http;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Data
 {
@@ -15,7 +15,7 @@ namespace GradingBookProject.Data
     /// <typeparam name="Y">Type of request service.</typeparam>
     public class HttpRepository<T, Y>
         where Y : HttpRequestService<T>, new()
-        where T : DataEntity
+        where T : EntityViewModel
     {
         protected Y requestService;
 

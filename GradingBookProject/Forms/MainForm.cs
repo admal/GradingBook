@@ -12,7 +12,6 @@ using AutoMapper;
 using Ninject;
 using GradingBookProject.Data;
 using GradingBookProject.Models;
-using GradingBookProject.ViewModels;
 using Ninject.Parameters;
 
 namespace GradingBookProject.Forms

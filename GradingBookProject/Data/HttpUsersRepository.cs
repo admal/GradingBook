@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GradingBookProject.Http;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 using GradingBookProject.Validation;
 
 namespace GradingBookProject.Data
 {
-    class HttpUsersRepository : HttpRepository<Users, HttpUserRequestService>
+    class HttpUsersRepository : HttpRepository<UsersViewModel, HttpUserRequestService>
     {
         public async Task<bool> LoginUser(string username, string passwd)
         {
-            Users user = null;
+            UsersViewModel user = null;
             try
             {
                 user = await GetUser(username);
@@ -39,7 +39,7 @@ namespace GradingBookProject.Data
             return false;
         }
 
-        public async Task<Users> GetUser(string username)
+        public async Task<UsersViewModel> GetUser(string username)
         {
             var user = await requestService.GetUserByUsername(username);
             return user;

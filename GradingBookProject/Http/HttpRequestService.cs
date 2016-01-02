@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 //using GradingBookApi.Models;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Http
 {
@@ -23,28 +23,28 @@ namespace GradingBookProject.Http
         {
             url = baseUrl;
             var t = typeof (T);
-            if (t == typeof (Users))
+            if (t == typeof (UsersViewModel))
             {
                 url += "api/Users/";
 
             }
-            else if (t == typeof (Years))
+            else if (t == typeof (YearsViewModel))
             {
                 url += "api/Years/";
             }
-            else if (t == typeof (Subjects))
+            else if (t == typeof (SubjectsViewModel))
             {
                 url += "api/Subjects/";
             }
-            else if (t == typeof (SubjectDetails))
+            else if (t == typeof(SubjectDetailsViewModel))
             {
                 url += "api/SubjectDetails/";
             }
-            else if (t == typeof(Groups))
+            else if (t == typeof(GroupsViewModel))
             {
                 url += "api/Groups/";
             }
-            else if (t == typeof(GroupDetails))
+            else if (t == typeof(GroupDetailsViewModel))
             {
                 url += "api/GroupDetails/";
             }

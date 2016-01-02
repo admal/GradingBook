@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using GradingBookProject.Data;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 using GradingBookProject.Validation;
 using Ninject;
 
@@ -68,7 +68,7 @@ namespace GradingBookProject.Forms
                 if(await uRepo.UserExists(validatedUsername))
                     throw new Exception("Such a user already exists!");
 
-                await uRepo.AddOne(new Users()
+                await uRepo.AddOne(new UsersViewModel()
                 {
                     passwd = validatedPasswd,
                     username = validatedUsername,

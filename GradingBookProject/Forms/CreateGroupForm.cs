@@ -8,16 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Data;
-using GradingBookProject.Models;
+
 using GradingBookProject.Validation;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Forms
 {
     public partial class CreateGroupForm : Form
     {
-        private Groups currGroup;
+        private GroupsViewModel currGroup;
         private bool edit;
-        public CreateGroupForm(Groups group, bool edit)
+        public CreateGroupForm(GroupsViewModel group, bool edit)
         {
             InitializeComponent();
             currGroup = group;
@@ -29,10 +30,10 @@ namespace GradingBookProject.Forms
                 tbTitle.Text = currGroup.name;
                 tbDesc.Text = currGroup.description;
 
-                foreach (var groupDetail in currGroup.GroupDetails)
-                {
-                    usersBindingSource.Add(groupDetail.Users);
-                }
+                //foreach (var groupDetail in currGroup.GroupDetails)
+                //{
+                //    usersBindingSource.Add(groupDetail.Users);
+                //}
             }
 
         }
@@ -40,7 +41,7 @@ namespace GradingBookProject.Forms
         private async void RemoveUser(object sender, DataGridViewRowEventArgs e)
         {
             HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
-            Users user = (Users) usersBindingSource[e.Row.Index];
+            UsersViewModel user =  usersBindingSource[e.Row.Index] as UsersViewModel;
             await repo.RemoveDetail(user.id, currGroup.id);
         }
 
@@ -55,18 +56,18 @@ namespace GradingBookProject.Forms
             HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
 
             //ading users
-            foreach (Users user in usersBindingSource)
+            foreach (UsersViewModel user in usersBindingSource)
             {
                 bool detailAlreadyExists = false;
-                foreach (var groupDetail in user.GroupDetails)
-                {
-                    if ((await repo.DetailExists(groupDetail))) //if given connection does not exist then add it
-                    {
-                        detailAlreadyExists = true;
-                        break;
-                    }
+                //foreach (var groupDetail in user.GroupDetails)
+                //{
+                //    if ((await repo.DetailExists(groupDetail))) //if given connection does not exist then add it
+                //    {
+                //        detailAlreadyExists = true;
+                //        break;
+                //    }
   
-                }
+                //}
                 if (!detailAlreadyExists)
                 {
                     //await repo.AddOne(new GroupDetails()
@@ -74,10 +75,10 @@ namespace GradingBookProject.Forms
                     //    group_id = currGroup.id,
                     //    user_id = user.id
                     //});
-                    currGroup.GroupDetails.Add(new GroupDetails()
+                    currGroup.GroupDetails.Add(new GroupDetailsViewModel()
                     {
                         group_id = currGroup.id,
-                       user_id = user.id
+                        user_id = user.id
                     });
                 }
             }
@@ -88,25 +89,25 @@ namespace GradingBookProject.Forms
 
             if (edit)
             {
-                currGroup.Users = null;
-                await groupRepo.EditOne(currGroup);
-                this.Close();
+                //currGroup.Users = null;
+                //await groupRepo.EditOne(currGroup);
+                //this.Close();
             }
             else
             {
                 //adding yourself to the group
-                currGroup.GroupDetails.Add(new GroupDetails()
+                currGroup.GroupDetails.Add(new GroupDetailsViewModel()
                 {
                     user_id = Globals.CurrentUser.id,
                     group_id = currGroup.id
                 });
-                currGroup.Users = Globals.CurrentUser;
-                var tmp = new Groups()
+                //currGroup.Users = Globals.CurrentUser;
+                var tmp = new GroupsViewModel()
                 {
                     created_at = DateTime.Now,
                     GroupDetails = currGroup.GroupDetails,
                     name = currGroup.name,
-                    owner_id = currGroup.Users.id,
+                    owner_id = Globals.CurrentUser.id,
                     description = currGroup.description
                 };
                 //currGroup.created_at = DateTime.Now;
@@ -132,7 +133,7 @@ namespace GradingBookProject.Forms
                 MessageBox.Show("You can not add yourself to group! (you are already in it)");
                 return;
             }
-            if (usersBindingSource.Cast<Users>().Any(user => user.username == username))
+            if (usersBindingSource.Cast<UsersViewModel>().Any(user => user.username == username))
             {
                 MessageBox.Show("You have already added such a user!");
                 return;

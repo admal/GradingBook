@@ -5,11 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Http
 {
-    class HttpUserRequestService : HttpRequestService<Users>
+    class HttpUserRequestService : HttpRequestService<UsersViewModel>
     {
         public HttpUserRequestService() : base()
         {
@@ -20,7 +20,7 @@ namespace GradingBookProject.Http
         /// </summary>
         /// <param name="username"></param>
         /// <returns>User with given username, null if there is no such a user.</returns>
-        public async Task<Users> GetUserByUsername(string username)
+        public async Task<UsersViewModel> GetUserByUsername(string username)
         {
             using (var client = new HttpClient())
             {
@@ -32,7 +32,7 @@ namespace GradingBookProject.Http
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Users responseUsers = await response.Content.ReadAsAsync<Users>();
+                    var responseUsers = await response.Content.ReadAsAsync<UsersViewModel>();
                     return responseUsers;
                 }
                 return null;

@@ -14,7 +14,7 @@ namespace GradingBookProject.Data
     /// <summary>
     /// Repository class for a Year, contains all functions needed to manage a Year.
     /// </summary>
-    class HttpYearsRepository : HttpRepository<Years, HttpYearRequestService>
+    class HttpYearsRepository : HttpRepository<YearsViewModel, HttpYearRequestService>
     {
         //private HttpYearRequestService requestService = new HttpYearRequestService();
         /// <summary>

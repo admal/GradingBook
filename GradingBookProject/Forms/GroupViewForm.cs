@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Http;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
+
 
 namespace GradingBookProject.Forms
 {
     public partial class GroupViewForm : Form
     {
-        public GroupViewForm(Groups group, bool isAdmin = false)
+        public GroupViewForm(GroupsViewModel group, bool isAdmin = false)
         {
             InitializeComponent();
         }

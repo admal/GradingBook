@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Data;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
+
 
 namespace GradingBookProject.Forms
 {
     public partial class YourGroupsForm : Form
     {
-        private Users currUser;
+        private UsersViewModel currUser;
         public YourGroupsForm()
         {
             InitializeComponent();
@@ -25,10 +26,10 @@ namespace GradingBookProject.Forms
 
         public void UpdateGridView()
         {
-            foreach (var groupDetail in currUser.GroupDetails)
-            {
-                groupsBindingSource.Add(groupDetail.Groups);
-            }
+            //foreach (var groupDetail in currUser)
+            //{
+            //    groupsBindingSource.Add(groupDetail.Groups);
+            //}
         }
 
 
@@ -37,7 +38,7 @@ namespace GradingBookProject.Forms
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                Groups group = (Groups)groupsBindingSource[e.RowIndex];
+                GroupsViewModel group = groupsBindingSource[e.RowIndex] as GroupsViewModel;
                 var createForm = new CreateGroupForm(group, true);
                 createForm.ShowDialog();
             }

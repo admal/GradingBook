@@ -1,4 +1,5 @@
 ﻿using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject
 {
@@ -10,6 +11,7 @@ namespace GradingBookProject
         /// <summary>
         /// Currently logged user
         /// </summary>
-        public static Users  CurrentUser { get; set; }
+        //public static Users  CurrentUser { get; set; }
+        public static UsersViewModel CurrentUser { get; set; }
     }
 }

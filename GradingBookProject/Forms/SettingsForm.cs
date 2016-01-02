@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using GradingBookProject.Data;
-using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 using GradingBookProject.Validation;
 using Ninject;
 
@@ -15,12 +15,12 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Currenlty logged user
         /// </summary>
-        private Users currUser;
+        private UsersViewModel currUser;
         /// <summary>
         /// Form constructor
         /// </summary>
         /// <param name="user">User that is logged in</param>
-        public SettingsForm(Users user)
+        public SettingsForm(UsersViewModel user)
         {
             currUser = user;
             InitializeComponent();

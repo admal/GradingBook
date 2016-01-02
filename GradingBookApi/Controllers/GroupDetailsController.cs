@@ -9,7 +9,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookApi.Controllers
 {
@@ -38,22 +41,23 @@ namespace GradingBookApi.Controllers
         }
 
         // GET: api/GroupDetails
-        public IQueryable<GroupDetails> GetGroupDetails()
+        public IQueryable<GroupDetailsViewModel> GetGroupDetails()
         {
-            return db.GroupDetails;
+            var details = db.GroupDetails.ProjectTo<GroupDetailsViewModel>();
+            return details;
         }
 
         // GET: api/GroupDetails/5
-        [ResponseType(typeof(GroupDetails))]
+        [ResponseType(typeof(GroupDetailsViewModel))]
         public async Task<IHttpActionResult> GetGroupDetails(int id)
         {
-            GroupDetails groupDetails = await db.GroupDetails.FindAsync(id);
-            if (groupDetails == null)
+            GroupDetails groupDetail = await db.GroupDetails.FindAsync(id);
+            if (groupDetail == null)
             {
                 return NotFound();
             }
-
-            return Ok(groupDetails);
+            var retDetail = Mapper.Map<GroupDetailsViewModel>(groupDetail);
+            return Ok(retDetail);
         }
 
         // PUT: api/GroupDetails/5
@@ -92,45 +96,50 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/GroupDetails
-        [ResponseType(typeof(GroupDetails))]
-        public async Task<IHttpActionResult> PostGroupDetails(GroupDetails groupDetails)
+        [ResponseType(typeof(GroupDetailsViewModel))]
+        public async Task<IHttpActionResult> PostGroupDetails(GroupDetailsViewModel groupDetails)
         {
+            GroupDetails newDetail = new GroupDetails()
+            {
+                user_id = groupDetails.user_id,
+                group_id = groupDetails.group_id
+            };
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.GroupDetails.Add(groupDetails);
+            db.GroupDetails.Add(newDetail);
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = groupDetails.id }, groupDetails);
         }
 
         // DELETE: api/GroupDetails/5
-        [ResponseType(typeof(GroupDetails))]
+        [ResponseType(typeof(GroupDetailsViewModel))]
         public async Task<IHttpActionResult> DeleteGroupDetails(int id)
         {
-            GroupDetails groupDetails = await db.GroupDetails.FindAsync(id);
-            if (groupDetails == null)
+            GroupDetails groupDetail = await db.GroupDetails.FindAsync(id);
+            if (groupDetail == null)
             {
                 return NotFound();
             }
 
-            db.GroupDetails.Remove(groupDetails);
+            db.GroupDetails.Remove(groupDetail);
             await db.SaveChangesAsync();
-
-            return Ok(groupDetails);
+            var retDetail = Mapper.Map<GroupDetailsViewModel>(groupDetail);
+            return Ok(retDetail);
         }
 
-        [ResponseType(typeof(GroupDetails))]
+        [ResponseType(typeof(GroupDetailsViewModel))]
         public async Task<IHttpActionResult> DeleteGroupDetails(int userId, int groupId)
         {
             var groupDetail =
                 await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId);
             if (groupDetail == null)
                 return NotFound();
-
-            return Ok(groupDetail);
+            var retDetail = Mapper.Map<GroupDetailsViewModel>(groupDetail);
+            return Ok(retDetail);
         }
 
         protected override void Dispose(bool disposing)
@@ -146,5 +155,117 @@ namespace GradingBookApi.Controllers
         {
             return db.GroupDetails.Count(e => e.id == id) > 0;
         }
+
+        #region old methods
+        //// GET: api/GroupDetails
+        //public IQueryable<GroupDetails> GetGroupDetails()
+        //{
+        //    return db.GroupDetails;
+        //}
+
+        //// GET: api/GroupDetails/5
+        //[ResponseType(typeof(GroupDetails))]
+        //public async Task<IHttpActionResult> GetGroupDetails(int id)
+        //{
+        //    GroupDetails groupDetails = await db.GroupDetails.FindAsync(id);
+        //    if (groupDetails == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(groupDetails);
+        //}
+
+        //// PUT: api/GroupDetails/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutGroupDetails(int id, GroupDetails groupDetails)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != groupDetails.id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    db.Entry(groupDetails).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!GroupDetailsExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        //// POST: api/GroupDetails
+        //[ResponseType(typeof(GroupDetails))]
+        //public async Task<IHttpActionResult> PostGroupDetails(GroupDetails groupDetails)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.GroupDetails.Add(groupDetails);
+        //    await db.SaveChangesAsync();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = groupDetails.id }, groupDetails);
+        //}
+
+        //// DELETE: api/GroupDetails/5
+        //[ResponseType(typeof(GroupDetails))]
+        //public async Task<IHttpActionResult> DeleteGroupDetails(int id)
+        //{
+        //    GroupDetails groupDetails = await db.GroupDetails.FindAsync(id);
+        //    if (groupDetails == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    db.GroupDetails.Remove(groupDetails);
+        //    await db.SaveChangesAsync();
+
+        //    return Ok(groupDetails);
+        //}
+
+        //[ResponseType(typeof(GroupDetails))]
+        //public async Task<IHttpActionResult> DeleteGroupDetails(int userId, int groupId)
+        //{
+        //    var groupDetail =
+        //        await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId);
+        //    if (groupDetail == null)
+        //        return NotFound();
+
+        //    return Ok(groupDetail);
+        //}
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
+
+        //private bool GroupDetailsExists(int id)
+        //{
+        //    return db.GroupDetails.Count(e => e.id == id) > 0;
+        //}
+        #endregion
     }
 }

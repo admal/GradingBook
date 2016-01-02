@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
-using AutoMapper;
 using GradingBookProject.Data;
 using GradingBookProject.Forms;
-using GradingBookProject.Http;
-using GradingBookProject.Models;
 using GradingBookProject.Validation;
-using GradingBookProject.ViewModels;
 using Ninject;
 
 namespace GradingBookProject
@@ -54,12 +47,6 @@ namespace GradingBookProject
             CreateBindings();
             
             Globals.CurrentUser = null;
-
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<Users, UsersViewModel>();
-                config.CreateMap<GroupDetails, GroupDetailsViewModel>();
-            });
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

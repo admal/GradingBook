@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using GradingBookProject.Http;
 using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Data
 {
-    public class HttpGroupsRepository : HttpRepository<Groups, HttpRequestService<Groups>>
+    public class HttpGroupsRepository : HttpRepository<GroupsViewModel, HttpRequestService<GroupsViewModel>>
     { 
 
     }
