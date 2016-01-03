@@ -92,13 +92,6 @@ namespace GradingBookProject.Forms
                 GroupsViewModel retGroup = await groupRepo.AddOne(newGroup); //we need it to get created id
                 
                 currGroup.id = retGroup.id; 
-
-                ////adding yourself to the group
-                //await detailRepo.AddOne(new GroupDetailsViewModel()
-                //{
-                //    user_id = Globals.CurrentUser.id,
-                //    group_id = currGroup.id
-                //});
                 //adding users
                 await UpdateUsers();
                 this.Close();
@@ -112,23 +105,16 @@ namespace GradingBookProject.Forms
             //adding new users
             foreach (UsersViewModel user in usersBindingSource)
             {
-                bool detailAlreadyExists = false;
-                foreach (var groupDetail in user.GroupDetails)
+                var newDetail = new GroupDetailsViewModel()
                 {
-                    if ((await repo.DetailExists(groupDetail))) //if given connection does not exist then add it
-                    {
-                        detailAlreadyExists = true;
-                        break;
-                    }
-                }
-                if (!detailAlreadyExists)
+                    user_id = user.id,
+                    group_id = currGroup.id
+                };
+
+                if (!(await repo.DetailExists(newDetail))) //if given connection does not exist then add it
                 {
                     var detailRepo = new HttpGroupDetailsRepository();
-                    await detailRepo.AddOne(new GroupDetailsViewModel()
-                    {
-                        group_id = currGroup.id,
-                        user_id = user.id
-                    });
+                    await detailRepo.AddOne(newDetail);
                 }
             }
         }
