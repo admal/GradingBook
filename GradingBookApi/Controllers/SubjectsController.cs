@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using GradingBookProject.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookApi.Controllers
 {
@@ -20,13 +21,13 @@ namespace GradingBookApi.Controllers
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
         // GET: api/Subjects
-        public IQueryable<Subjects> GetSubjects()
+        public IQueryable<SubjectsViewModel> GetSubjects()
         {
-            return db.Subjects;
+            return db.Subjects.ProjectTo<SubjectsViewModel>();
         }
 
         // GET: api/Subjects/5
-        [ResponseType(typeof(Subjects))]
+        [ResponseType(typeof(SubjectsViewModel))]
         public async Task<IHttpActionResult> GetSubjects(int id)
         {
             Subjects subjects = await db.Subjects.FindAsync(id);
@@ -35,25 +36,31 @@ namespace GradingBookApi.Controllers
                 return NotFound();
             }
 
-            return Ok(subjects);
+            return Ok(Mapper.Map<SubjectsViewModel>(subjects));
         }
         // GET: api/subjects/getbyyearid/4
         [HttpGet]
         [Route("api/subjects/getbyyearid/{id:int}")]
         [ActionName("getbyyearid")]
-        public IQueryable<Subjects> GetSubjectsOfYear(int id) {
+        public IQueryable<SubjectsViewModel> GetSubjectsOfYear(int id) {
             
-            var subjects = db.Years.FirstOrDefault(y => y.id == id).Subjects;
+            var subjects = db.Years.FirstOrDefault(y => y.id == id).Subjects.AsQueryable().ProjectTo<SubjectsViewModel>();
 
-            if (subjects.Count > 0)
-                return subjects.AsQueryable();
-            return Enumerable.Empty<Subjects>().AsQueryable();
+            if (subjects.Count() > 0)
+                return subjects;
+            return Enumerable.Empty<SubjectsViewModel>().AsQueryable();
         }
 
         // PUT: api/Subjects/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutSubjects(int id, Subjects subjects)
+        public async Task<IHttpActionResult> PutSubjects(int id, SubjectsViewModel subjects)
         {
+            Subjects updatedSubject = await db.Subjects.FindAsync(id); 
+                updatedSubject.name = subjects.name;
+                updatedSubject.sub_desc = subjects.sub_desc;
+                updatedSubject.teacher_mail = subjects.teacher_mail;
+                updatedSubject.year_id = subjects.year_id;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -64,15 +71,7 @@ namespace GradingBookApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(subjects).State = EntityState.Modified;
-
-            /*Subjects o = await db.Subjects.FirstOrDefaultAsync(s => s.id == id );
-            o.name = subjects.name;
-            o.sub_desc = subjects.sub_desc;
-            o.teacher_mail = subjects.teacher_mail;
-            o.year_id = subjects.year_id;
-
-            db.Entry(o).State = EntityState.Modified;*/
+            db.Entry(updatedSubject).State = EntityState.Modified;
 
             try
             {
@@ -94,22 +93,31 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/Subjects
-        [ResponseType(typeof(Subjects))]
-        public async Task<IHttpActionResult> PostSubjects(Subjects subjects)
+        [ResponseType(typeof(SubjectsViewModel))]
+        public async Task<IHttpActionResult> PostSubjects(SubjectsViewModel subjects)
         {
+            Subjects newSubject = new Subjects()
+            {
+                name = subjects.name,
+                sub_desc = subjects.sub_desc,
+                teacher_mail = subjects.teacher_mail,
+                year_id = subjects.year_id,
+
+            };
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Subjects.Add(subjects);
+            db.Subjects.Add(newSubject);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = subjects.id }, subjects);
+            return CreatedAtRoute("DefaultApi", new { id = subjects.id }, newSubject);
         }
 
         // DELETE: api/Subjects/5
-        [ResponseType(typeof(Subjects))]
+        [ResponseType(typeof(SubjectsViewModel))]
         public async Task<IHttpActionResult> DeleteSubjects(int id)
         {
             Subjects subjects = await db.Subjects.FindAsync(id);
@@ -121,7 +129,7 @@ namespace GradingBookApi.Controllers
             db.Subjects.Remove(subjects);
             await db.SaveChangesAsync();
 
-            return Ok(subjects);
+            return Ok(Mapper.Map<SubjectsViewModel>(subjects));
         }
 
         protected override void Dispose(bool disposing)

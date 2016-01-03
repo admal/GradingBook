@@ -402,7 +402,7 @@ namespace GradingBookProject.Forms
             }
             else if (e.Button == MouseButtons.Right)
             {
-                repo.DeleteOne(g);
+                await repo.DeleteOne(g);
                 //repo.DeleteGrade(g);
                 //gradesPanel.Controls.Remove(lblSender);
                 //Refresh();
