@@ -43,7 +43,7 @@ namespace GradingBookProject.Forms
         /// Constructor taking existing Year and filling in the form.
         /// </summary>
         /// <param name="year">Year to edit.</param>
-        public YearForm(Years year)
+        public YearForm(YearsViewModel year)
         {
             InitializeComponent();
             LoadData(year);
@@ -52,7 +52,7 @@ namespace GradingBookProject.Forms
         /// Loads data from given year to a form.
         /// </summary>
         /// <param name="year">Year to be displayed</param>
-        private async void LoadData(Years year) {
+        private async void LoadData(YearsViewModel year) {
             yearsRepo = new HttpYearsRepository();
             if ((yearLocal = await yearsRepo.GetOne(year.id)) != null)
             {

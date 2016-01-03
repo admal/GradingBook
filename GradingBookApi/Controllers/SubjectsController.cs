@@ -42,13 +42,14 @@ namespace GradingBookApi.Controllers
         [HttpGet]
         [Route("api/subjects/getbyyearid/{id:int}")]
         [ActionName("getbyyearid")]
-        public IQueryable<SubjectsViewModel> GetSubjectsOfYear(int id) {
-            
-            var subjects = db.Years.FirstOrDefault(y => y.id == id).Subjects.AsQueryable().ProjectTo<SubjectsViewModel>();
+        public async Task<ICollection<SubjectsViewModel>> GetSubjectsOfYear(int id) {
 
-            if (subjects.Count() > 0)
-                return subjects;
-            return Enumerable.Empty<SubjectsViewModel>().AsQueryable();
+            var year = await db.Years.FirstOrDefaultAsync(y => y.id == id);
+
+            if (year == null)
+                return null;
+            return  year.Subjects.AsQueryable().ProjectTo<SubjectsViewModel>().ToList();
+           
         }
 
         // PUT: api/Subjects/5

@@ -45,13 +45,13 @@ namespace GradingBookApi.Controllers
         [HttpGet]
         [Route("api/subjectDetails/getbysubjectid/{id:int}")]
         [ActionName("getbysubjectid")]
-        public IQueryable<SubjectDetailsViewModel> GetGradesOfSubject(int id)
+        public async Task<ICollection<SubjectDetailsViewModel>> GetGradesOfSubject(int id)
         {
-            var grades = db.Subjects.FirstOrDefault(s => s.id == id).SubjectDetails.AsQueryable().ProjectTo<SubjectDetailsViewModel>();
-         
-            if (grades.Count() > 0)
-                return grades;
-            return Enumerable.Empty<SubjectDetailsViewModel>().AsQueryable();
+            var subject = await db.Subjects.FirstOrDefaultAsync(s => s.id == id);
+
+            if (subject == null)
+                return null;
+            return subject.SubjectDetails.AsQueryable().ProjectTo<SubjectDetailsViewModel>().ToList();
         }
 
         // PUT: api/SubjectDetails/5

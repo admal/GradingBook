@@ -44,7 +44,7 @@ namespace GradingBookProject.Forms
         /// Constructor taking existing Subject and filling in the form.
         /// </summary>
         /// <param name="subject">Subject to edit.</param>
-        public SubjectForm(Subjects subject)
+        public SubjectForm(SubjectsViewModel subject)
         {
             InitializeComponent();
             LoadData(subject);
@@ -54,7 +54,7 @@ namespace GradingBookProject.Forms
         /// Loads data from given subject to a form.
         /// </summary>
         /// <param name="subject">Subject to be displayed</param>
-        private async void LoadData(Subjects subject)
+        private async void LoadData(SubjectsViewModel subject)
         {
             subjects = new HttpSubjectsRepository();
             if ((subjectLocal = await subjects.GetOne(subject.id)) != null)

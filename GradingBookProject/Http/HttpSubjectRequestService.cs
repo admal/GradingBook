@@ -22,7 +22,7 @@ namespace GradingBookProject.Http
         /// </summary>
         /// <param name="username"></param>
         /// <returns>List of subjects of a given Year, null if there is no such a Year.</returns>
-        public async Task<IQueryable<SubjectsViewModel>> GetSubjectsOfYear(YearsViewModel year)
+        public async Task<ICollection<SubjectsViewModel>> GetSubjectsOfYear(YearsViewModel year)
         {
             using (var client = new HttpClient())
             {
@@ -34,7 +34,7 @@ namespace GradingBookProject.Http
 
                 if (response.IsSuccessStatusCode)
                 {
-                    IQueryable<SubjectsViewModel> responseSubjects = await response.Content.ReadAsAsync<IQueryable<SubjectsViewModel>>();
+                    ICollection<SubjectsViewModel> responseSubjects = await response.Content.ReadAsAsync<ICollection<SubjectsViewModel>>();
                     return responseSubjects;
                 }
                 return null;

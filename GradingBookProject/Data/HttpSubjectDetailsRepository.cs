@@ -22,31 +22,9 @@ namespace GradingBookProject.Data
         /// </summary>
         /// <param name="subject">Subject we take grades from.</param>
         /// <returns>SubjectDetails of a year.</returns>
-        public async Task<IQueryable<SubjectDetailsViewModel>> GetSubjectDetails(SubjectsViewModel subject)
+        public async Task<ICollection<SubjectDetailsViewModel>> GetSubjectDetails(SubjectsViewModel subject)
         {
             return await requestService.GetSubjectDetailsOfSubject(subject);
-        }
-        
-        /// <summary>
-        /// Updates a given Grade. Overrides base.EditOne()
-        /// </summary>
-        /// <param name="grade">Grade to be updated</param>
-        /// <returns></returns>
-        public new async Task EditOne(SubjectDetailsViewModel grade)
-        {
-            if (await requestService.GetOne(grade.id) == null)
-                throw new Exception("Such grade does not exist!");
-
-            await requestService.UpdateOne(grade.id, new SubjectDetailsViewModel
-            {
-                id = grade.id,
-                sub_id = grade.sub_id,
-                grade_weight = grade.grade_weight,
-                //Subjects = null,
-                grade_date = grade.grade_date,
-                grade_desc = grade.grade_desc,
-                grade_value = grade.grade_value
-            });
         }
     }
 }

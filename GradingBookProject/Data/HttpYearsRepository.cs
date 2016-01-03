@@ -23,7 +23,7 @@ namespace GradingBookProject.Data
         /// </summary>
         /// <param name="username">Username of a desired user.</param>
         /// <returns></returns>
-        public async Task<IQueryable<YearsViewModel>> GetYears(string username) {
+        public async Task<ICollection<YearsViewModel>> GetYears(string username) {
             return await requestService.GetYearsByUsername(username);
         }
     }

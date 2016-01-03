@@ -23,7 +23,7 @@ namespace GradingBookProject.Data
         /// </summary>
         /// <param name="year">Year of desired Subjects.</param>
         /// <returns>Subjects of a year.</returns>
-        public async Task<IQueryable<SubjectsViewModel>> GetSubjects(YearsViewModel year)
+        public async Task<ICollection<SubjectsViewModel>> GetSubjects(YearsViewModel year)
         {
             return await requestService.GetSubjectsOfYear(year);
         }

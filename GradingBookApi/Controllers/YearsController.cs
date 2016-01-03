@@ -57,14 +57,15 @@ namespace GradingBookApi.Controllers
         /// <param name="username">Username of a User we want years of.</param>
         /// <returns>Years of a User.</returns>
         [ActionName("GetByUsername")]
-        public IQueryable<YearsViewModel> GetYearsOfUsername(string username)
+        public async Task<ICollection<YearsViewModel>> GetYearsOfUsername(string username)
         {
 
-            var years = db.Users.FirstOrDefault(u => u.username == username).Years.AsQueryable().ProjectTo<YearsViewModel>();
+            var user = await db.Users.FirstOrDefaultAsync(u => u.username == username);
 
-            if(years.Count() > 0)
-                return years;
-            return Enumerable.Empty<YearsViewModel>().AsQueryable();
+            if (user == null)
+                return null;
+            
+            return user.Years.AsQueryable().ProjectTo<YearsViewModel>().ToList();
         }
 
         // PUT: api/Years/5

@@ -23,12 +23,12 @@ namespace GradingBookProject.Forms
     public partial class MainForm : Form
     {
         //private static int defaultYear = 0;
-        private int selectedYear;
+        private YearsViewModel selectedYear = new YearsViewModel();
         private YearListItem selectedYearListItem;
-        private int userid;
-        private IYearsRepository years;
-        private ISubjectsRepository subjects;
-        private IGradesRepository grades;
+        private string username;
+        private HttpYearsRepository years;
+        private HttpSubjectsRepository subjects;
+        private HttpSubjectDetailsRepository grades;
 
         private bool toCloseApp = true;
         /// <summary>
@@ -39,7 +39,7 @@ namespace GradingBookProject.Forms
             InitializeComponent();
 
             // Get id of current user.
-            userid = Globals.CurrentUser.id;
+            username = Globals.CurrentUser.username;
             
             // Initialize repositories.
             UpdateRepositories();
@@ -52,9 +52,9 @@ namespace GradingBookProject.Forms
         /// Updates repositories.
         /// </summary>
         private  void UpdateRepositories() {
-            years = new YearsRepository();
-            subjects = new SubjectsRepository();
-            grades = new GradesRepository();
+            years = new HttpYearsRepository();
+            subjects = new HttpSubjectsRepository();
+            grades = new HttpSubjectDetailsRepository();
         }
         /// <summary>
         /// Updates Main Form.
@@ -67,17 +67,21 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Updates list of years.
         /// </summary>
-        private void UpdateYearList(){
+        private async void UpdateYearList(){
             listYear.Items.Clear();
-            foreach (var year in years.Years(userid))
+            var yearsList = await years.GetYears(username);
+            if (yearsList != null && yearsList.Count != 0)
             {
-                YearListItem item = new YearListItem(year.name, year.id);
-                listYear.Items.Add(item);
-            }
+                foreach (var year in yearsList)
+                {
+                    YearListItem item = new YearListItem(year.name, year.id);
+                    listYear.Items.Add(item);
+                }
 
-            if (listYear.Items.Count != 0)
-            {
                 btnAddSubject.Enabled = true;
+                btnDeleteYear.Enabled = true;
+                btnEditYear.Enabled = true;
+
                 if (selectedYearListItem != null)
                 {
                     listYear.SelectedIndex = listYear.Items.IndexOf(selectedYearListItem);
@@ -88,7 +92,11 @@ namespace GradingBookProject.Forms
                 }
             }
             else
-               btnAddSubject.Enabled = false;
+            {
+                btnAddSubject.Enabled = false;
+                btnDeleteYear.Enabled = false;
+                btnEditYear.Enabled = false;
+            }
         }
         /*-----------------------------POPULATING FUNCTIONS-----------------------------*/
         /// <summary>
@@ -96,14 +104,13 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender">Chosen ComboBox element</param>
         /// <param name="e"></param>
-        private void listYearSelected(object sender, EventArgs e)
+        private async void listYearSelected(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)sender;
             var selectedIndex = (int)cmb.SelectedIndex;
             var item= (YearListItem)cmb.SelectedItem;
-            //TEMPORARY parsing the selected value and subtrackting 1 to reflect index
-            //selectedYear = int.Parse(cmb.SelectedItem.ToString());
-            selectedYear = item.Id;
+
+            selectedYear = await years.GetOne(item.Id);
             selectedYearListItem = new YearListItem(item.ToString(), item.Id);
             UpdateTable();
         }
@@ -111,20 +118,20 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// updates the table of subjects and grades according to the chosen year
         /// </summary>
-        private void UpdateTable()
+        private async void UpdateTable()
         {
             //clear table
             ClearTableMarks();
             tableMarks.AutoSize = true;
+            var yearsList = await years.GetYears(username);
+            var subjectsList = await subjects.GetSubjects(selectedYear);
             //populate the Marks table with db records check if there are subjects on chosen year
-            if (years.Years(userid).Count() != 0 && years.Year(selectedYear, userid) != null && subjects.Subjects(selectedYear).Count() != 0)
+            if (yearsList != null && yearsList.Count() != 0 && selectedYear != null && subjectsList != null)
             {
-                
-                //get current user and his subjects on chosen year
-                var subjectsEnumerated = subjects.Subjects(selectedYear);
+
                 //var row = 0;
                 //var percentHeight = 100/subjectsEnumerated.Count();
-                foreach (var subject in subjectsEnumerated)
+                foreach (var subject in subjectsList)
                 {
                     tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                     LinkLabel temp;
@@ -141,9 +148,12 @@ namespace GradingBookProject.Forms
 
                     CreateGradesLabels(subject);
 
+                    var gradesList = await grades.GetSubjectDetails(subject);
+                    var avg = CalculateAverage(gradesList.ToArray());
+
                     tableMarks.Controls.Add(new Label()
                     {
-                        Text = CalculateAverage(subject).ToString(),
+                        Text = avg.ToString(),
                         Anchor = AnchorStyles.Left,
                         AutoSize = true,
                     });
@@ -167,9 +177,9 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="subject">Subject id.</param>
         /// <returns>WeightAverage from marks</returns>
-        private double CalculateAverage(Subjects subject)
+        private double CalculateAverage(SubjectDetailsViewModel[] data)
         {
-            SubjectDetails[] data = grades.SubjectGrades(subject.id).ToArray();
+
             if (data.Length != 0)
             {
                 double sumTop = 0;
@@ -186,11 +196,12 @@ namespace GradingBookProject.Forms
             return 0;
         }
 
-        void AddGradeClick(object sender, EventArgs e)
+        private async void AddGradeClick(object sender, EventArgs e)
         {
             var btn = sender as Button;
             var subId = (int) btn.Tag;
-            var sub = subjects.GetSubject(subId);
+            var sub = await subjects.GetOne(subId);
+           
             AddGradeToSubject(sub);
         }
         /// <summary>
@@ -223,7 +234,7 @@ namespace GradingBookProject.Forms
         private void versionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            MessageBox.Show("Current version: A0.1");
+            MessageBox.Show("Current version: B1.3");
         }
 
 
@@ -256,12 +267,13 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnDeleteYear_Click(object sender, EventArgs e)
+        private async void btnDeleteYear_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected year?", "Delete a Year", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                years.DeleteYear(years.Year(selectedYear, userid), userid);
+                await years.DeleteOne(selectedYear);
+                
                 selectedYearListItem = null;
                 UpdateMainForm();
                 //exception after removing a year we move to next existing
@@ -279,10 +291,10 @@ namespace GradingBookProject.Forms
         /// <param name="e"></param>
         private void btnEditYear_Click(object sender, EventArgs e)
         {
-            var yearForm = Program.GetKernel().Get<YearForm>(new ConstructorArgument("year", years.Year(selectedYear, userid)));
+            var yearForm = Program.GetKernel().Get<YearForm>(new ConstructorArgument("year", selectedYear));
             yearForm.FormClosed += new FormClosedEventHandler(Form_Close);
             yearForm.ShowDialog();
-            selectedYearListItem.Name(years.Year(selectedYear, userid).name);
+            selectedYearListItem.Name(selectedYear.name);
         }
 
         /*----------------------------- CRUDs Subject---------------------------*/
@@ -293,7 +305,7 @@ namespace GradingBookProject.Forms
         /// <param name="e"></param>
         private void btnAddSubject_Click(object sender, EventArgs e)
         {
-            var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("yearid", selectedYear));
+            var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("yearid", selectedYear.id));
             subjectForm.FormClosed += new FormClosedEventHandler(this.Form_Close);
             subjectForm.ShowDialog();
         }            
@@ -302,12 +314,12 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Subject_Click(object sender, EventArgs e) 
+        private async void Subject_Click(object sender, EventArgs e) 
         {
             LinkLabel link = (LinkLabel)sender;
             int subjectid = (int)link.Tag;
-            var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("subject", 
-                subjects.Subject(selectedYear, subjectid)));
+            var subject = await subjects.GetOne(subjectid);
+            var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("subject", subject));
             subjectForm.FormClosed += new FormClosedEventHandler(this.Form_Close);
             subjectForm.ShowDialog();
         }
@@ -335,7 +347,7 @@ namespace GradingBookProject.Forms
         /// Creates link labels with grade values.
         /// </summary>
         /// <param name="sub">Subject with grades to show</param>
-        private void CreateGradesLabels(Subjects sub)
+        private void CreateGradesLabels(SubjectsViewModel sub)
         {
             var panel = new FlowLayoutPanel(); //panel with grades
             panel.Name = "panel" + sub.id; //set name of the panel to: "panel+subId"
@@ -363,7 +375,7 @@ namespace GradingBookProject.Forms
         /// Calls edit form for grade
         /// </summary>
         /// <param name="sub">Subject to which grade will be added</param>
-        private void AddGradeToSubject(Subjects sub)
+        private void AddGradeToSubject(SubjectsViewModel sub)
         {
             SubjectDetailsViewModel grade = new SubjectDetailsViewModel()
             {
