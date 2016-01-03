@@ -45,11 +45,11 @@ namespace GradingBookProject.Data
         /// </summary>
         /// <param name="entity">Grade to be added.</param>
         /// <returns></returns>
-        public async Task AddOne(T entity)
+        public async Task<T> AddOne(T entity)
         {
             if ((await GetOne(entity.id)) != null)
                 throw new Exception("There is already such an object!");
-            await requestService.PostOne(entity);
+            return await requestService.PostOne(entity);
         }
         /// <summary>
         /// Edits given entity.

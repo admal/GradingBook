@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using GradingBookProject.Http;
 using GradingBookProject.Models;
 using GradingBookProject.ViewModels;
 
@@ -24,7 +25,8 @@ namespace GradingBookApi.Controllers
         [ActionName("DetailExists")]
         public async Task<bool> DetailExists(int groupId, int userId )
         {
-            return (await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId) != null);
+            bool exists = (await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId) != null);
+            return exists;
         }
 
         [HttpGet]
@@ -39,6 +41,41 @@ namespace GradingBookApi.Controllers
             db.GroupDetails.Remove(detail);
             return Ok(detail);
         }
+
+        /// <summary>
+        /// Get all groupdetails for the user with id
+        /// </summary>
+        /// <param name="id">user id</param>
+        /// <returns>list of groupdetails for given user</returns>
+        [HttpGet]
+        [ActionName("GetGroupDetailsForUser")]
+        [Route("api/GroupDetails/GetGroupDetailsForUser/{id:int}")]
+        public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForUser(int id)
+        {
+            var user = await db.Users.FirstOrDefaultAsync(u => u.id == id);
+            if (user == null)
+                return null;
+            var details = user.GroupDetails.AsQueryable().ProjectTo<GroupDetailsViewModel>().ToList();
+            return details;
+        }
+
+        /// <summary>
+        /// Get all groupdetails for the group with id
+        /// </summary>
+        /// <param name="id">group id</param>
+        /// <returns>list of groupdetails for given group</returns>
+        [HttpGet]
+        [ActionName("GetGroupDetailsForGroup")]
+        [Route("api/GroupDetails/GetGroupDetailsForGroup/{id:int}")]
+        public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForGroup(int id)
+        {
+            var group = await db.Groups.FirstOrDefaultAsync(g => g.id == id);
+            if (group == null)
+                return null;
+            var details = group.GroupDetails.AsQueryable().ProjectTo<GroupDetailsViewModel>().ToList();
+            return details;
+        }
+
 
         // GET: api/GroupDetails
         public IQueryable<GroupDetailsViewModel> GetGroupDetails()

@@ -19,7 +19,7 @@ namespace GradingBookApi.Controllers
         // GET: api/Groups
         public IQueryable<GroupsViewModel> GetGroups()
         {
-            var groups = db.Users.ProjectTo<GroupsViewModel>();
+            var groups = db.Groups.ProjectTo<GroupsViewModel>();
             return groups;
         }
 
@@ -38,7 +38,7 @@ namespace GradingBookApi.Controllers
 
         // PUT: api/Groups/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutGroups(int id, Groups groups)
+        public async Task<IHttpActionResult> PutGroups(int id, GroupsViewModel groups)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,14 @@ namespace GradingBookApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(groups).State = EntityState.Modified;
+            var groupToEdit = await db.Groups.FirstOrDefaultAsync(g => g.id == id);
+
+            groupToEdit.name = groups.name;
+            groupToEdit.description= groups.description;
+            groupToEdit.created_at = groups.created_at;
+            groupToEdit.owner_id = groups.owner_id;
+
+            db.Entry(groupToEdit).State = EntityState.Modified;
 
             try
             {
@@ -82,7 +89,6 @@ namespace GradingBookApi.Controllers
                 description = groups.description,
                 owner_id = groups.owner_id,
             };
-            //TODO: ADD group details
 
             if (!ModelState.IsValid)
             {
@@ -92,7 +98,8 @@ namespace GradingBookApi.Controllers
             db.Groups.Add(newGroup);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = groups.id }, groups);
+            var retGroup = Mapper.Map<GroupsViewModel>(newGroup);
+            return CreatedAtRoute("DefaultApi", new { id = newGroup.id }, retGroup);
         }
 
         // DELETE: api/Groups/5

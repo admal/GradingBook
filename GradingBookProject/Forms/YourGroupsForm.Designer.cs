@@ -32,12 +32,11 @@
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.groupsGridView = new System.Windows.Forms.DataGridView();
+            this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usersDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEditGridView = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -72,7 +71,6 @@
             this.name,
             this.id,
             this.created_at,
-            this.usersDataGridViewTextBoxColumn,
             this.btnEditGridView});
             this.groupsGridView.DataSource = this.groupsBindingSource;
             this.groupsGridView.Location = new System.Drawing.Point(12, 12);
@@ -80,6 +78,10 @@
             this.groupsGridView.ReadOnly = true;
             this.groupsGridView.Size = new System.Drawing.Size(491, 150);
             this.groupsGridView.TabIndex = 3;
+            // 
+            // groupsBindingSource
+            // 
+            this.groupsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.GroupsViewModel);
             // 
             // name
             // 
@@ -103,22 +105,11 @@
             this.created_at.Name = "created_at";
             this.created_at.ReadOnly = true;
             // 
-            // usersDataGridViewTextBoxColumn
-            // 
-            this.usersDataGridViewTextBoxColumn.DataPropertyName = "Users";
-            this.usersDataGridViewTextBoxColumn.HeaderText = "Owner";
-            this.usersDataGridViewTextBoxColumn.Name = "usersDataGridViewTextBoxColumn";
-            this.usersDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // btnEditGridView
             // 
             this.btnEditGridView.HeaderText = "Edit";
             this.btnEditGridView.Name = "btnEditGridView";
             this.btnEditGridView.ReadOnly = true;
-            // 
-            // groupsBindingSource
-            // 
-            this.groupsBindingSource.DataSource = typeof(GradingBookProject.Models.Groups);
             // 
             // YourGroupsForm
             // 
@@ -145,7 +136,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn created_at;
-        private System.Windows.Forms.DataGridViewTextBoxColumn usersDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn btnEditGridView;
     }
 }

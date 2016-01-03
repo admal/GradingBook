@@ -38,9 +38,9 @@
             this.btnAddUser = new System.Windows.Forms.Button();
             this.tbUser = new System.Windows.Forms.TextBox();
             this.usersDataView = new System.Windows.Forms.DataGridView();
+            this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.usernameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.usersDataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -132,6 +132,10 @@
             this.usersDataView.Size = new System.Drawing.Size(240, 193);
             this.usersDataView.TabIndex = 9;
             // 
+            // usersBindingSource
+            // 
+            this.usersBindingSource.DataSource = typeof(GradingBookProject.ViewModels.UsersViewModel);
+            // 
             // usernameDataGridViewTextBoxColumn
             // 
             this.usernameDataGridViewTextBoxColumn.DataPropertyName = "username";
@@ -145,10 +149,6 @@
             this.emailDataGridViewTextBoxColumn.HeaderText = "email";
             this.emailDataGridViewTextBoxColumn.Name = "emailDataGridViewTextBoxColumn";
             this.emailDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // usersBindingSource
-            // 
-            this.usersBindingSource.DataSource = typeof(GradingBookProject.Models.Users);
             // 
             // CreateGroupForm
             // 
@@ -186,8 +186,8 @@
         private System.Windows.Forms.Button btnAddUser;
         private System.Windows.Forms.TextBox tbUser;
         private System.Windows.Forms.DataGridView usersDataView;
+        private System.Windows.Forms.BindingSource usersBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn usernameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource usersBindingSource;
     }
 }

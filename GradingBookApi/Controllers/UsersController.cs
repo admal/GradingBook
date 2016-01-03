@@ -43,10 +43,9 @@ namespace GradingBookApi.Controllers
 
 
         // PUT: api/Users/5
-        
-        //TODO: change edition
+
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUsers(int id, Users users)
+        public async Task<IHttpActionResult> PutUsers(int id, UsersViewModel users)
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +57,15 @@ namespace GradingBookApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(users).State = EntityState.Modified;
+            var userToEdit = await db.Users.FirstOrDefaultAsync(u => u.id == id);
+            
+            userToEdit.username = users.username;
+            userToEdit.email = users.email;
+            userToEdit.name = users.name;
+            userToEdit.surname = users.surname;
+            userToEdit.passwd = users.passwd;
+            
+            db.Entry(userToEdit).State = EntityState.Modified;
 
             try
             {
@@ -149,6 +156,8 @@ namespace GradingBookApi.Controllers
         {
             return db.Users.Count(e => e.id == id) > 0;
         }
+
+
 
         #region old methods
         //// GET: api/Users/5

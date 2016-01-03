@@ -29,13 +29,24 @@ namespace GradingBookProject.Forms
             {
                 tbTitle.Text = currGroup.name;
                 tbDesc.Text = currGroup.description;
-
-                //foreach (var groupDetail in currGroup.GroupDetails)
-                //{
-                //    usersBindingSource.Add(groupDetail.Users);
-                //}
+                UpdateSource();
+            }
+            else
+            {
+                usersBindingSource.Add(Globals.CurrentUser);
             }
 
+        }
+
+        public async void UpdateSource()
+        {
+            var repo = new HttpUsersRepository();
+
+            foreach (var groupDetail in currGroup.GroupDetails)
+            {
+                var user = await repo.GetOne(groupDetail.user_id);
+                usersBindingSource.Add(user);
+            }
         }
 
         private async void RemoveUser(object sender, DataGridViewRowEventArgs e)
@@ -53,35 +64,7 @@ namespace GradingBookProject.Forms
                 MessageBox.Show("Title can not be empty!");
                 return;
             }
-            HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
 
-            //ading users
-            foreach (UsersViewModel user in usersBindingSource)
-            {
-                bool detailAlreadyExists = false;
-                //foreach (var groupDetail in user.GroupDetails)
-                //{
-                //    if ((await repo.DetailExists(groupDetail))) //if given connection does not exist then add it
-                //    {
-                //        detailAlreadyExists = true;
-                //        break;
-                //    }
-  
-                //}
-                if (!detailAlreadyExists)
-                {
-                    //await repo.AddOne(new GroupDetails()
-                    //{
-                    //    group_id = currGroup.id,
-                    //    user_id = user.id
-                    //});
-                    currGroup.GroupDetails.Add(new GroupDetailsViewModel()
-                    {
-                        group_id = currGroup.id,
-                        user_id = user.id
-                    });
-                }
-            }
             HttpGroupsRepository groupRepo = new HttpGroupsRepository();
 
             currGroup.description = tbDesc.Text;
@@ -89,20 +72,15 @@ namespace GradingBookProject.Forms
 
             if (edit)
             {
-                //currGroup.Users = null;
-                //await groupRepo.EditOne(currGroup);
-                //this.Close();
+                await UpdateUsers();
+                await groupRepo.EditOne(currGroup);
+                this.Close();
             }
             else
             {
-                //adding yourself to the group
-                currGroup.GroupDetails.Add(new GroupDetailsViewModel()
-                {
-                    user_id = Globals.CurrentUser.id,
-                    group_id = currGroup.id
-                });
-                //currGroup.Users = Globals.CurrentUser;
-                var tmp = new GroupsViewModel()
+                var detailRepo = new HttpGroupDetailsRepository();
+
+                var newGroup = new GroupsViewModel()
                 {
                     created_at = DateTime.Now,
                     GroupDetails = currGroup.GroupDetails,
@@ -110,12 +88,49 @@ namespace GradingBookProject.Forms
                     owner_id = Globals.CurrentUser.id,
                     description = currGroup.description
                 };
-                //currGroup.created_at = DateTime.Now;
 
-                await groupRepo.AddOne(tmp);
+                GroupsViewModel retGroup = await groupRepo.AddOne(newGroup); //we need it to get created id
+                
+                currGroup.id = retGroup.id; 
+
+                ////adding yourself to the group
+                //await detailRepo.AddOne(new GroupDetailsViewModel()
+                //{
+                //    user_id = Globals.CurrentUser.id,
+                //    group_id = currGroup.id
+                //});
+                //adding users
+                await UpdateUsers();
                 this.Close();
             }
 
+        }
+
+        private async Task UpdateUsers()
+        {
+            HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
+            //adding new users
+            foreach (UsersViewModel user in usersBindingSource)
+            {
+                bool detailAlreadyExists = false;
+                foreach (var groupDetail in user.GroupDetails)
+                {
+                    if ((await repo.DetailExists(groupDetail))) //if given connection does not exist then add it
+                    {
+                        detailAlreadyExists = true;
+                        break;
+                    }
+                }
+                if (!detailAlreadyExists)
+                {
+                    var detailRepo = new HttpGroupDetailsRepository();
+                    await detailRepo.AddOne(new GroupDetailsViewModel()
+                    {
+                        group_id = currGroup.id,
+                        user_id = user.id
+                    });
+                }
+            }
         }
 
         private async void AddUserClick(object sender, EventArgs e)

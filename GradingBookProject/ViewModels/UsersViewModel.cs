@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using GradingBookProject.Data;
-using GradingBookProject.Models;
 
 namespace GradingBookProject.ViewModels
 {
@@ -16,14 +15,11 @@ namespace GradingBookProject.ViewModels
         public string email { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
-    
-       // public virtual ICollection<GroupDetailsViewModel> GroupDetails { get; set; }
-        public async Task<ICollection<GroupDetailsViewModel>>  Details()
-        {
-            HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
-            return (await repo.GetAll()).ProjectTo<GroupDetailsViewModel>().ToList();
-        }
-        
+
+        public virtual ICollection<GroupDetailsViewModel> GroupDetails { get; set; }
+        public virtual ICollection<GroupsViewModel> Groups { get; set; }
+        public virtual ICollection<YearsViewModel> Years { get; set; }
+
         public override string ToString()
         {
             return username;

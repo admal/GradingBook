@@ -24,12 +24,14 @@ namespace GradingBookProject.Forms
             groupsGridView.CellContentClick += EditGroupClick;
         }
 
-        public void UpdateGridView()
+        public async void UpdateGridView()
         {
-            //foreach (var groupDetail in currUser)
-            //{
-            //    groupsBindingSource.Add(groupDetail.Groups);
-            //}
+            var repo = new HttpGroupsRepository();
+            foreach (var groupDetail in currUser.GroupDetails)
+            {
+                var group = await repo.GetOne(groupDetail.group_id);
+                groupsBindingSource.Add(group);
+            }
         }
 
 

@@ -29,5 +29,13 @@ namespace GradingBookProject.Data
         {
             return await requestService.RemoveDetail(detail.group_id,detail.group_id);
         }
+        public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForUser(int userId)
+        {
+            return await requestService.GetGroupDetailsForUser(userId);
+        }
+        public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForGroup(int groupId)
+        {
+            return await requestService.GetGroupDetailsForGroup(groupId);
+        }
     }
 }

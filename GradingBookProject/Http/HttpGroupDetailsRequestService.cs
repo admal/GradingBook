@@ -22,14 +22,15 @@ namespace GradingBookProject.Http
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(baseUrl + "DetailExists/" + groupId + "/"+userId);
+                client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync(url + "DetailExists/" + groupId + "/" + userId);
                 if (response.IsSuccessStatusCode)
                 {
-                    bool responseObject = await response.Content.ReadAsAsync<bool>();
+                    var responseObject = await response.Content.ReadAsAsync<bool>();
+                    
                     return responseObject;
                 }
                 else
@@ -42,11 +43,11 @@ namespace GradingBookProject.Http
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(baseUrl + "RemoveDetail/" + groupId + "/" + userId);
+                client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync(url + "RemoveDetail/" + groupId + "/" + userId);
                 if (response.IsSuccessStatusCode)
                 {
                     GroupDetailsViewModel responseObject = await response.Content.ReadAsAsync<GroupDetailsViewModel>();
@@ -55,6 +56,47 @@ namespace GradingBookProject.Http
                 else
                 {
                     return default(GroupDetailsViewModel);
+                }
+            }
+        }
+
+        public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForUser(int userId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(url + "GetGroupDetailsForUser/" + userId);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseObject = await response.Content.ReadAsAsync<List<GroupDetailsViewModel>>();
+                    return responseObject;
+                }
+                else
+                {
+                    return default(List<GroupDetailsViewModel>);
+                }
+            }
+        }
+        public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForGroup(int groupId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(url + "GetGroupDetailsForGroup/" + groupId);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseObject = await response.Content.ReadAsAsync<List<GroupDetailsViewModel>>();
+                    return responseObject;
+                }
+                else
+                {
+                    return default(List<GroupDetailsViewModel>);
                 }
             }
         }
