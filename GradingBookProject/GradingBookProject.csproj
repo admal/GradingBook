@@ -193,7 +193,7 @@
     <Compile Include="Http\HttpGroupDetailsRequestService.cs" />
     <Compile Include="Http\HttpRequestService.cs" />
     <Compile Include="Http\HttpSubjectDetailsRequestService.cs" />
-    <Compile Include="Http\HttpSubjectService.cs" />
+    <Compile Include="Http\HttpSubjectRequestService.cs" />
     <Compile Include="Http\HttpUserRequestService.cs" />
     <Compile Include="Http\HttpYearRequestService.cs" />
     <Compile Include="Models\AdoModel.Context.cs">
@@ -239,7 +239,10 @@
     <Compile Include="ViewModels\EntityViewModel.cs" />
     <Compile Include="ViewModels\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\GroupsViewModel.cs" />
+    <Compile Include="ViewModels\SubjectDetailsViewModel.cs" />
+    <Compile Include="ViewModels\SubjectsViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
+    <Compile Include="ViewModels\YearsViewModel.cs" />
     <Compile Include="YearListItem.cs" />
     <EmbeddedResource Include="Forms\CreateGroupForm.resx">
       <DependentUpon>CreateGroupForm.cs</DependentUpon>

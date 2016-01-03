@@ -13,6 +13,7 @@ using Ninject;
 using GradingBookProject.Data;
 using GradingBookProject.Models;
 using Ninject.Parameters;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Forms
 {
@@ -364,7 +365,7 @@ namespace GradingBookProject.Forms
         /// <param name="sub">Subject to which grade will be added</param>
         private void AddGradeToSubject(Subjects sub)
         {
-            SubjectDetails grade = new SubjectDetails()
+            SubjectDetailsViewModel grade = new SubjectDetailsViewModel()
             {
                 sub_id = sub.id,
                 grade_weight = 1
@@ -380,15 +381,16 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="sender">Clicked object</param>
         /// <param name="e">Event parameters</param>
-        private void ShowGradePanel(object sender, LinkLabelLinkClickedEventArgs e)
+        private async void ShowGradePanel(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var lblSender = sender as LinkLabel;
             var data = (Point)lblSender.Tag;
 
             var gradesPanel = this.Controls.Find("panel" + data.Y, true).First() as FlowLayoutPanel;
 
-            var repo = new GradesRepository();
-            var g = repo.GetGrade(data.X);
+            var repo = new HttpSubjectDetailsRepository();
+            var g = await repo.GetOne(data.X);
+            //var g = repo.GetGrade(data.X);
             if (e.Button == MouseButtons.Left)
             {
                 if (g == null)
@@ -400,7 +402,8 @@ namespace GradingBookProject.Forms
             }
             else if (e.Button == MouseButtons.Right)
             {
-                repo.DeleteGrade(g);
+                repo.DeleteOne(g);
+                //repo.DeleteGrade(g);
                 //gradesPanel.Controls.Remove(lblSender);
                 //Refresh();
                 UpdateMainForm();

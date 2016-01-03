@@ -6,10 +6,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Http
 {
-    class HttpSubjectRequestService : HttpRequestService<Subjects>
+    class HttpSubjectRequestService : HttpRequestService<SubjectsViewModel>
     {
         public HttpSubjectRequestService()
             : base()
@@ -21,7 +22,7 @@ namespace GradingBookProject.Http
         /// </summary>
         /// <param name="username"></param>
         /// <returns>List of subjects of a given Year, null if there is no such a Year.</returns>
-        public async Task<IQueryable<Subjects>> GetSubjectsOfYear(Years year)
+        public async Task<IQueryable<SubjectsViewModel>> GetSubjectsOfYear(YearsViewModel year)
         {
             using (var client = new HttpClient())
             {
@@ -33,7 +34,7 @@ namespace GradingBookProject.Http
 
                 if (response.IsSuccessStatusCode)
                 {
-                    IQueryable<Subjects> responseSubjects = await response.Content.ReadAsAsync<IQueryable<Subjects>>();
+                    IQueryable<SubjectsViewModel> responseSubjects = await response.Content.ReadAsAsync<IQueryable<SubjectsViewModel>>();
                     return responseSubjects;
                 }
                 return null;

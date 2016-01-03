@@ -13,6 +13,9 @@ namespace GradingBookApi
             {
                 config.CreateMap<Users, UsersViewModel>();
                 config.CreateMap<GroupDetails, GroupDetailsViewModel>();
+                config.CreateMap<Years, YearsViewModel>();
+                config.CreateMap<Subjects, SubjectsViewModel>();
+                config.CreateMap<SubjectDetails, SubjectDetailsViewModel>();
             });
 
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

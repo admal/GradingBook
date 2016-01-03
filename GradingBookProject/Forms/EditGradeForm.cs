@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using GradingBookProject.Data;
 using GradingBookProject.Models;
 using GradingBookProject.Validation;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Forms
 {
@@ -26,7 +27,7 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Grade to edit
         /// </summary>
-        private SubjectDetails grade;
+        private SubjectDetailsViewModel grade;
         /// <summary>
         /// Specifies if we edit new added grade or edit existing one
         /// </summary>
@@ -36,7 +37,7 @@ namespace GradingBookProject.Forms
         /// </summary>
         /// <param name="_grade">grade to edit/add</param>
         /// <param name="add">specifies if provided grade is a new or existing one</param>
-        public EditGradeForm(SubjectDetails _grade, bool add = false)
+        public EditGradeForm(SubjectDetailsViewModel _grade, bool add = false)
         {
             grades = new HttpSubjectDetailsRepository();
             this.grade = _grade;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GradingBookProject.Http;
 using GradingBookProject.Models;
 using GradingBookProject.Validation;
+using GradingBookProject.ViewModels;
 
 
 namespace GradingBookProject.Data
@@ -14,7 +15,7 @@ namespace GradingBookProject.Data
     /// <summary>
     /// Repository class for a Subject, contains all functions needed to manage a Subject.
     /// </summary>
-    class HttpSubjectsRepository : HttpRepository<Subjects, HttpSubjectRequestService>
+    class HttpSubjectsRepository : HttpRepository<SubjectsViewModel, HttpSubjectRequestService>
     {
         //private HttpSubjectRequestService requestService = new HttpSubjectRequestService();
         /// <summary>
@@ -22,7 +23,7 @@ namespace GradingBookProject.Data
         /// </summary>
         /// <param name="year">Year of desired Subjects.</param>
         /// <returns>Subjects of a year.</returns>
-        public async Task<IQueryable<Subjects>> GetSubjects(Years year)
+        public async Task<IQueryable<SubjectsViewModel>> GetSubjects(YearsViewModel year)
         {
             return await requestService.GetSubjectsOfYear(year);
         }

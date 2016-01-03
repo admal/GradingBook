@@ -56,7 +56,7 @@ namespace GradingBookProject.Forms
 
         private void NewGroupClick(object sender, EventArgs e)
         {
-            var createForm = new CreateGroupForm(new Groups(), false);
+            var createForm = new CreateGroupForm(new GroupsViewModel(), false);
             createForm.ShowDialog();
         }
 

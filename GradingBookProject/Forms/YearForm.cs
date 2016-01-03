@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Forms
 {
@@ -33,7 +34,7 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Local variable for storing a input/edit Year.
         /// </summary>
-        private Years yearLocal;
+        private YearsViewModel yearLocal;
         /// <summary>
         /// Current user.
         /// </summary>
@@ -71,7 +72,7 @@ namespace GradingBookProject.Forms
             yearsRepo = new HttpYearsRepository();
             txtYearStart.Text = DateTime.Now.ToString("d");
             txtYearEnd.Text = DateTime.Now.AddDays(100).ToString("d");
-            yearLocal = new Years();
+            yearLocal = new YearsViewModel();
             yearLocal.user_id = Globals.CurrentUser.id;
         }
         /// <summary>

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Forms
 {
@@ -33,7 +34,7 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Local variable for storing an Edited/Added/Deleted Subject.
         /// </summary>
-        private Subjects subjectLocal;
+        private SubjectsViewModel subjectLocal;
         /// <summary>
         /// Determines wether we Add or Edit a Subject.
         /// </summary>
@@ -71,7 +72,7 @@ namespace GradingBookProject.Forms
         public SubjectForm(int yearid) {
             InitializeComponent();
             subjects = new HttpSubjectsRepository();
-            subjectLocal = new Subjects();
+            subjectLocal = new SubjectsViewModel();
             subjectLocal.year_id = yearid;
             btnSubjectDelete.Enabled = false;
         }

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using GradingBookProject.Models;
+using GradingBookProject.ViewModels;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace GradingBookApi.Controllers
 {
@@ -24,16 +27,18 @@ namespace GradingBookApi.Controllers
         }
 
         // GET: api/SubjectDetails/5
-        [ResponseType(typeof(SubjectDetails))]
+        [ResponseType(typeof(SubjectDetailsViewModel))]
         public async Task<IHttpActionResult> GetSubjectDetails(int id)
         {
-            SubjectDetails subjectDetails = await db.SubjectDetails.FindAsync(id);
+            var subjectDetails = await db.SubjectDetails.FindAsync(id);
+            var subjectDetailsViewModel = Mapper.Map<SubjectDetailsViewModel>(subjectDetails);
+
             if (subjectDetails == null)
             {
                 return NotFound();
             }
 
-            return Ok(subjectDetails);
+            return Ok(subjectDetailsViewModel);
         }
 
         // GET: api/subjectDetails/getbysubjectid/4
