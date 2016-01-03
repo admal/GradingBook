@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using GradingBookProject.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using GradingBookProject.ViewModels;
 
 namespace GradingBookApi.Controllers
 {
@@ -27,9 +28,9 @@ namespace GradingBookApi.Controllers
         /// Sends all Years from database.
         /// </summary>
         /// <returns>All years</returns>
-        public IQueryable<Years> GetYears()
+        public IQueryable<YearsViewModel> GetYears()
         {
-            return db.Years;
+            return db.Years.ProjectTo<YearsViewModel>();
         }
 
         // GET: api/Years/5
@@ -47,7 +48,7 @@ namespace GradingBookApi.Controllers
                 return NotFound();
             }
 
-            return Ok(years);
+            return Ok(Mapper.Map<YearsViewModel>(years));
         }
         // GET: api/Years/getByUsername/jedrek
         /// <summary>
@@ -56,14 +57,14 @@ namespace GradingBookApi.Controllers
         /// <param name="username">Username of a User we want years of.</param>
         /// <returns>Years of a User.</returns>
         [ActionName("GetByUsername")]
-        public IQueryable<Years> GetYearsOfUsername(string username)
+        public IQueryable<YearsViewModel> GetYearsOfUsername(string username)
         {
 
-            var years = db.Users.FirstOrDefault(u => u.username == username).Years;
+            var years = db.Users.FirstOrDefault(u => u.username == username).Years.AsQueryable().ProjectTo<YearsViewModel>();
 
-            if(years.Count > 0)
-                return years.AsQueryable();
-            return Enumerable.Empty<Years>().AsQueryable();
+            if(years.Count() > 0)
+                return years;
+            return Enumerable.Empty<YearsViewModel>().AsQueryable();
         }
 
         // PUT: api/Years/5
@@ -74,8 +75,18 @@ namespace GradingBookApi.Controllers
         /// <param name="years">Year to be updated.</param>
         /// <returns></returns>
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutYears(int id, Years years)
+        public async Task<IHttpActionResult> PutYears(int id, YearsViewModel years)
         {
+
+            Years updateYear = await db.Years.FindAsync(id);
+            updateYear.end_date = years.end_date;
+            updateYear.group_id = years.group_id;
+            updateYear.name = years.name;
+            updateYear.start = years.start;
+            updateYear.user_id = years.user_id;
+            updateYear.year_desc = years.year_desc;
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -86,12 +97,7 @@ namespace GradingBookApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(years).State = EntityState.Modified;
-
-           /*(await db.Years.FirstOrDefaultAsync(y => y.id == id)).name = years.name;
-           (await db.Years.FirstOrDefaultAsync(y => y.id == id)).year_desc = years.year_desc;
-           (await db.Years.FirstOrDefaultAsync(y => y.id == id)).start = years.start;
-           (await db.Years.FirstOrDefaultAsync(y => y.id == id)).end_date = years.end_date;*/
+            db.Entry(updateYear).State = EntityState.Modified;
 
             try
             {
@@ -118,18 +124,27 @@ namespace GradingBookApi.Controllers
         /// </summary>
         /// <param name="years">ID of a Year to be saved.</param>
         /// <returns>Year to be saved</returns>
-        [ResponseType(typeof(Years))]
-        public async Task<IHttpActionResult> PostYears(Years years)
+        [ResponseType(typeof(YearsViewModel))]
+        public async Task<IHttpActionResult> PostYears(YearsViewModel years)
         {
+            Years newYear = new Years() { 
+                end_date = years.end_date,
+                group_id = years.group_id,
+                name = years.name,
+                start = years.start,
+                user_id = years.user_id,
+                year_desc = years.year_desc,
+            };
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Years.Add(years);
+            db.Years.Add(newYear);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = years.id }, years);
+            return CreatedAtRoute("DefaultApi", new { id = years.id }, newYear);
         }
 
         // DELETE: api/Years/5
@@ -138,7 +153,7 @@ namespace GradingBookApi.Controllers
         /// </summary>
         /// <param name="id">Id of a Year to be deleted.</param>
         /// <returns></returns>
-        [ResponseType(typeof(Years))]
+        [ResponseType(typeof(YearsViewModel))]
         public async Task<IHttpActionResult> DeleteYears(int id)
         {
             Years years = await db.Years.FindAsync(id);
@@ -150,7 +165,7 @@ namespace GradingBookApi.Controllers
             db.Years.Remove(years);
             await db.SaveChangesAsync();
 
-            return Ok(years);
+            return Ok(Mapper.Map<YearsViewModel>(years));
         }
         /// <summary>
         /// Disposes of database connection.

@@ -21,9 +21,9 @@ namespace GradingBookApi.Controllers
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
         // GET: api/SubjectDetails
-        public IQueryable<SubjectDetails> GetSubjectDetails()
+        public IQueryable<SubjectDetailsViewModel> GetSubjectDetails()
         {
-            return db.SubjectDetails;
+            return db.SubjectDetails.ProjectTo<SubjectDetailsViewModel>();
         }
 
         // GET: api/SubjectDetails/5
@@ -45,20 +45,25 @@ namespace GradingBookApi.Controllers
         [HttpGet]
         [Route("api/subjectDetails/getbysubjectid/{id:int}")]
         [ActionName("getbysubjectid")]
-        public IQueryable<SubjectDetails> GetGradesOfSubject(int id)
+        public IQueryable<SubjectDetailsViewModel> GetGradesOfSubject(int id)
         {
-
-            var grades = db.Subjects.FirstOrDefault(s => s.id == id).SubjectDetails;
-
-            if (grades.Count > 0)
-                return grades.AsQueryable();
-            return Enumerable.Empty<SubjectDetails>().AsQueryable();
+            var grades = db.Subjects.FirstOrDefault(s => s.id == id).SubjectDetails.AsQueryable().ProjectTo<SubjectDetailsViewModel>();
+         
+            if (grades.Count() > 0)
+                return grades;
+            return Enumerable.Empty<SubjectDetailsViewModel>().AsQueryable();
         }
 
         // PUT: api/SubjectDetails/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutSubjectDetails(int id, SubjectDetails subjectDetails)
+        public async Task<IHttpActionResult> PutSubjectDetails(int id, SubjectDetailsViewModel subjectDetails)
         {
+            SubjectDetails local=  await db.SubjectDetails.FindAsync(id);
+                local.grade_date = subjectDetails.grade_date;
+                local.grade_desc = subjectDetails.grade_desc;
+                local.grade_value = subjectDetails.grade_value;
+                local.grade_weight = subjectDetails.grade_weight;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -69,7 +74,7 @@ namespace GradingBookApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(subjectDetails).State = EntityState.Modified;
+            db.Entry(local).State = EntityState.Modified;
 
             try
             {
@@ -91,22 +96,31 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/SubjectDetails
-        [ResponseType(typeof(SubjectDetails))]
-        public async Task<IHttpActionResult> PostSubjectDetails(SubjectDetails subjectDetails)
+        [ResponseType(typeof(SubjectDetailsViewModel))]
+        public async Task<IHttpActionResult> PostSubjectDetails(SubjectDetailsViewModel subjectDetails)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.SubjectDetails.Add(subjectDetails);
+            SubjectDetails newSubjectDetail = new SubjectDetails()
+            {
+                grade_date = subjectDetails.grade_date,
+                grade_desc = subjectDetails.grade_desc,
+                grade_value = subjectDetails.grade_value,
+                grade_weight = subjectDetails.grade_weight,
+                sub_id = subjectDetails.sub_id,
+            };
+
+            db.SubjectDetails.Add(newSubjectDetail);
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = subjectDetails.id }, subjectDetails);
         }
 
         // DELETE: api/SubjectDetails/5
-        [ResponseType(typeof(SubjectDetails))]
+        [ResponseType(typeof(SubjectDetailsViewModel))]
         public async Task<IHttpActionResult> DeleteSubjectDetails(int id)
         {
             SubjectDetails subjectDetails = await db.SubjectDetails.FindAsync(id);
@@ -117,8 +131,8 @@ namespace GradingBookApi.Controllers
 
             db.SubjectDetails.Remove(subjectDetails);
             await db.SaveChangesAsync();
-
-            return Ok(subjectDetails);
+            
+            return Ok(Mapper.Map<SubjectDetailsViewModel>(subjectDetails));
         }
 
         protected override void Dispose(bool disposing)
