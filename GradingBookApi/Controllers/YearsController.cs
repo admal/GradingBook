@@ -68,6 +68,23 @@ namespace GradingBookApi.Controllers
             return user.Years.AsQueryable().ProjectTo<YearsViewModel>().ToList();
         }
 
+        // GET: api/Years/GetByGroupId/3
+        /// <summary>
+        /// Sends all Years of a given Group.
+        /// </summary>
+        /// <param name="groupId">Group ID of a Group we want years of.</param>
+        /// <returns>Years of a Group.</returns>
+        [ActionName("GetByGroupId")]
+        public async Task<ICollection<YearsViewModel>> GetYearsOfGroup(int groupId) {
+
+            var group = await db.Groups.FirstOrDefaultAsync(g => g.id == groupId);
+
+            if (group== null)
+                return null;
+
+            return group.Years.AsQueryable().ProjectTo<YearsViewModel>().ToList();
+        }
+
         // PUT: api/Years/5
         /// <summary>
         /// Updates a given year.

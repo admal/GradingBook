@@ -17,7 +17,6 @@ namespace GradingBookProject.Data
     /// </summary>
     class HttpYearsRepository : HttpRepository<YearsViewModel, HttpYearRequestService>
     {
-        //private HttpYearRequestService requestService = new HttpYearRequestService();
         /// <summary>
         /// Gets all Years of a given user.
         /// </summary>
@@ -25,6 +24,16 @@ namespace GradingBookProject.Data
         /// <returns></returns>
         public async Task<ICollection<YearsViewModel>> GetYears(string username) {
             return await requestService.GetYearsByUsername(username);
+        }
+
+        /// <summary>
+        /// Gets all Years of a given Group ID.
+        /// </summary>
+        /// <param name="groupId">Group ID of a desired Group.</param>
+        /// <returns>Collection of Years</returns>
+        public async Task<ICollection<YearsViewModel>> GetYearsOfGroup(int groupId)
+        {
+            return await requestService.GetYearsByGroupId(groupId);
         }
     }
 }

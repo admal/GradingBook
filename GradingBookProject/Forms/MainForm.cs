@@ -29,8 +29,15 @@ namespace GradingBookProject.Forms
         private HttpYearsRepository years;
         private HttpSubjectsRepository subjects;
         private HttpSubjectDetailsRepository grades;
+        private HttpUsersRepository users;
+        private HttpGroupsRepository groups;
+        private HttpGroupDetailsRepository groupDetails;
+
+        private bool visiting;
 
         private bool toCloseApp = true;
+
+        /*-------------------------CONSTRUCTORS----------------------*/
         /// <summary>
         /// Initializes the form updates repositories and list of years.
         /// </summary>
@@ -40,11 +47,23 @@ namespace GradingBookProject.Forms
 
             // Get id of current user.
             username = Globals.CurrentUser.username;
-            
+            visiting = false;
+
             // Initialize repositories.
             UpdateRepositories();
             
             //populate the list of Years
+            UpdateYearList();
+        }
+
+        public MainForm(string visitingUsername) {
+            InitializeComponent();
+
+            username = visitingUsername;
+            visiting = true;
+
+            UpdateRepositories();
+
             UpdateYearList();
         }
         /*-----------------------------UPDATING FUNCTIONS-----------------------------*/
@@ -55,6 +74,9 @@ namespace GradingBookProject.Forms
             years = new HttpYearsRepository();
             subjects = new HttpSubjectsRepository();
             grades = new HttpSubjectDetailsRepository();
+            users = new HttpUsersRepository();
+            groups = new HttpGroupsRepository();
+            groupDetails = new HttpGroupDetailsRepository();
         }
         /// <summary>
         /// Updates Main Form.
@@ -63,9 +85,10 @@ namespace GradingBookProject.Forms
             UpdateRepositories();
             UpdateYearList();
             UpdateTable();
-        }   
+        }
+
         /// <summary>
-        /// Updates list of years.
+        /// Updates list of years. And Enables/Disables buttons
         /// </summary>
         private async void UpdateYearList(){
             listYear.Items.Clear();
@@ -78,9 +101,44 @@ namespace GradingBookProject.Forms
                     listYear.Items.Add(item);
                 }
 
-                btnAddSubject.Enabled = true;
-                btnDeleteYear.Enabled = true;
-                btnEditYear.Enabled = true;
+                //Get groups from groupDetails using a username
+                var tempUser = await users.GetUser(username);
+                var gd = await groupDetails.GetGroupDetailsForUser(tempUser.id);
+                if (gd != null)
+                {
+                    List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
+                    foreach (var groupDetail in gd)
+                    {
+                        userGroups.Add(await groups.GetOne(groupDetail.group_id));
+                    }
+
+                    //Cycle through groups and add Years and separators to the list of years
+                    foreach(var group in userGroups){
+                        var groupYears = await years.GetYearsOfGroup(group.id);
+                        if (groupYears != null) {
+                            listYear.Items.Add(new ToolStripSeparator());
+                            foreach (var year in groupYears)
+                            {
+                                YearListItem item = new YearListItem(year.name, year.id);
+                                listYear.Items.Add(item);
+                            }
+                        }
+                    }
+                }
+
+                if (visiting)
+                {
+                    btnAddSubject.Enabled = false;
+                    btnDeleteYear.Enabled = false;
+                    btnEditYear.Enabled = false;
+                    btnAddYear.Enabled = false;
+                }
+                else
+                {
+                    btnAddSubject.Enabled = true;
+                    btnDeleteYear.Enabled = true;
+                    btnEditYear.Enabled = true;
+                }
 
                 if (selectedYearListItem != null)
                 {
@@ -96,6 +154,9 @@ namespace GradingBookProject.Forms
                 btnAddSubject.Enabled = false;
                 btnDeleteYear.Enabled = false;
                 btnEditYear.Enabled = false;
+                if (visiting) {
+                    btnAddYear.Enabled = false;
+                }
             }
         }
         /*-----------------------------POPULATING FUNCTIONS-----------------------------*/
@@ -135,7 +196,8 @@ namespace GradingBookProject.Forms
                 {
                     tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                     LinkLabel temp;
-                    tableMarks.Controls.Add(temp = new LinkLabel()
+
+                    temp = new LinkLabel()
                     {
                         Text = subject.name,
                         Anchor = AnchorStyles.Left,
@@ -143,7 +205,12 @@ namespace GradingBookProject.Forms
                         ActiveLinkColor = Color.Black,
                         LinkBehavior = LinkBehavior.NeverUnderline,
                         Tag = subject.id
-                    });
+                    };
+                    if(visiting){
+                        temp.Enabled = false;
+                    }
+
+                    tableMarks.Controls.Add(temp);
                     temp.Click += new System.EventHandler(this.Subject_Click);
 
                     CreateGradesLabels(subject);
@@ -164,6 +231,11 @@ namespace GradingBookProject.Forms
                         AutoSize = true,
                         Tag = subject.id,
                     };
+
+                    if (visiting) {
+                        btn.Enabled = false;                                        
+                    }
+
                     btn.Click+=AddGradeClick;
                     tableMarks.Controls.Add(btn);
                     tableMarks.RowCount++;
@@ -366,6 +438,9 @@ namespace GradingBookProject.Forms
                 lbl.LinkClicked += ShowGradePanel; //event handler of click
                 lbl.Tag = new Point(grade.id, sub.id); //just 2d vector with id of grade and subject //tmp solution
                 lbl.AutoSize = true;
+                if (visiting) {
+                    lbl.Enabled = false;
+                }
                 panel.Controls.Add(lbl);
             }
         }
