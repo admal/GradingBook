@@ -35,14 +35,14 @@
             this.btnAddYear = new System.Windows.Forms.Button();
             this.btnLeave = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
-            this.yersGridView = new System.Windows.Forms.DataGridView();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.yearsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.yearsGridView = new System.Windows.Forms.DataGridView();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.enddateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yeardescDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.yersGridView)).BeginInit();
+            this.yearsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.lblTitle = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.yearsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yearsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,37 +107,25 @@
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.BackClick);
             // 
-            // yersGridView
+            // yearsGridView
             // 
-            this.yersGridView.AllowUserToAddRows = false;
-            this.yersGridView.AllowUserToDeleteRows = false;
-            this.yersGridView.AutoGenerateColumns = false;
-            this.yersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.yersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.yearsGridView.AllowUserToAddRows = false;
+            this.yearsGridView.AllowUserToDeleteRows = false;
+            this.yearsGridView.AutoGenerateColumns = false;
+            this.yearsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.yearsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameDataGridViewTextBoxColumn,
             this.startDataGridViewTextBoxColumn,
             this.enddateDataGridViewTextBoxColumn,
             this.yeardescDataGridViewTextBoxColumn});
-            this.yersGridView.DataSource = this.yearsBindingSource;
-            this.yersGridView.Location = new System.Drawing.Point(12, 149);
-            this.yersGridView.Name = "yersGridView";
-            this.yersGridView.ReadOnly = true;
-            this.yersGridView.Size = new System.Drawing.Size(586, 208);
-            this.yersGridView.TabIndex = 7;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblTitle.Location = new System.Drawing.Point(12, 9);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(85, 29);
-            this.lblTitle.TabIndex = 8;
-            this.lblTitle.Text = "label1";
-            // 
-            // yearsBindingSource
-            // 
-            this.yearsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.YearsViewModel);
+            this.yearsGridView.DataSource = this.yearsBindingSource;
+            this.yearsGridView.Location = new System.Drawing.Point(12, 149);
+            this.yearsGridView.MultiSelect = false;
+            this.yearsGridView.Name = "yearsGridView";
+            this.yearsGridView.ReadOnly = true;
+            this.yearsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.yearsGridView.Size = new System.Drawing.Size(586, 208);
+            this.yearsGridView.TabIndex = 7;
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -168,13 +156,27 @@
             this.yeardescDataGridViewTextBoxColumn.Name = "yeardescDataGridViewTextBoxColumn";
             this.yeardescDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // yearsBindingSource
+            // 
+            this.yearsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.YearsViewModel);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblTitle.Location = new System.Drawing.Point(12, 9);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(85, 29);
+            this.lblTitle.TabIndex = 8;
+            this.lblTitle.Text = "label1";
+            // 
             // GroupViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(616, 398);
             this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.yersGridView);
+            this.Controls.Add(this.yearsGridView);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.btnAddYear);
@@ -183,7 +185,7 @@
             this.Controls.Add(this.tbDesc);
             this.Name = "GroupViewForm";
             this.Text = "GroupTitle";
-            ((System.ComponentModel.ISupportInitialize)(this.yersGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yearsGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yearsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -198,7 +200,7 @@
         private System.Windows.Forms.Button btnAddYear;
         private System.Windows.Forms.Button btnLeave;
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.DataGridView yersGridView;
+        private System.Windows.Forms.DataGridView yearsGridView;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn startDataGridViewTextBoxColumn;

@@ -32,14 +32,14 @@
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.groupsGridView = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEditGridView = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).BeginInit();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCreate
@@ -75,10 +75,16 @@
             this.groupsGridView.DataSource = this.groupsBindingSource;
             this.groupsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupsGridView.Location = new System.Drawing.Point(0, 0);
+            this.groupsGridView.MultiSelect = false;
             this.groupsGridView.Name = "groupsGridView";
             this.groupsGridView.ReadOnly = true;
+            this.groupsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.groupsGridView.Size = new System.Drawing.Size(515, 228);
             this.groupsGridView.TabIndex = 3;
+            // 
+            // groupsBindingSource
+            // 
+            this.groupsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.GroupsViewModel);
             // 
             // panel1
             // 
@@ -89,10 +95,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(515, 34);
             this.panel1.TabIndex = 4;
-            // 
-            // groupsBindingSource
-            // 
-            this.groupsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.GroupsViewModel);
             // 
             // name
             // 
@@ -126,8 +128,8 @@
             this.Name = "YourGroupsForm";
             this.Text = "Your groups";
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).EndInit();
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

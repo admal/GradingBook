@@ -28,6 +28,9 @@ namespace GradingBookProject.Forms
             lblTitle.Text = group.name;
             this.Name = group.name;
             tbDesc.Text = group.description;
+
+            yearsGridView.CellDoubleClick += SeeYearDetails;
+
             FindUser();
 
             if (isAdmin)
@@ -38,6 +41,17 @@ namespace GradingBookProject.Forms
             UpdateYearsSource();
         }
 
+        void SeeYearDetails(object sender, DataGridViewCellEventArgs e)
+        {
+            int idx = e.RowIndex;
+            if (idx >= 0 && idx < yearsBindingSource.Count)
+            {
+                YearsViewModel year = yearsBindingSource[idx] as YearsViewModel;
+                MessageBox.Show("Year: " + year.name);
+                //show form
+            }
+        }
+
         public async void UpdateYearsSource()
         {
             await SyncGroup();
@@ -46,7 +60,7 @@ namespace GradingBookProject.Forms
             {
                 yearsBindingSource.Add(year);
             }
-            yersGridView.Update();
+            yearsGridView.Update();
         }
 
         public async Task SyncGroup()
