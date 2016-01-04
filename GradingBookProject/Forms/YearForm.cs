@@ -77,7 +77,7 @@ namespace GradingBookProject.Forms
             txtYearStart.Text = DateTime.Now.ToString("d");
             txtYearEnd.Text = DateTime.Now.AddDays(100).ToString("d");
             yearLocal = new YearsViewModel();
-            yearLocal.user_id = Globals.CurrentUser.id;
+            //yearLocal.user_id = Globals.CurrentUser.id;
         }
         /// <summary>
         /// Constructor taking group to which year is assigned.

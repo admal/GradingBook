@@ -75,7 +75,37 @@ namespace GradingBookProject.Forms
 
         private async void LeaveGroupClick(object sender, EventArgs e)
         {
+            var question = isAdmin ? "delete" : "leave";
 
+            var result = MessageBox.Show("Are you sure you want to "+question+" the group?", "Delete group",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+                return;
+
+            if (isAdmin)
+            {
+                await DeleteGroup();
+            }
+            else
+            {
+                await LeaveGroup();
+
+            }
+            await Globals.UpdateCurrentUser();
+            Close();
+        }
+
+        private async Task DeleteGroup()
+        {
+            var repo = new HttpGroupsRepository();
+            await repo.DeleteOne(currGroup);
+        }
+
+        private async Task LeaveGroup()
+        {
+            var currDetail = currGroup.GroupDetails.FirstOrDefault(d => d.user_id == Globals.CurrentUser.id);
+            var repo = new HttpGroupDetailsRepository();
+            await repo.DeleteOne(currDetail);
         }
     }
 }

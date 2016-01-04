@@ -32,14 +32,14 @@
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.groupsGridView = new System.Windows.Forms.DataGridView();
-            this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEditGridView = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCreate
@@ -80,10 +80,6 @@
             this.groupsGridView.Size = new System.Drawing.Size(515, 228);
             this.groupsGridView.TabIndex = 3;
             // 
-            // groupsBindingSource
-            // 
-            this.groupsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.GroupsViewModel);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btnBack);
@@ -93,6 +89,10 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(515, 34);
             this.panel1.TabIndex = 4;
+            // 
+            // groupsBindingSource
+            // 
+            this.groupsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.GroupsViewModel);
             // 
             // name
             // 
@@ -126,8 +126,8 @@
             this.Name = "YourGroupsForm";
             this.Text = "Your groups";
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

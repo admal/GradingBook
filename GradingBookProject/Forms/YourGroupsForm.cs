@@ -68,7 +68,8 @@ namespace GradingBookProject.Forms
                     var isAdmin = (currGroup.owner_id == Globals.CurrentUser.id);
 
                     var form = new GroupViewForm(currGroup, isAdmin);
-                    form.Show();
+                    form.ShowDialog();
+                    UpdateGridView();
                 }
             }
         }
