@@ -74,10 +74,11 @@ namespace GradingBookApi.Controllers
         /// </summary>
         /// <param name="groupId">Group ID of a Group we want years of.</param>
         /// <returns>Years of a Group.</returns>
+        [Route("api/years/getbygroupid/{id:int}")]
         [ActionName("GetByGroupId")]
-        public async Task<ICollection<YearsViewModel>> GetYearsOfGroup(int groupId) {
+        public async Task<ICollection<YearsViewModel>> GetYearsOfGroup(int id) {
 
-            var group = await db.Groups.FirstOrDefaultAsync(g => g.id == groupId);
+            var group = await db.Groups.FirstOrDefaultAsync(g => g.id == id);
 
             if (group== null)
                 return null;
