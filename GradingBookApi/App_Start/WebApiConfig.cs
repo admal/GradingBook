@@ -16,8 +16,10 @@ namespace GradingBookApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            
-
+            config.Routes.MapHttpRoute(
+                name: "ActionApiGroupId",
+                routeTemplate: "api/years/getByGroupId/{groupId}"
+                );
             config.Routes.MapHttpRoute(
                   name: "ActionSubjectApiId",
                   routeTemplate: "api/subjects/{action}/{id}"
@@ -34,10 +36,12 @@ namespace GradingBookApi
                   name: "ActionGradeApiId",
                   routeTemplate: "api/subjectDetails/{action}/{id}"
                   );*/
+            
             config.Routes.MapHttpRoute(
                 name: "ActionApiUsername",
                 routeTemplate: "api/{controller}/{action}/{username}"
                 );
+            
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

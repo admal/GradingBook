@@ -115,8 +115,8 @@ namespace GradingBookProject.Forms
                     //Cycle through groups and add Years and separators to the list of years
                     foreach(var group in userGroups){
                         var groupYears = await years.GetYearsOfGroup(group.id);
-                        if (groupYears != null) {
-                            listYear.Items.Add(new ToolStripSeparator());
+                        if (groupYears != null && groupYears.Count != 0) {
+                            //listYear.Items.Add();
                             foreach (var year in groupYears)
                             {
                                 YearListItem item = new YearListItem(year.name, year.id);
