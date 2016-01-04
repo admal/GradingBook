@@ -33,17 +33,18 @@
             this.btnBack = new System.Windows.Forms.Button();
             this.groupsGridView = new System.Windows.Forms.DataGridView();
             this.groupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEditGridView = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(12, 227);
+            this.btnCreate.Location = new System.Drawing.Point(81, 8);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(96, 23);
             this.btnCreate.TabIndex = 1;
@@ -53,7 +54,7 @@
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(114, 227);
+            this.btnBack.Location = new System.Drawing.Point(0, 8);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(75, 23);
             this.btnBack.TabIndex = 2;
@@ -69,37 +70,41 @@
             this.groupsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.groupsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
-            this.id,
             this.created_at,
             this.btnEditGridView});
             this.groupsGridView.DataSource = this.groupsBindingSource;
-            this.groupsGridView.Location = new System.Drawing.Point(12, 12);
+            this.groupsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupsGridView.Location = new System.Drawing.Point(0, 0);
             this.groupsGridView.Name = "groupsGridView";
             this.groupsGridView.ReadOnly = true;
-            this.groupsGridView.Size = new System.Drawing.Size(491, 150);
+            this.groupsGridView.Size = new System.Drawing.Size(515, 228);
             this.groupsGridView.TabIndex = 3;
             // 
             // groupsBindingSource
             // 
             this.groupsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.GroupsViewModel);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnBack);
+            this.panel1.Controls.Add(this.btnCreate);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 228);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(515, 34);
+            this.panel1.TabIndex = 4;
+            // 
             // name
             // 
+            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.name.DataPropertyName = "name";
             this.name.HeaderText = "Name";
             this.name.Name = "name";
             this.name.ReadOnly = true;
             // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
-            // 
             // created_at
             // 
+            this.created_at.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.created_at.DataPropertyName = "created_at";
             this.created_at.HeaderText = "Created at";
             this.created_at.Name = "created_at";
@@ -117,12 +122,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(515, 262);
             this.Controls.Add(this.groupsGridView);
-            this.Controls.Add(this.btnBack);
-            this.Controls.Add(this.btnCreate);
+            this.Controls.Add(this.panel1);
             this.Name = "YourGroupsForm";
             this.Text = "Your groups";
             ((System.ComponentModel.ISupportInitialize)(this.groupsGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupsBindingSource)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -133,8 +138,8 @@
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.DataGridView groupsGridView;
         private System.Windows.Forms.BindingSource groupsBindingSource;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn created_at;
         private System.Windows.Forms.DataGridViewButtonColumn btnEditGridView;
     }

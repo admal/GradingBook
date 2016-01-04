@@ -12,25 +12,22 @@ namespace GradingBookProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Groups : DataEntity
+    public partial class Groups
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Groups()
         {
             this.GroupDetails = new HashSet<GroupDetails>();
             this.Years = new HashSet<Years>();
         }
     
-        //public int id { get; set; }
+        public int id { get; set; }
         public string name { get; set; }
         public int owner_id { get; set; }
         public System.DateTime created_at { get; set; }
         public string description { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GroupDetails> GroupDetails { get; set; }
         public virtual Users Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Years> Years { get; set; }
     }
 }

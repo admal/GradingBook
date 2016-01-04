@@ -224,6 +224,9 @@
     <Compile Include="Models\Subjects.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>AdoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Users.cs">
       <DependentUpon>AdoModel.tt</DependentUpon>
     </Compile>
@@ -291,8 +294,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AdoModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Models\AdoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoModel.edmx</DependentUpon>
+      <LastGenOutput>AdoModel.Context.cs</LastGenOutput>
+    </None>
     <None Include="Models\AdoModel.edmx.diagram">
       <DependentUpon>AdoModel.edmx</DependentUpon>
+    </None>
+    <None Include="Models\AdoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoModel.edmx</DependentUpon>
+      <LastGenOutput>AdoModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -303,6 +316,7 @@
     <None Include="Properties\DataSources\GradingBookProject.Models.Years.datasource" />
     <None Include="Properties\DataSources\GradingBookProject.ViewModels.GroupsViewModel.datasource" />
     <None Include="Properties\DataSources\GradingBookProject.ViewModels.UsersViewModel.datasource" />
+    <None Include="Properties\DataSources\GradingBookProject.ViewModels.YearsViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -337,18 +351,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Models\AdoModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AdoModel.edmx</DependentUpon>
-      <LastGenOutput>AdoModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\AdoModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AdoModel.edmx</DependentUpon>
-      <LastGenOutput>AdoModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

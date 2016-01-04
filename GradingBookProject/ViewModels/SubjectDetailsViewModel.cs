@@ -14,6 +14,8 @@ namespace GradingBookProject.ViewModels
         public Nullable<System.DateTime> grade_date { get; set; }
         public double grade_value { get; set; }
 
+        public Nullable<int> user_id { get; set; }
+
         //public virtual SubjectsViewModel Subjects { get; set; }
     }
 }

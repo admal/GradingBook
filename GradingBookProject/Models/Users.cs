@@ -12,33 +12,26 @@ namespace GradingBookProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users : DataEntity
+    public partial class Users
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
             this.GroupDetails = new HashSet<GroupDetails>();
             this.Groups = new HashSet<Groups>();
+            this.SubjectDetails = new HashSet<SubjectDetails>();
             this.Years = new HashSet<Years>();
         }
     
-       // public int id { get; set; }
+        public int id { get; set; }
         public string username { get; set; }
         public string passwd { get; set; }
         public string email { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GroupDetails> GroupDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Groups> Groups { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }
         public virtual ICollection<Years> Years { get; set; }
-
-        public override string ToString()
-        {
-            return username;
-        }
     }
 }

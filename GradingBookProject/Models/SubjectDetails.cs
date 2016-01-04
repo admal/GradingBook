@@ -12,15 +12,17 @@ namespace GradingBookProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SubjectDetails : DataEntity
+    public partial class SubjectDetails
     {
-        //public int id { get; set; }
+        public int id { get; set; }
         public int sub_id { get; set; }
         public string grade_desc { get; set; }
         public int grade_weight { get; set; }
         public Nullable<System.DateTime> grade_date { get; set; }
         public double grade_value { get; set; }
+        public Nullable<int> user_id { get; set; }
     
         public virtual Subjects Subjects { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

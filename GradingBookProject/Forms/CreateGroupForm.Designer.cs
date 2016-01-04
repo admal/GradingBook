@@ -38,9 +38,9 @@
             this.btnAddUser = new System.Windows.Forms.Button();
             this.tbUser = new System.Windows.Forms.TextBox();
             this.usersDataView = new System.Windows.Forms.DataGridView();
-            this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.usernameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.usersDataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -89,6 +89,7 @@
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 
@@ -127,14 +128,12 @@
             this.emailDataGridViewTextBoxColumn});
             this.usersDataView.DataSource = this.usersBindingSource;
             this.usersDataView.Location = new System.Drawing.Point(248, 49);
+            this.usersDataView.MultiSelect = false;
             this.usersDataView.Name = "usersDataView";
             this.usersDataView.ReadOnly = true;
+            this.usersDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.usersDataView.Size = new System.Drawing.Size(240, 193);
             this.usersDataView.TabIndex = 9;
-            // 
-            // usersBindingSource
-            // 
-            this.usersBindingSource.DataSource = typeof(GradingBookProject.ViewModels.UsersViewModel);
             // 
             // usernameDataGridViewTextBoxColumn
             // 
@@ -149,6 +148,10 @@
             this.emailDataGridViewTextBoxColumn.HeaderText = "email";
             this.emailDataGridViewTextBoxColumn.Name = "emailDataGridViewTextBoxColumn";
             this.emailDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // usersBindingSource
+            // 
+            this.usersBindingSource.DataSource = typeof(GradingBookProject.ViewModels.UsersViewModel);
             // 
             // CreateGroupForm
             // 

@@ -23,8 +23,7 @@ namespace GradingBookProject.Forms
             InitializeComponent();
             currGroup = group;
             this.edit = edit;
-            usersDataView.UserDeletedRow += RemoveUser;
-
+            //usersDataView.UserDeletedRow += RemoveUser;
             if (edit)
             {
                 tbTitle.Text = currGroup.name;
@@ -47,14 +46,17 @@ namespace GradingBookProject.Forms
                 var user = await repo.GetOne(groupDetail.user_id);
                 usersBindingSource.Add(user);
             }
+            
         }
 
-        private async void RemoveUser(object sender, DataGridViewRowEventArgs e)
-        {
-            HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
-            UsersViewModel user =  usersBindingSource[e.Row.Index] as UsersViewModel;
-            await repo.RemoveDetail(user.id, currGroup.id);
-        }
+        //private async void RemoveUser(object sender, DataGridViewRowEventArgs e)
+        //{
+        //    HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
+        //    int currId = usersDataView.CurrentRow.Index;
+        //    MessageBox.Show("Row: " + currId);
+        //    //UsersViewModel user = usersBindingSource[currId] as UsersViewModel;
+        //    //await repo.RemoveDetail(user.id, currGroup.id);
+        //}
 
         private async void SaveChangesClick(object sender, EventArgs e)
         {
@@ -74,6 +76,8 @@ namespace GradingBookProject.Forms
             {
                 await UpdateUsers();
                 await groupRepo.EditOne(currGroup);
+
+                await Globals.UpdateCurrentUser();
                 this.Close();
             }
             else
@@ -94,6 +98,9 @@ namespace GradingBookProject.Forms
                 currGroup.id = retGroup.id; 
                 //adding users
                 await UpdateUsers();
+
+                await Globals.UpdateCurrentUser();
+
                 this.Close();
             }
 
@@ -102,6 +109,7 @@ namespace GradingBookProject.Forms
         private async Task UpdateUsers()
         {
             HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
+            ICollection<GroupDetailsViewModel> listOfDetails = new List<GroupDetailsViewModel>();
             //adding new users
             foreach (UsersViewModel user in usersBindingSource)
             {
@@ -110,11 +118,21 @@ namespace GradingBookProject.Forms
                     user_id = user.id,
                     group_id = currGroup.id
                 };
-
+                listOfDetails.Add(newDetail);
                 if (!(await repo.DetailExists(newDetail))) //if given connection does not exist then add it
                 {
                     var detailRepo = new HttpGroupDetailsRepository();
                     await detailRepo.AddOne(newDetail);
+                   // currGroup.GroupDetails.Add(newDetail); //synchronize current group with db
+                }
+            }
+            HttpGroupsRepository groupsRepo = new HttpGroupsRepository();
+            var actualGroup = await groupsRepo.GetOne(currGroup.id); //actual group to synchronize from db
+            foreach (var detail in actualGroup.GroupDetails)
+            {
+                if (listOfDetails.Count(d => d.group_id == detail.group_id && d.user_id == detail.user_id) == 0) //if currGroup does not contain any of detail then delete it from db
+                {
+                    await repo.DeleteOne(detail);
                 }
             }
         }
@@ -142,12 +160,18 @@ namespace GradingBookProject.Forms
 
             if (await repo.UserExists(username))
             {
-                usersBindingSource.Add(await repo.GetUser(username));
+                var user = await repo.GetUser(username);
+                usersBindingSource.Add(user);
             }
             else
             {
                 MessageBox.Show("There is no such a user!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     }

@@ -29,6 +29,7 @@ namespace GradingBookProject.Models
         public virtual DbSet<Groups> Groups { get; set; }
         public virtual DbSet<SubjectDetails> SubjectDetails { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Years> Years { get; set; }
     }

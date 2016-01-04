@@ -59,10 +59,11 @@ namespace GradingBookApi.Controllers
         public async Task<IHttpActionResult> PutSubjectDetails(int id, SubjectDetailsViewModel subjectDetails)
         {
             SubjectDetails local=  await db.SubjectDetails.FindAsync(id);
-                local.grade_date = subjectDetails.grade_date;
-                local.grade_desc = subjectDetails.grade_desc;
-                local.grade_value = subjectDetails.grade_value;
-                local.grade_weight = subjectDetails.grade_weight;
+            local.grade_date = subjectDetails.grade_date;
+            local.grade_desc = subjectDetails.grade_desc;
+            local.grade_value = subjectDetails.grade_value;
+            local.grade_weight = subjectDetails.grade_weight;
+            local.user_id = subjectDetails.user_id;
 
             if (!ModelState.IsValid)
             {
@@ -111,6 +112,7 @@ namespace GradingBookApi.Controllers
                 grade_value = subjectDetails.grade_value,
                 grade_weight = subjectDetails.grade_weight,
                 sub_id = subjectDetails.sub_id,
+                user_id = subjectDetails.user_id
             };
 
             db.SubjectDetails.Add(newSubjectDetail);

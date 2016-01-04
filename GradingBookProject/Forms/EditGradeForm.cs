@@ -132,7 +132,10 @@ namespace GradingBookProject.Forms
                     if (!addGrade)
                         await grades.EditOne(g);
                     else
+                    {
+                        g.user_id = Globals.CurrentUser.id;
                         await grades.AddOne(g);
+                    }
                     this.Close();
                 }
                 catch (Exception ex) {

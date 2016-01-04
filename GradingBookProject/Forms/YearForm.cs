@@ -40,6 +40,10 @@ namespace GradingBookProject.Forms
         /// </summary>
         private int userid = Globals.CurrentUser.id;
         /// <summary>
+        /// Group to which we add year. By default is null.
+        /// </summary>
+        private GroupsViewModel currGroup = null;
+        /// <summary>
         /// Constructor taking existing Year and filling in the form.
         /// </summary>
         /// <param name="year">Year to edit.</param>
@@ -50,9 +54,11 @@ namespace GradingBookProject.Forms
         }
         /// <summary>
         /// Loads data from given year to a form.
-        /// </summary>
         /// <param name="year">Year to be displayed</param>
+        /// <param name="forGroup">indicates if we create year for a group</param>
+        /// </summary>
         private async void LoadData(YearsViewModel year) {
+
             yearsRepo = new HttpYearsRepository();
             if ((yearLocal = await yearsRepo.GetOne(year.id)) != null)
             {
@@ -63,9 +69,7 @@ namespace GradingBookProject.Forms
                 edit = true;
             }
         }
-        /// <summary>
-        /// Pure form for adding a new Year.
-        /// </summary>
+
         public YearForm()
         {
             InitializeComponent();
@@ -74,6 +78,15 @@ namespace GradingBookProject.Forms
             txtYearEnd.Text = DateTime.Now.AddDays(100).ToString("d");
             yearLocal = new YearsViewModel();
             yearLocal.user_id = Globals.CurrentUser.id;
+        }
+        /// <summary>
+        /// Constructor taking group to which year is assigned.
+        /// </summary>
+        /// <param name="group"></param>
+        public YearForm(GroupsViewModel group) : this()
+        {
+            currGroup = group;
+
         }
         /// <summary>
         /// Saves either a new Year to database or edited existing.
@@ -96,15 +109,27 @@ namespace GradingBookProject.Forms
             yearLocal.end_date = DateTime.Parse(txtYearEnd.Text);
             yearLocal.name = txtYearName.Text;
             yearLocal.year_desc = txtYearDesc.Text;
-            yearLocal.user_id = Globals.CurrentUser.id;
+            
 
             try
             {
+                if (currGroup != null)//determines if year belongs to group or to the user
+                {
+                    yearLocal.group_id = currGroup.id;
+                }
+                else
+                {
+                    yearLocal.user_id = Globals.CurrentUser.id;
+
+                }
                 // Depending on whether you add or edit a Year different operation is called.
                 if (edit)
                     await yearsRepo.EditOne(yearLocal);
                 else
-                    await yearsRepo.AddOne(yearLocal);
+                {
+
+                    await yearsRepo.AddOne(yearLocal); 
+                }
 
                 DialogResult dialogResult = MessageBox.Show("Changes saved successfuly.", "Year", MessageBoxButtons.OK);
                 this.Close();

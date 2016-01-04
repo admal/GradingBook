@@ -1,4 +1,6 @@
-﻿using GradingBookProject.Models;
+﻿using System.Threading.Tasks;
+using GradingBookProject.Data;
+using GradingBookProject.Models;
 using GradingBookProject.ViewModels;
 
 namespace GradingBookProject
@@ -13,5 +15,12 @@ namespace GradingBookProject
         /// </summary>
         //public static Users  CurrentUser { get; set; }
         public static UsersViewModel CurrentUser { get; set; }
+
+        public static async Task<bool> UpdateCurrentUser()
+        {
+            HttpUsersRepository repo = new HttpUsersRepository();
+            CurrentUser = await repo.GetOne(CurrentUser.id);
+            return true;
+        }
     }
 }

@@ -36,11 +36,12 @@
             this.btnLeave = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.yersGridView = new System.Windows.Forms.DataGridView();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.yearsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.enddateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yeardescDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yearsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.yersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yearsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -48,10 +49,10 @@
             // tbDesc
             // 
             this.tbDesc.Enabled = false;
-            this.tbDesc.Location = new System.Drawing.Point(12, 12);
+            this.tbDesc.Location = new System.Drawing.Point(12, 47);
             this.tbDesc.Multiline = true;
             this.tbDesc.Name = "tbDesc";
-            this.tbDesc.Size = new System.Drawing.Size(197, 131);
+            this.tbDesc.Size = new System.Drawing.Size(197, 96);
             this.tbDesc.TabIndex = 0;
             this.tbDesc.Text = "Description....";
             // 
@@ -78,9 +79,9 @@
             // btnAddYear
             // 
             this.btnAddYear.Enabled = false;
-            this.btnAddYear.Location = new System.Drawing.Point(523, 47);
+            this.btnAddYear.Location = new System.Drawing.Point(489, 47);
             this.btnAddYear.Name = "btnAddYear";
-            this.btnAddYear.Size = new System.Drawing.Size(75, 23);
+            this.btnAddYear.Size = new System.Drawing.Size(109, 23);
             this.btnAddYear.TabIndex = 3;
             this.btnAddYear.Text = "Add year";
             this.btnAddYear.UseVisualStyleBackColor = true;
@@ -88,9 +89,9 @@
             // 
             // btnLeave
             // 
-            this.btnLeave.Location = new System.Drawing.Point(523, 76);
+            this.btnLeave.Location = new System.Drawing.Point(489, 76);
             this.btnLeave.Name = "btnLeave";
-            this.btnLeave.Size = new System.Drawing.Size(75, 23);
+            this.btnLeave.Size = new System.Drawing.Size(109, 23);
             this.btnLeave.TabIndex = 5;
             this.btnLeave.Text = "Leave group";
             this.btnLeave.UseVisualStyleBackColor = true;
@@ -124,6 +125,20 @@
             this.yersGridView.Size = new System.Drawing.Size(586, 208);
             this.yersGridView.TabIndex = 7;
             // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblTitle.Location = new System.Drawing.Point(12, 9);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(85, 29);
+            this.lblTitle.TabIndex = 8;
+            this.lblTitle.Text = "label1";
+            // 
+            // yearsBindingSource
+            // 
+            this.yearsBindingSource.DataSource = typeof(GradingBookProject.ViewModels.YearsViewModel);
+            // 
             // nameDataGridViewTextBoxColumn
             // 
             this.nameDataGridViewTextBoxColumn.DataPropertyName = "name";
@@ -134,14 +149,14 @@
             // startDataGridViewTextBoxColumn
             // 
             this.startDataGridViewTextBoxColumn.DataPropertyName = "start";
-            this.startDataGridViewTextBoxColumn.HeaderText = "Starts at";
+            this.startDataGridViewTextBoxColumn.HeaderText = "Start";
             this.startDataGridViewTextBoxColumn.Name = "startDataGridViewTextBoxColumn";
             this.startDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // enddateDataGridViewTextBoxColumn
             // 
             this.enddateDataGridViewTextBoxColumn.DataPropertyName = "end_date";
-            this.enddateDataGridViewTextBoxColumn.HeaderText = "Ends at";
+            this.enddateDataGridViewTextBoxColumn.HeaderText = "End";
             this.enddateDataGridViewTextBoxColumn.Name = "enddateDataGridViewTextBoxColumn";
             this.enddateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -153,15 +168,12 @@
             this.yeardescDataGridViewTextBoxColumn.Name = "yeardescDataGridViewTextBoxColumn";
             this.yeardescDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // yearsBindingSource
-            // 
-            this.yearsBindingSource.DataSource = typeof(GradingBookProject.Models.Years);
-            // 
             // GroupViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(616, 398);
+            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.yersGridView);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnLeave);
@@ -187,6 +199,7 @@
         private System.Windows.Forms.Button btnLeave;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.DataGridView yersGridView;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn startDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn enddateDataGridViewTextBoxColumn;

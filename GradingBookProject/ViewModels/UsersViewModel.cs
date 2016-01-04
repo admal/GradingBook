@@ -19,6 +19,7 @@ namespace GradingBookProject.ViewModels
         public virtual ICollection<GroupDetailsViewModel> GroupDetails { get; set; }
         public virtual ICollection<GroupsViewModel> Groups { get; set; }
         public virtual ICollection<YearsViewModel> Years { get; set; }
+        public virtual ICollection<SubjectDetailsViewModel> SubjectDetails { get; set; }
 
         public override string ToString()
         {
