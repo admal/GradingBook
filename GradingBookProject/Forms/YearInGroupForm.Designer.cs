@@ -28,76 +28,145 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnAdd = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
             this.btnEdit = new System.Windows.Forms.Button();
-            this.tableUsers = new System.Windows.Forms.TableLayoutPanel();
-            this.tableSubjects = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonPanel = new System.Windows.Forms.Panel();
+            this.dataPanel = new System.Windows.Forms.Panel();
+            this.subjectsGridView = new System.Windows.Forms.DataGridView();
+            this.usersGridView = new System.Windows.Forms.DataGridView();
+            this.subjectsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.teachermailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.subdescDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAddSubject = new System.Windows.Forms.Button();
+            this.buttonPanel.SuspendLayout();
+            this.dataPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.subjectsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subjectsViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(12, 12);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Add year";
-            this.btnAdd.UseVisualStyleBackColor = true;
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(93, 12);
+            this.btnEdit.Location = new System.Drawing.Point(93, 3);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 1;
             this.btnEdit.Text = "Edit year";
             this.btnEdit.UseVisualStyleBackColor = true;
             // 
-            // tableUsers
+            // buttonPanel
             // 
-            this.tableUsers.ColumnCount = 2;
-            this.tableUsers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableUsers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableUsers.Location = new System.Drawing.Point(12, 41);
-            this.tableUsers.Name = "tableUsers";
-            this.tableUsers.RowCount = 2;
-            this.tableUsers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableUsers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableUsers.Size = new System.Drawing.Size(596, 180);
-            this.tableUsers.TabIndex = 2;
+            this.buttonPanel.Controls.Add(this.btnAddSubject);
+            this.buttonPanel.Controls.Add(this.btnEdit);
+            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonPanel.Location = new System.Drawing.Point(0, 0);
+            this.buttonPanel.Name = "buttonPanel";
+            this.buttonPanel.Size = new System.Drawing.Size(620, 34);
+            this.buttonPanel.TabIndex = 4;
+            this.buttonPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // tableSubjects
+            // dataPanel
             // 
-            this.tableSubjects.ColumnCount = 2;
-            this.tableSubjects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableSubjects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableSubjects.Location = new System.Drawing.Point(12, 240);
-            this.tableSubjects.Name = "tableSubjects";
-            this.tableSubjects.RowCount = 2;
-            this.tableSubjects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableSubjects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableSubjects.Size = new System.Drawing.Size(596, 195);
-            this.tableSubjects.TabIndex = 3;
+            this.dataPanel.Controls.Add(this.usersGridView);
+            this.dataPanel.Controls.Add(this.subjectsGridView);
+            this.dataPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataPanel.Location = new System.Drawing.Point(0, 34);
+            this.dataPanel.Name = "dataPanel";
+            this.dataPanel.Size = new System.Drawing.Size(620, 413);
+            this.dataPanel.TabIndex = 5;
+            // 
+            // subjectsGridView
+            // 
+            this.subjectsGridView.AllowUserToAddRows = false;
+            this.subjectsGridView.AllowUserToDeleteRows = false;
+            this.subjectsGridView.AutoGenerateColumns = false;
+            this.subjectsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.subjectsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.teachermailDataGridViewTextBoxColumn,
+            this.subdescDataGridViewTextBoxColumn});
+            this.subjectsGridView.DataSource = this.subjectsViewModelBindingSource;
+            this.subjectsGridView.Dock = System.Windows.Forms.DockStyle.Top;
+            this.subjectsGridView.Location = new System.Drawing.Point(0, 0);
+            this.subjectsGridView.Name = "subjectsGridView";
+            this.subjectsGridView.ReadOnly = true;
+            this.subjectsGridView.Size = new System.Drawing.Size(620, 202);
+            this.subjectsGridView.TabIndex = 0;
+            // 
+            // usersGridView
+            // 
+            this.usersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.usersGridView.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.usersGridView.Location = new System.Drawing.Point(0, 208);
+            this.usersGridView.Name = "usersGridView";
+            this.usersGridView.Size = new System.Drawing.Size(620, 205);
+            this.usersGridView.TabIndex = 1;
+            // 
+            // subjectsViewModelBindingSource
+            // 
+            this.subjectsViewModelBindingSource.DataSource = typeof(GradingBookProject.ViewModels.SubjectsViewModel);
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // teachermailDataGridViewTextBoxColumn
+            // 
+            this.teachermailDataGridViewTextBoxColumn.DataPropertyName = "teacher_mail";
+            this.teachermailDataGridViewTextBoxColumn.HeaderText = "Teacher\'s mail";
+            this.teachermailDataGridViewTextBoxColumn.Name = "teachermailDataGridViewTextBoxColumn";
+            this.teachermailDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // subdescDataGridViewTextBoxColumn
+            // 
+            this.subdescDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.subdescDataGridViewTextBoxColumn.DataPropertyName = "sub_desc";
+            this.subdescDataGridViewTextBoxColumn.HeaderText = "Description";
+            this.subdescDataGridViewTextBoxColumn.Name = "subdescDataGridViewTextBoxColumn";
+            this.subdescDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // btnAddSubject
+            // 
+            this.btnAddSubject.Location = new System.Drawing.Point(12, 3);
+            this.btnAddSubject.Name = "btnAddSubject";
+            this.btnAddSubject.Size = new System.Drawing.Size(75, 23);
+            this.btnAddSubject.TabIndex = 2;
+            this.btnAddSubject.Text = "Add subject";
+            this.btnAddSubject.UseVisualStyleBackColor = true;
             // 
             // YearInGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(620, 447);
-            this.Controls.Add(this.tableSubjects);
-            this.Controls.Add(this.tableUsers);
-            this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.dataPanel);
+            this.Controls.Add(this.buttonPanel);
             this.Name = "YearInGroupForm";
             this.Text = "YearInGroupForm";
+            this.buttonPanel.ResumeLayout(false);
+            this.dataPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.subjectsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subjectsViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.TableLayoutPanel tableUsers;
-        private System.Windows.Forms.TableLayoutPanel tableSubjects;
+        private System.Windows.Forms.Panel buttonPanel;
+        private System.Windows.Forms.Panel dataPanel;
+        private System.Windows.Forms.DataGridView usersGridView;
+        private System.Windows.Forms.DataGridView subjectsGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn teachermailDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subdescDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource subjectsViewModelBindingSource;
+        private System.Windows.Forms.Button btnAddSubject;
     }
 }
