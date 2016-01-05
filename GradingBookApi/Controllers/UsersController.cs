@@ -16,19 +16,31 @@ using GradingBookProject.ViewModels;
 
 namespace GradingBookApi.Controllers
 {
+    /// <summary>
+    /// Api controller to manage operations on groups.
+    /// </summary>
     public class UsersController : ApiController
     {
+        /// <summary>
+        /// databse context
+        /// </summary>
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
-
-
+        /// <summary>
+        /// Get all users from the database.
+        /// </summary>
+        /// <returns>Groups from db</returns>
         public IQueryable<UsersViewModel> GetUsers()
         {
             var users = db.Users.ProjectTo<UsersViewModel>();
             return users;
         }
 
-        
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="id">id of user</param>
+        /// <returns>Single user with the given id, not found response</returns>
         [ResponseType(typeof(UsersViewModel))]
         public async Task<IHttpActionResult> GetUsers(int id)
         {
@@ -43,7 +55,12 @@ namespace GradingBookApi.Controllers
 
 
         // PUT: api/Users/5
-
+        /// <summary>
+        /// Edits user with given id.
+        /// </summary>
+        /// <param name="id">user id</param>
+        /// <param name="users">edited user</param>
+        /// <returns>Edited user view model, bad request, not found responses</returns>
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutUsers(int id, UsersViewModel users)
         {
@@ -87,6 +104,11 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/Users
+        /// <summary>
+        /// Adds new user to db.
+        /// </summary>
+        /// <param name="users">User to be added</param>
+        /// <returns>Added user view model, bad request response.</returns>
         [ResponseType(typeof(UsersViewModel))]
         public async Task<IHttpActionResult> PostUsers(UsersViewModel users)
         {
@@ -110,8 +132,12 @@ namespace GradingBookApi.Controllers
             return CreatedAtRoute("DefaultApi", new { id = users.id }, users);
         }
 
-        
 
+        /// <summary>
+        /// Deletes user with given id.
+        /// </summary>
+        /// <param name="id">id of the user</param>
+        /// <returns>Deleted user view model, not found response</returns>
         [ResponseType(typeof(UsersViewModel))]
         public async Task<IHttpActionResult> DeleteUsers(int id)
         {
@@ -129,6 +155,11 @@ namespace GradingBookApi.Controllers
             return Ok(retUser);
         }
 
+        /// <summary>
+        /// Finds user with the given username.
+        /// </summary>
+        /// <param name="username">username of searched user</param>
+        /// <returns>User view model with the given username, not found response</returns>
         [HttpGet]
         [ActionName("GetByUsername")]
         [ResponseType(typeof(UsersViewModel))]
@@ -142,7 +173,10 @@ namespace GradingBookApi.Controllers
             var retUser = Mapper.Map<UsersViewModel>(user);
             return Ok(retUser);
         }
-
+        /// <summary>
+        /// Close connection to the database.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -151,7 +185,11 @@ namespace GradingBookApi.Controllers
             }
             base.Dispose(disposing);
         }
-
+        /// <summary>
+        /// Checks whether specified user exists in the database.
+        /// </summary>
+        /// <param name="id">id of the user </param>
+        /// <returns>true - if there is such a user, false - otherwise</returns>
         private bool UsersExists(int id)
         {
             return db.Users.Count(e => e.id == id) > 0;

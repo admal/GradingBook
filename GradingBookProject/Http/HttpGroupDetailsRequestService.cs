@@ -39,6 +39,12 @@ namespace GradingBookProject.Http
                 }
             }
         }
+        /// <summary>
+        /// Sends request to the api to delete GroupsDetail with given ids.
+        /// </summary>
+        /// <param name="groupId">id of the group.</param>
+        /// <param name="userId">id of the user</param>
+        /// <returns>Deleted detail view model, default value</returns>
         public async Task<GroupDetailsViewModel> RemoveDetail(int groupId, int userId)
         {
             using (var client = new HttpClient())
@@ -59,7 +65,11 @@ namespace GradingBookProject.Http
                 }
             }
         }
-
+        /// <summary>
+        /// All details of groups that user belongs to.
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <returns>List of details, default value</returns>
         public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForUser(int userId)
         {
             using (var client = new HttpClient())
@@ -80,6 +90,11 @@ namespace GradingBookProject.Http
                 }
             }
         }
+        /// <summary>
+        /// All details of the group.
+        /// </summary>
+        /// <param name="groupId">group id</param>
+        /// <returns>List of details, default value</returns>
         public async Task<ICollection<GroupDetailsViewModel>> GetGroupDetailsForGroup(int groupId)
         {
             using (var client = new HttpClient())

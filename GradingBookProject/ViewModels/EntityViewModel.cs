@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.ViewModels
 {
+    /// <summary>
+    /// View model of the db entity
+    /// </summary>
     public class EntityViewModel
     {
         /// <summary>

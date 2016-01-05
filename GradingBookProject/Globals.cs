@@ -16,11 +16,14 @@ namespace GradingBookProject
         //public static Users  CurrentUser { get; set; }
         public static UsersViewModel CurrentUser { get; set; }
 
-        public static async Task<bool> UpdateCurrentUser()
+        /// <summary>
+        /// Funciton updates currently logged user to have the same data as in databse.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task UpdateCurrentUser()
         {
             HttpUsersRepository repo = new HttpUsersRepository();
             CurrentUser = await repo.GetOne(CurrentUser.id);
-            return true;
         }
     }
 }

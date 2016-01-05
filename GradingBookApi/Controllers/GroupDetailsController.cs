@@ -1,26 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using GradingBookProject.Http;
 using GradingBookProject.Models;
 using GradingBookProject.ViewModels;
 
 namespace GradingBookApi.Controllers
 {
+    /// <summary>
+    /// Api controller to manage operations on GroupDetails (they are members of the group)
+    /// </summary>
     public class GroupDetailsController : ApiController
     {
+        /// <summary>
+        /// databse context
+        /// </summary>
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
+        /// <summary>
+        /// Checks whether specified detail exists in the database.
+        /// </summary>
+        /// <param name="groupId">id of the group to which detail belongs</param>
+        /// <param name="userId">id of user in the group</param>
+        /// <returns>true - if there is such a detail, false - otherwise</returns>
         [HttpGet]
         [ActionName("DetailExists")]
         public async Task<bool> DetailExists(int groupId, int userId )
@@ -28,7 +36,12 @@ namespace GradingBookApi.Controllers
             bool exists = (await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == userId) != null);
             return exists;
         }
-
+        /// <summary>
+        /// Removes detail with specyfied user and group.
+        /// </summary>
+        /// <param name="groupId">id of the group to which detail belongs</param>
+        /// <param name="userId">id of user in the group</param>
+        /// <returns>Removed detail. Not found call if there was not such detail.</returns>
         [HttpGet]
         [ActionName("RemoveDetail")]
         public async Task<IHttpActionResult> RemoveDetail(int groupId, int userId)
@@ -76,8 +89,12 @@ namespace GradingBookApi.Controllers
             return details;
         }
 
-
+        
         // GET: api/GroupDetails
+        /// <summary>
+        /// Get all details from the database.
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<GroupDetailsViewModel> GetGroupDetails()
         {
             var details = db.GroupDetails.ProjectTo<GroupDetailsViewModel>();
@@ -85,6 +102,11 @@ namespace GradingBookApi.Controllers
         }
 
         // GET: api/GroupDetails/5
+        /// <summary>
+        /// Get group detail by id.
+        /// </summary>
+        /// <param name="id">Id of the detail</param>
+        /// <returns>Detail with specified id, NotFound call otherwise.</returns>
         [ResponseType(typeof(GroupDetailsViewModel))]
         public async Task<IHttpActionResult> GetGroupDetails(int id)
         {
@@ -98,6 +120,12 @@ namespace GradingBookApi.Controllers
         }
 
         // PUT: api/GroupDetails/5
+        /// <summary>
+        /// Edits given detail.
+        /// </summary>
+        /// <param name="id">id of detail</param>
+        /// <param name="groupDetails">edited groupDetail</param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutGroupDetails(int id, GroupDetails groupDetails)
         {
@@ -133,6 +161,11 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/GroupDetails
+        /// <summary>
+        /// Adds given detail to database.
+        /// </summary>
+        /// <param name="groupDetails">View model of the group detail model that needs to be added to database.</param>
+        /// <returns>Added detail, bad request response if there was error.</returns>
         [ResponseType(typeof(GroupDetailsViewModel))]
         public async Task<IHttpActionResult> PostGroupDetails(GroupDetailsViewModel groupDetails)
         {
@@ -153,6 +186,11 @@ namespace GradingBookApi.Controllers
         }
 
         // DELETE: api/GroupDetails/5
+        /// <summary>
+        /// Deletes detail with given id.
+        /// </summary>
+        /// <param name="id">Id of the detail to delete.</param>
+        /// <returns>Deleted detail, not found response if there was an error.</returns>
         [ResponseType(typeof(GroupDetailsViewModel))]
         public async Task<IHttpActionResult> DeleteGroupDetails(int id)
         {
@@ -167,7 +205,12 @@ namespace GradingBookApi.Controllers
             var retDetail = Mapper.Map<GroupDetailsViewModel>(groupDetail);
             return Ok(retDetail);
         }
-
+        /// <summary>
+        /// Deletes detail with given user id and group id.
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <param name="groupId">group id</param>
+        /// <returns>Deleted detail, not found response if there was an error.</returns>
         [ResponseType(typeof(GroupDetailsViewModel))]
         public async Task<IHttpActionResult> DeleteGroupDetails(int userId, int groupId)
         {
@@ -178,7 +221,10 @@ namespace GradingBookApi.Controllers
             var retDetail = Mapper.Map<GroupDetailsViewModel>(groupDetail);
             return Ok(retDetail);
         }
-
+        /// <summary>
+        /// Close connection to the database.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -187,7 +233,11 @@ namespace GradingBookApi.Controllers
             }
             base.Dispose(disposing);
         }
-
+        /// <summary>
+        /// Checks whether specified detail exists in the database.
+        /// </summary>
+        /// <param name="id">id of the detail belongs</param>
+        /// <returns>true - if there is such a detail, false - otherwise</returns>
         private bool GroupDetailsExists(int id)
         {
             return db.GroupDetails.Count(e => e.id == id) > 0;

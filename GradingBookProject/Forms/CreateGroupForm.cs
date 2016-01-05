@@ -14,10 +14,26 @@ using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Form to create new group, it allows to put name and description of the group and add members to it.
+    /// Form also allows us to edit already existing group.
+    /// </summary>
     public partial class CreateGroupForm : Form
     {
+        /// <summary>
+        /// New group or currently loaded to edit
+        /// </summary>
         private GroupsViewModel currGroup;
+        /// <summary>
+        /// Indicates if user edits group or creates new one
+        /// </summary>
         private bool edit;
+        /// <summary>
+        /// Constructor
+        /// If the group is edited it fills text boxes and lists with proper data.
+        /// </summary>
+        /// <param name="group">loaded group </param>
+        /// <param name="edit">indicates if we edit a group or user creates new one</param>
         public CreateGroupForm(GroupsViewModel group, bool edit)
         {
             InitializeComponent();
@@ -50,7 +66,9 @@ namespace GradingBookProject.Forms
                }
             }
         }
-
+        /// <summary>
+        /// Updates binding source.
+        /// </summary>
         public async void UpdateSource()
         {
             var repo = new HttpUsersRepository();
@@ -71,7 +89,11 @@ namespace GradingBookProject.Forms
         //    //UsersViewModel user = usersBindingSource[currId] as UsersViewModel;
         //    //await repo.RemoveDetail(user.id, currGroup.id);
         //}
-
+        /// <summary>
+        /// Saves and validates provided data.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SaveChangesClick(object sender, EventArgs e)
         {
             IStringValidator validator = new Validator();
@@ -119,11 +141,23 @@ namespace GradingBookProject.Forms
             }
 
         }
-
+        /// <summary>
+        /// Updates added members added to the database.
+        /// </summary>
+        /// <returns></returns>
         private async Task UpdateUsers()
         {
             HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
             ICollection<GroupDetailsViewModel> listOfDetails = new List<GroupDetailsViewModel>();
+
+            //checking if creator is added to the group
+            if (!usersBindingSource.Contains(Globals.CurrentUser)) //if not add him and proper communicate
+            {
+                usersBindingSource.Add(Globals.CurrentUser);
+                MessageBox.Show("You removed yourself from the group, you were added to it automatically!","Warning",
+                    MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+
             //adding new users
             foreach (UsersViewModel user in usersBindingSource)
             {
@@ -150,7 +184,11 @@ namespace GradingBookProject.Forms
                 }
             }
         }
-
+        /// <summary>
+        /// Adds user to binding source and also validates the added user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void AddUserClick(object sender, EventArgs e)
         {
             HttpUsersRepository repo = new HttpUsersRepository();
@@ -161,11 +199,11 @@ namespace GradingBookProject.Forms
                 MessageBox.Show("Provide username!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (username == Globals.CurrentUser.username)
-            {
-                MessageBox.Show("You can not add yourself to group! (you are already in it)");
-                return;
-            }
+            //if (username == Globals.CurrentUser.username)
+            //{
+            //    MessageBox.Show("You can not add yourself to group! (you are already in it)");
+            //    return;
+            //}
             if (usersBindingSource.Cast<UsersViewModel>().Any(user => user.username == username))
             {
                 MessageBox.Show("You have already added such a user!");
@@ -182,7 +220,11 @@ namespace GradingBookProject.Forms
                 MessageBox.Show("There is no such a user!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        /// <summary>
+        /// Leaves the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();

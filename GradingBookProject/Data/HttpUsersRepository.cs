@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GradingBookProject.Http;
 using GradingBookProject.ViewModels;
@@ -12,6 +8,12 @@ namespace GradingBookProject.Data
 {
     class HttpUsersRepository : HttpRepository<UsersViewModel, HttpUserRequestService>
     {
+        /// <summary>
+        /// Login user with provided data. Method sends request to server and checks data corectness.
+        /// </summary>
+        /// <param name="username">username of user</param>
+        /// <param name="passwd">password of user</param>
+        /// <returns>true - if login process was succesful, false - otherwise</returns>
         public async Task<bool> LoginUser(string username, string passwd)
         {
             UsersViewModel user = null;
@@ -38,13 +40,21 @@ namespace GradingBookProject.Data
             }
             return false;
         }
-
+        /// <summary>
+        /// Get single user with the given username.
+        /// </summary>
+        /// <param name="username">username of user</param>
+        /// <returns>user</returns>
         public async Task<UsersViewModel> GetUser(string username)
         {
             var user = await requestService.GetUserByUsername(username);
             return user;
         }
-
+        /// <summary>
+        /// Checks if user with given username exists
+        /// </summary>
+        /// <param name="username">username of user</param>
+        /// <returns>true - if it exists, false -otherwise</returns>
         public async Task<bool> UserExists(string username)
         {
             var user = await requestService.GetUserByUsername(username);

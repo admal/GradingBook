@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using AutoMapper;
+using GradingBookApi.App_Start;
 using GradingBookProject.Models;
 using GradingBookProject.ViewModels;
 
@@ -9,18 +10,9 @@ namespace GradingBookApi
     {
         protected void Application_Start()
         {
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<Users, UsersViewModel>();
-                config.CreateMap<GroupDetails, GroupDetailsViewModel>();
-                config.CreateMap<Groups, GroupsViewModel>();
-                config.CreateMap<Years, YearsViewModel>();
-                config.CreateMap<Subjects, SubjectsViewModel>();
-                config.CreateMap<SubjectDetails, SubjectDetailsViewModel>();
-            });
+            AutoMapperConfig.Register();
 
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-
             GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
             GlobalConfiguration.Configure(WebApiConfig.Register);   

@@ -13,9 +13,18 @@ using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Form shows all groups that user is a member or an administrator.
+    /// </summary>
     public partial class YourGroupsForm : Form
     {
+        /// <summary>
+        /// Current user
+        /// </summary>
         private UsersViewModel currUser;
+        /// <summary>
+        /// Contructor fills list of groups and assigns event hanlders
+        /// </summary>
         public YourGroupsForm()
         {
             InitializeComponent();
@@ -24,7 +33,9 @@ namespace GradingBookProject.Forms
             groupsGridView.CellContentClick += EditGroupClick;
             groupsGridView.CellDoubleClick += SeeGroupDetailsClick;
         }
-
+        /// <summary>
+        /// Updates binding source
+        /// </summary>
         public async void UpdateGridView()
         {
             currUser = Globals.CurrentUser;
@@ -38,7 +49,11 @@ namespace GradingBookProject.Forms
             groupsGridView.Update();
         }
 
-
+        /// <summary>
+        /// Shows CreateGroupForm for editing chosen group (only if user is administartor of the group)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditGroupClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
@@ -56,7 +71,11 @@ namespace GradingBookProject.Forms
                 UpdateGridView();
             }
         }
-
+        /// <summary>
+        /// Shows details of the chosen group.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void SeeGroupDetailsClick(object sender, DataGridViewCellEventArgs e)
         {
             int idx = e.RowIndex;
@@ -73,12 +92,20 @@ namespace GradingBookProject.Forms
                 }
             }
         }
-
+        /// <summary>
+        /// Goes to the previous form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BackClick(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// Shows CreateGroupForm to create new group.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewGroupClick(object sender, EventArgs e)
         {
             var createForm = new CreateGroupForm(new GroupsViewModel(), false);

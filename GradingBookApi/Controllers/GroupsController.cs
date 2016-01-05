@@ -12,11 +12,21 @@ using GradingBookProject.Models;
 
 namespace GradingBookApi.Controllers
 {
+    /// <summary>
+    /// Api controller to manage operations on groups.
+    /// </summary>
     public class GroupsController : ApiController
     {
+        /// <summary>
+        /// databse context
+        /// </summary>
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
         // GET: api/Groups
+        /// <summary>
+        /// Get all groups from the database.
+        /// </summary>
+        /// <returns>Groups from db</returns>
         public IQueryable<GroupsViewModel> GetGroups()
         {
             var groups = db.Groups.ProjectTo<GroupsViewModel>();
@@ -24,6 +34,11 @@ namespace GradingBookApi.Controllers
         }
 
         // GET: api/Groups/5
+        /// <summary>
+        /// Get single group by id.
+        /// </summary>
+        /// <param name="id">id of the group</param>
+        /// <returns>Group view model, not found response</returns>
         [ResponseType(typeof(GroupsViewModel))]
         public async Task<IHttpActionResult> GetGroups(int id)
         {
@@ -37,6 +52,12 @@ namespace GradingBookApi.Controllers
         }
 
         // PUT: api/Groups/5
+        /// <summary>
+        /// Edits group with given id.
+        /// </summary>
+        /// <param name="id">id of the group</param>
+        /// <param name="groups">edited group</param>
+        /// <returns>Edited group view model, bad request, not found responses</returns>
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutGroups(int id, GroupsViewModel groups)
         {
@@ -79,6 +100,11 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/Groups
+        /// <summary>
+        /// Add new group to the database.
+        /// </summary>
+        /// <param name="groups">Group to be added</param>
+        /// <returns>Added group view model, bad request response.</returns>
         [ResponseType(typeof(GroupsViewModel))]
         public async Task<IHttpActionResult> PostGroups(GroupsViewModel groups)
         {
@@ -103,6 +129,11 @@ namespace GradingBookApi.Controllers
         }
 
         // DELETE: api/Groups/5
+        /// <summary>
+        /// Deletes group with given id.
+        /// </summary>
+        /// <param name="id">id of the group</param>
+        /// <returns>Deleted group view model, not found response</returns>
         [ResponseType(typeof(GroupsViewModel))]
         public async Task<IHttpActionResult> DeleteGroups(int id)
         {
@@ -118,7 +149,10 @@ namespace GradingBookApi.Controllers
             var retGroup = Mapper.Map<GroupsViewModel>(group);
             return Ok(retGroup);
         }
-
+        /// <summary>
+        /// Close connection to the database.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -127,7 +161,11 @@ namespace GradingBookApi.Controllers
             }
             base.Dispose(disposing);
         }
-
+        /// <summary>
+        /// Checks whether specified group exists in the database.
+        /// </summary>
+        /// <param name="id">id of the group belongs</param>
+        /// <returns>true - if there is such a group, false - otherwise</returns>
         private bool GroupsExists(int id)
         {
             return db.Groups.Count(e => e.id == id) > 0;

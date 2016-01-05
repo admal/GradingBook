@@ -9,7 +9,7 @@ using GradingBookProject.ViewModels;
 namespace GradingBookProject.Data
 {
     /// <summary>
-    /// Base class for basic data operations on entities.
+    /// Base class for basic data operations on entities via http requests.
     /// </summary>
     /// <typeparam name="T">Model type.</typeparam>
     /// <typeparam name="Y">Type of request service.</typeparam>
