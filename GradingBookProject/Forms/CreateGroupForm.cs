@@ -34,7 +34,21 @@ namespace GradingBookProject.Forms
             {
                 usersBindingSource.Add(Globals.CurrentUser);
             }
+            usersDataView.CellDoubleClick += SeeUsersProfile;
+        }
 
+        private void SeeUsersProfile(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            
+
+            if (index >= 0 && index < usersBindingSource.Count) {
+               UsersViewModel user =  usersBindingSource[index] as UsersViewModel;
+               if (user != null) {
+                   var form = new MainForm(user.username);
+                   form.ShowDialog();
+               }
+            }
         }
 
         public async void UpdateSource()

@@ -49,6 +49,8 @@ namespace GradingBookProject.Forms
                 YearsViewModel year = yearsBindingSource[idx] as YearsViewModel;
                 MessageBox.Show("Year: " + year.name);
                 //show form
+                var form = new YearInGroupForm((int)year.group_id, year.id, isAdmin);
+                form.ShowDialog();
             }
         }
 

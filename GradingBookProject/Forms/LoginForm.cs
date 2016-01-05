@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using GradingBookProject.Data;
 using GradingBookProject.ViewModels;
 using Ninject;
+using Ninject.Parameters;
 
 namespace GradingBookProject.Forms
 {

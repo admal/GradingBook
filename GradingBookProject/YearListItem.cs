@@ -13,15 +13,26 @@ namespace GradingBookProject
     {
         private string name;
         private int id;
+        private bool clickable = false;
         /// <summary>
         /// Takes the name of the year and it's id.
         /// </summary>
         /// <param name="_name">Year name.</param>
         /// <param name="_id">Year id.</param>
-        public YearListItem(string _name, int _id) 
+        public YearListItem(string _name, int _id, bool click = true) 
         {
+            clickable = click;
             name = _name;
             id = _id;
+        }
+
+        public YearListItem(string _name) {
+            clickable = false;
+            name = "<----" + _name + "---->";
+        }
+        public bool Clickable 
+        {
+            get { return clickable; }
         }
         /// <summary>
         /// returns hidden Year id

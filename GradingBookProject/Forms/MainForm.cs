@@ -35,7 +35,7 @@ namespace GradingBookProject.Forms
 
         private bool visiting;
 
-        private bool toCloseApp = true;
+        private bool toCloseApp = false;
 
         /*-------------------------CONSTRUCTORS----------------------*/
         /// <summary>
@@ -56,11 +56,17 @@ namespace GradingBookProject.Forms
             UpdateYearList();
         }
 
+        /// <summary>
+        /// Initializes the form updates repositories and list of years.
+        /// </summary>
+        /// <param name="visitingUsername">Determines the user other than logged in to be viewed</param>
         public MainForm(string visitingUsername) {
             InitializeComponent();
 
             username = visitingUsername;
             visiting = true;
+
+            menuStrip1.Visible = false;
 
             UpdateRepositories();
 
@@ -92,40 +98,49 @@ namespace GradingBookProject.Forms
         /// </summary>
         private async void UpdateYearList(){
             listYear.Items.Clear();
+            listYear.Sorted = false;
+            //get list of years for user
             var yearsList = await years.GetYears(username);
-            if (yearsList != null && yearsList.Count != 0)
+
+            //Get groups from groupDetails using a username
+            var tempUser = await users.GetUser(username);
+            var groupDetailsList = await groupDetails.GetGroupDetailsForUser(tempUser.id);
+
+            if (yearsList != null && yearsList.Count != 0 && groupDetailsList != null && groupDetailsList.Count != 0)
             {
+
+                listYear.Items.Add(new YearListItem("Users Years"));
+                // populate with current user years
                 foreach (var year in yearsList)
                 {
                     YearListItem item = new YearListItem(year.name, year.id);
                     listYear.Items.Add(item);
                 }
 
-                //Get groups from groupDetails using a username
-                var tempUser = await users.GetUser(username);
-                var gd = await groupDetails.GetGroupDetailsForUser(tempUser.id);
-                if (gd != null)
+                List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
+                foreach (var groupDetail in groupDetailsList)
                 {
-                    List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
-                    foreach (var groupDetail in gd)
-                    {
-                        userGroups.Add(await groups.GetOne(groupDetail.group_id));
-                    }
+                    userGroups.Add(await groups.GetOne(groupDetail.group_id));
+                }
 
-                    //Cycle through groups and add Years and separators to the list of years
-                    foreach(var group in userGroups){
-                        var groupYears = await years.GetYearsOfGroup(group.id);
-                        if (groupYears != null && groupYears.Count != 0) {
-                            //listYear.Items.Add();
-                            foreach (var year in groupYears)
-                            {
-                                YearListItem item = new YearListItem(year.name, year.id);
-                                listYear.Items.Add(item);
-                            }
+                foreach (var group in userGroups)
+                {
+                    var groupYears = await years.GetYearsOfGroup(group.id);
+                    if (groupYears != null && groupYears.Count != 0)
+                    {
+                        //adding a separator with a name of the group
+                        listYear.Items.Add(new YearListItem(group.name));
+                        //listYear.Items.Add();
+                        foreach (var year in groupYears)
+                        {
+                            YearListItem item = new YearListItem(year.name, year.id);
+                            listYear.Items.Add(item);
                         }
+                      
                     }
                 }
 
+           
                 if (visiting)
                 {
                     btnAddSubject.Enabled = false;
@@ -170,10 +185,13 @@ namespace GradingBookProject.Forms
             ComboBox cmb = (ComboBox)sender;
             var selectedIndex = (int)cmb.SelectedIndex;
             var item= (YearListItem)cmb.SelectedItem;
-
-            selectedYear = await years.GetOne(item.Id);
-            selectedYearListItem = new YearListItem(item.ToString(), item.Id);
-            UpdateTable();
+            if (item.Clickable)
+            {
+                selectedYear = await years.GetOne(item.Id);
+                selectedYearListItem = new YearListItem(item.ToString(), item.Id);
+                UpdateTable();
+            }
+            
         }
 
         /// <summary>
@@ -185,62 +203,67 @@ namespace GradingBookProject.Forms
             ClearTableMarks();
             tableMarks.AutoSize = true;
             var yearsList = await years.GetYears(username);
-            var subjectsList = await subjects.GetSubjects(selectedYear);
-            //populate the Marks table with db records check if there are subjects on chosen year
-            if (yearsList != null && yearsList.Count() != 0 && selectedYear != null && subjectsList != null)
+            if (selectedYear != null)
             {
-
-                //var row = 0;
-                //var percentHeight = 100/subjectsEnumerated.Count();
-                foreach (var subject in subjectsList)
+                var subjectsList = await subjects.GetSubjects(selectedYear);
+                //populate the Marks table with db records check if there are subjects on chosen year
+                if (yearsList != null && yearsList.Count() != 0 && selectedYear != null && subjectsList != null)
                 {
-                    tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-                    LinkLabel temp;
 
-                    temp = new LinkLabel()
+                    //var row = 0;
+                    //var percentHeight = 100/subjectsEnumerated.Count();
+                    foreach (var subject in subjectsList)
                     {
-                        Text = subject.name,
-                        Anchor = AnchorStyles.Left,
-                        AutoSize = true,//false
-                        ActiveLinkColor = Color.Black,
-                        LinkBehavior = LinkBehavior.NeverUnderline,
-                        Tag = subject.id
-                    };
-                    if(visiting){
-                        temp.Enabled = false;
+                        tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                        LinkLabel temp;
+
+                        temp = new LinkLabel()
+                        {
+                            Text = subject.name,
+                            Anchor = AnchorStyles.Left,
+                            AutoSize = true,//false
+                            ActiveLinkColor = Color.Black,
+                            LinkBehavior = LinkBehavior.NeverUnderline,
+                            Tag = subject.id
+                        };
+                        if (visiting)
+                        {
+                            temp.Enabled = false;
+                        }
+
+                        tableMarks.Controls.Add(temp);
+                        temp.Click += new System.EventHandler(this.Subject_Click);
+
+                        CreateGradesLabels(subject);
+
+                        var gradesList = await grades.GetSubjectDetails(subject);
+                        var avg = CalculateAverage(gradesList.ToArray());
+
+                        tableMarks.Controls.Add(new Label()
+                            {
+                                Text = avg.ToString(),
+                                Anchor = AnchorStyles.Left,
+                                AutoSize = true,
+                            });
+                        var btn = new Button()
+                            {
+                                Text = "Add",
+                                Anchor = AnchorStyles.Left,
+                                AutoSize = true,
+                                Tag = subject.id,
+                            };
+
+                        if (visiting)
+                        {
+                            btn.Enabled = false;
+                        }
+
+                        btn.Click += AddGradeClick;
+                        tableMarks.Controls.Add(btn);
+                        tableMarks.RowCount++;
                     }
 
-                    tableMarks.Controls.Add(temp);
-                    temp.Click += new System.EventHandler(this.Subject_Click);
-
-                    CreateGradesLabels(subject);
-
-                    var gradesList = await grades.GetSubjectDetails(subject);
-                    var avg = CalculateAverage(gradesList.ToArray());
-
-                    tableMarks.Controls.Add(new Label()
-                    {
-                        Text = avg.ToString(),
-                        Anchor = AnchorStyles.Left,
-                        AutoSize = true,
-                    });
-                                        var btn = new Button()
-                    {
-                        Text = "Add",
-                        Anchor = AnchorStyles.Left,
-                        AutoSize = true,
-                        Tag = subject.id,
-                    };
-
-                    if (visiting) {
-                        btn.Enabled = false;                                        
-                    }
-
-                    btn.Click+=AddGradeClick;
-                    tableMarks.Controls.Add(btn);
-                    tableMarks.RowCount++;
                 }
-
             }
         }
 
@@ -502,7 +525,15 @@ namespace GradingBookProject.Forms
             //ToolStripMenuItem item = (ToolStripMenuItem)sender;
             //if(toCloseApp)
             //    Application.Exit();
-            toCloseApp = true;
+            if (visiting)
+            {
+                toCloseApp = false;
+
+            }
+            else
+            {
+                toCloseApp = true;
+            }
             this.Close();
         }
         private void ExitIconClick(object sender, FormClosedEventArgs e)
