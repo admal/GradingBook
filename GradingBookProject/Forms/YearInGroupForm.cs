@@ -38,12 +38,51 @@ namespace GradingBookProject.Forms
             subjects = new HttpSubjectsRepository();
             groupDetails = new HttpGroupDetailsRepository();
 
+            usersGridView.CellDoubleClick += seeUser;
+            subjectsGridView.CellDoubleClick += editSubject;
+
             UpdateTables();
 
             btnAddSubject.Click += AddSubject;
             if (!isAdmin)
             {
                 btnAddSubject.Visible = false;
+            }
+        }
+
+        private void editSubject(object sender, DataGridViewCellEventArgs e)
+        {
+            if (isAdmin)
+            {
+                int idx = e.RowIndex;
+                if (idx >= 0 && idx < subjectsBindingSource.Count)
+                {
+
+                    SubjectsViewModel subject = subjectsBindingSource[idx] as SubjectsViewModel;
+
+                    if (subject.id != null)
+                    {
+                        var form = new SubjectForm(subject);
+                        form.FormClosed += new FormClosedEventHandler(this.Form_Close);
+                        form.ShowDialog();
+                    }
+
+                }
+            }
+        }
+
+        private void seeUser(object sender, DataGridViewCellEventArgs e)
+        {
+            int idx = e.RowIndex;
+            if (idx >= 0 && idx < usersBindingSource.Count)
+            {
+
+                UsersViewModel user = usersBindingSource[idx] as UsersViewModel;
+
+                var form = new MainForm(user.username, groupId);
+                form.ShowDialog();
+                
+                
             }
         }
 
@@ -65,70 +104,31 @@ namespace GradingBookProject.Forms
              PopulateSubjectsTable();        
         }
         private async void PopulateUserstable(){
-            usersGridView.Controls.Clear();
-            //tableUsers.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+         
             var gds = await groupDetails.GetGroupDetailsForGroup(groupId);
 
+            usersBindingSource.Clear();
             foreach (var gd in gds)
             {
                 var user = await users.GetOne(gd.user_id);
-                var tempControl = new LinkLabel() { Text = user.name + " \"" + user.username + "\" " + user.surname};
-                tempControl.Tag = user.username;
-                tempControl.Anchor = AnchorStyles.Left;
 
-                tempControl.LinkClicked += seeUsersProfile;
-
-                //usersGridView.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
-                usersGridView.Controls.Add(tempControl);
-                
+                usersBindingSource.Add(user);
             }
-        }
-
-        private void seeUsersProfile(object sender, EventArgs e)
-        {
-            var control = (Control)sender;
-            var username = (string)control.Tag;
-            if (username != null)
-            {
-                var form = new MainForm(username);
-                form.ShowDialog();
-            }
+            usersGridView.Update();
         }
 
         private async void PopulateSubjectsTable() {
-            subjectsGridView.Controls.Clear();
-           // tableUsers.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+     
+            subjectsBindingSource.Clear();
 
             var subjectsList = await subjects.GetSubjects(await years.GetOne(yearId));
 
             foreach (var sub in subjectsList) {
-                var tempControl = new LinkLabel() { Text = sub.name };
-                tempControl.Tag = sub.id;
-                tempControl.Anchor = AnchorStyles.Left;
-                tempControl.LinkColor = Color.Black;
-                if (isAdmin)
-                {
-                    tempControl.LinkColor = Color.Blue;
-                    
-                    tempControl.LinkClicked += EditSubject;
-                }
-                //subjectsGridView.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
-                subjectsGridView.Controls.Add(tempControl);
-            }
-        }
 
-        private async void EditSubject(object sender, EventArgs e)
-        {
-            var control = (Control)sender;
-            var subjectId = (int)control.Tag;
-            if (subjectId != null) { 
-                var subject = await subjects.GetOne(subjectId);
-                var form = new SubjectForm(subject);
-                form.FormClosed += new FormClosedEventHandler(this.Form_Close);
-                form.ShowDialog();
+                subjectsBindingSource.Add(sub);
             }
+            subjectsGridView.Update();
         }
-
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {

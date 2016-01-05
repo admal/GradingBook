@@ -22,7 +22,7 @@ namespace GradingBookProject.Forms
     /// </summary>
     public partial class MainForm : Form
     {
-        //private static int defaultYear = 0;
+        private bool yearOwned = true;
         private YearsViewModel selectedYear = new YearsViewModel();
         private YearListItem selectedYearListItem;
         private string username;
@@ -32,6 +32,7 @@ namespace GradingBookProject.Forms
         private HttpUsersRepository users;
         private HttpGroupsRepository groups;
         private HttpGroupDetailsRepository groupDetails;
+        private int visitorGroupId;
 
         private bool visiting;
 
@@ -60,11 +61,12 @@ namespace GradingBookProject.Forms
         /// Initializes the form updates repositories and list of years.
         /// </summary>
         /// <param name="visitingUsername">Determines the user other than logged in to be viewed</param>
-        public MainForm(string visitingUsername) {
+        public MainForm(string visitingUsername, int _visitorGroupId) {
             InitializeComponent();
 
             username = visitingUsername;
             visiting = true;
+            visitorGroupId = _visitorGroupId;
 
             menuStrip1.Visible = false;
 
@@ -106,41 +108,56 @@ namespace GradingBookProject.Forms
             var tempUser = await users.GetUser(username);
             var groupDetailsList = await groupDetails.GetGroupDetailsForUser(tempUser.id);
 
-            if (yearsList != null && yearsList.Count != 0 && groupDetailsList != null && groupDetailsList.Count != 0)
+            if ((yearsList != null && yearsList.Count != 0) || (groupDetailsList != null && groupDetailsList.Count != 0))
             {
-
-                listYear.Items.Add(new YearListItem("Users Years"));
-                // populate with current user years
-                foreach (var year in yearsList)
+                ///If it is not a visitor display all years from usr and groups otherwise
+                /// otherwise display only years form a group it is being visited from
+                if (!visiting)
                 {
-                    YearListItem item = new YearListItem(year.name, year.id);
-                    listYear.Items.Add(item);
-                }
-
-                List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
-                foreach (var groupDetail in groupDetailsList)
-                {
-                    userGroups.Add(await groups.GetOne(groupDetail.group_id));
-                }
-
-                foreach (var group in userGroups)
-                {
-                    var groupYears = await years.GetYearsOfGroup(group.id);
-                    if (groupYears != null && groupYears.Count != 0)
+                    listYear.Items.Add(new YearListItem("Users Years"));
+                    // populate with current user years
+                    foreach (var year in yearsList)
                     {
-                        //adding a separator with a name of the group
-                        listYear.Items.Add(new YearListItem(group.name));
-                        //listYear.Items.Add();
-                        foreach (var year in groupYears)
+                        YearListItem item = new YearListItem(year.name, year.id);
+                        listYear.Items.Add(item);
+                    }
+                    List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
+                    foreach (var groupDetail in groupDetailsList)
+                    {
+                        userGroups.Add(await groups.GetOne(groupDetail.group_id));
+                    }
+
+                    foreach (var group in userGroups)
+                    {
+                        var groupYears = await years.GetYearsOfGroup(group.id);
+                        if (groupYears != null && groupYears.Count != 0)
                         {
-                            YearListItem item = new YearListItem(year.name, year.id);
-                            listYear.Items.Add(item);
+                            //adding a separator with a name of the group
+                            listYear.Items.Add(new YearListItem(group.name));
+                            //listYear.Items.Add();
+                            foreach (var year in groupYears)
+                            {
+                                YearListItem item;
+                                if (group.owner_id == tempUser.id)
+                                    item = new YearListItem(year.name, year.id, true, true);
+                                else
+                                    item = new YearListItem(year.name, year.id, true, false);
+
+                                listYear.Items.Add(item);
+                            }
+
                         }
-                      
+                    }
+                } //else: for displaying only years from common group
+                else {
+                    var groupYears = await years.GetYearsOfGroup(visitorGroupId);
+                    foreach (var year in groupYears)
+                    {
+                        listYear.Items.Add(new YearListItem(year.name, year.id, true, false));
                     }
                 }
 
-           
+                //Check if the form is being visited
                 if (visiting)
                 {
                     btnAddSubject.Enabled = false;
@@ -150,13 +167,27 @@ namespace GradingBookProject.Forms
                 }
                 else
                 {
-                    btnAddSubject.Enabled = true;
-                    btnDeleteYear.Enabled = true;
-                    btnEditYear.Enabled = true;
+                    //check If a year is displayed by an Owner
+                    if (selectedYearListItem != null)
+                    {
+                        if (selectedYearListItem.Owned)
+                        {
+                            btnAddSubject.Enabled = true;
+                            btnDeleteYear.Enabled = true;
+                            btnEditYear.Enabled = true;
+                        }
+                        else
+                        {
+                            btnAddSubject.Enabled = false;
+                            btnDeleteYear.Enabled = false;
+                            btnEditYear.Enabled = false;
+                        }
+                    }
                 }
 
-                if (selectedYearListItem != null)
+               if (selectedYearListItem != null)
                 {
+                    
                     listYear.SelectedIndex = listYear.Items.IndexOf(selectedYearListItem);
                 }
                 else
@@ -185,11 +216,16 @@ namespace GradingBookProject.Forms
             ComboBox cmb = (ComboBox)sender;
             var selectedIndex = (int)cmb.SelectedIndex;
             var item= (YearListItem)cmb.SelectedItem;
+            
             if (item.Clickable)
             {
+                if (!item.Owned)
+                {
+                    yearOwned = false;
+                }
                 selectedYear = await years.GetOne(item.Id);
-                selectedYearListItem = new YearListItem(item.ToString(), item.Id);
-                UpdateTable();
+                selectedYearListItem = new YearListItem(item.ToString(), item.Id, item.Clickable, item.Owned);
+                UpdateMainForm();
             }
             
         }
@@ -207,60 +243,72 @@ namespace GradingBookProject.Forms
             {
                 var subjectsList = await subjects.GetSubjects(selectedYear);
                 //populate the Marks table with db records check if there are subjects on chosen year
-                if (yearsList != null && yearsList.Count() != 0 && selectedYear != null && subjectsList != null)
+                if ((yearsList != null && yearsList.Count() != 0 ) || subjectsList != null)
                 {
 
-                    //var row = 0;
-                    //var percentHeight = 100/subjectsEnumerated.Count();
-                    foreach (var subject in subjectsList)
+                    if (subjectsList != null)
                     {
-                        tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-                        LinkLabel temp;
-
-                        temp = new LinkLabel()
+                        //var row = 0;
+                        //var percentHeight = 100/subjectsEnumerated.Count();
+                        foreach (var subject in subjectsList)
                         {
-                            Text = subject.name,
-                            Anchor = AnchorStyles.Left,
-                            AutoSize = true,//false
-                            ActiveLinkColor = Color.Black,
-                            LinkBehavior = LinkBehavior.NeverUnderline,
-                            Tag = subject.id
-                        };
-                        if (visiting)
-                        {
-                            temp.Enabled = false;
-                        }
+                            tableMarks.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                            LinkLabel temp;
 
-                        tableMarks.Controls.Add(temp);
-                        temp.Click += new System.EventHandler(this.Subject_Click);
-
-                        CreateGradesLabels(subject);
-
-                        var gradesList = await grades.GetSubjectDetails(subject);
-                        var avg = CalculateAverage(gradesList.ToArray());
-
-                        tableMarks.Controls.Add(new Label()
+                            temp = new LinkLabel()
                             {
-                                Text = avg.ToString(),
+                                Text = subject.name,
                                 Anchor = AnchorStyles.Left,
-                                AutoSize = true,
-                            });
-                        var btn = new Button()
-                            {
-                                Text = "Add",
-                                Anchor = AnchorStyles.Left,
-                                AutoSize = true,
-                                Tag = subject.id,
+                                AutoSize = true,//false
+                                ActiveLinkColor = Color.Black,
+                                LinkBehavior = LinkBehavior.NeverUnderline,
+                                Tag = subject.id
                             };
+                            if (visiting || !selectedYearListItem.Owned)
+                            {
+                                temp.Enabled = false;
+                            }
 
-                        if (visiting)
-                        {
-                            btn.Enabled = false;
+                            tableMarks.Controls.Add(temp);
+                            temp.Click += new System.EventHandler(this.Subject_Click);
+
+                            CreateGradesLabels(subject);
+
+                            //Get grades of a user to calculate the average
+                            var gradesList = await grades.GetSubjectDetails(subject);
+                            List<SubjectDetailsViewModel> gradesOfUser = new List<SubjectDetailsViewModel>();
+                            var currUser = await users.GetUser(username);
+                            foreach (var grade in gradesList)
+                            {
+                                if (grade.user_id == currUser.id)
+                                    gradesOfUser.Add(grade);
+                            }
+
+                            var avg = CalculateAverage(gradesOfUser.ToArray());
+
+                            tableMarks.Controls.Add(new Label()
+                                {
+                                    Text = avg.ToString(),
+                                    Anchor = AnchorStyles.Left,
+                                    AutoSize = true,
+                                });
+                            var btn = new Button()
+                                {
+                                    Text = "Add",
+                                    Anchor = AnchorStyles.Left,
+                                    AutoSize = true,
+                                    Tag = subject.id,
+                                };
+
+                            if (visiting)
+                            {
+                                btn.Enabled = false;
+                            }
+
+                            btn.Click += AddGradeClick;
+                            tableMarks.Controls.Add(btn);
+                            tableMarks.RowCount++;
                         }
-
-                        btn.Click += AddGradeClick;
-                        tableMarks.Controls.Add(btn);
-                        tableMarks.RowCount++;
                     }
 
                 }
@@ -442,7 +490,7 @@ namespace GradingBookProject.Forms
         /// Creates link labels with grade values.
         /// </summary>
         /// <param name="sub">Subject with grades to show</param>
-        private void CreateGradesLabels(SubjectsViewModel sub)
+        private async void CreateGradesLabels(SubjectsViewModel sub)
         {
             var panel = new FlowLayoutPanel(); //panel with grades
             panel.Name = "panel" + sub.id; //set name of the panel to: "panel+subId"
@@ -453,18 +501,23 @@ namespace GradingBookProject.Forms
             {
                 return;
             }
+            var user =await users.GetUser(username);
             foreach (var grade in sub.SubjectDetails) //populate with labels panel
             {
-                var lbl = new LinkLabel();
-                lbl.Name = grade.id.ToString();
-                lbl.Text = grade.grade_value.ToString();
-                lbl.LinkClicked += ShowGradePanel; //event handler of click
-                lbl.Tag = new Point(grade.id, sub.id); //just 2d vector with id of grade and subject //tmp solution
-                lbl.AutoSize = true;
-                if (visiting) {
-                    lbl.Enabled = false;
+                if (grade.user_id == user.id)
+                {
+                    var lbl = new LinkLabel();
+                    lbl.Name = grade.id.ToString();
+                    lbl.Text = grade.grade_value.ToString();
+                    lbl.LinkClicked += ShowGradePanel; //event handler of click
+                    lbl.Tag = new Point(grade.id, sub.id); //just 2d vector with id of grade and subject //tmp solution
+                    lbl.AutoSize = true;
+                    if (visiting)
+                    {
+                        lbl.Enabled = false;
+                    }
+                    panel.Controls.Add(lbl);
                 }
-                panel.Controls.Add(lbl);
             }
         }
 
