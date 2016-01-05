@@ -79,7 +79,7 @@ namespace GradingBookProject.Forms
 
                 UsersViewModel user = usersBindingSource[idx] as UsersViewModel;
 
-                var form = new MainForm(user.username);
+                var form = new MainForm(user.username, groupId);
                 form.ShowDialog();
                 
                 

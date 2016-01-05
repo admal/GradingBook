@@ -32,6 +32,7 @@ namespace GradingBookProject.Forms
         private HttpUsersRepository users;
         private HttpGroupsRepository groups;
         private HttpGroupDetailsRepository groupDetails;
+        private int visitorGroupId;
 
         private bool visiting;
 
@@ -60,11 +61,12 @@ namespace GradingBookProject.Forms
         /// Initializes the form updates repositories and list of years.
         /// </summary>
         /// <param name="visitingUsername">Determines the user other than logged in to be viewed</param>
-        public MainForm(string visitingUsername) {
+        public MainForm(string visitingUsername, int _visitorGroupId) {
             InitializeComponent();
 
             username = visitingUsername;
             visiting = true;
+            visitorGroupId = _visitorGroupId;
 
             menuStrip1.Visible = false;
 
@@ -108,40 +110,50 @@ namespace GradingBookProject.Forms
 
             if ((yearsList != null && yearsList.Count != 0) || (groupDetailsList != null && groupDetailsList.Count != 0))
             {
-
-                listYear.Items.Add(new YearListItem("Users Years"));
-                // populate with current user years
-                foreach (var year in yearsList)
+                ///If it is not a visitor display all years from usr and groups otherwise
+                /// otherwise display only years form a group it is being visited from
+                if (!visiting)
                 {
-                    YearListItem item = new YearListItem(year.name, year.id);
-                    listYear.Items.Add(item);
-                }
-
-                List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
-                foreach (var groupDetail in groupDetailsList)
-                {
-                    userGroups.Add(await groups.GetOne(groupDetail.group_id));
-                }
-
-                foreach (var group in userGroups)
-                {
-                    var groupYears = await years.GetYearsOfGroup(group.id);
-                    if (groupYears != null && groupYears.Count != 0)
+                    listYear.Items.Add(new YearListItem("Users Years"));
+                    // populate with current user years
+                    foreach (var year in yearsList)
                     {
-                        //adding a separator with a name of the group
-                        listYear.Items.Add(new YearListItem(group.name));
-                        //listYear.Items.Add();
-                        foreach (var year in groupYears)
-                        {
-                            YearListItem item;
-                            if (group.owner_id == tempUser.id)
-                                item = new YearListItem(year.name, year.id, true, true);                            
-                            else
-                                item = new YearListItem(year.name, year.id, true, false);
+                        YearListItem item = new YearListItem(year.name, year.id);
+                        listYear.Items.Add(item);
+                    }
+                    List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
+                    foreach (var groupDetail in groupDetailsList)
+                    {
+                        userGroups.Add(await groups.GetOne(groupDetail.group_id));
+                    }
 
-                            listYear.Items.Add(item);
+                    foreach (var group in userGroups)
+                    {
+                        var groupYears = await years.GetYearsOfGroup(group.id);
+                        if (groupYears != null && groupYears.Count != 0)
+                        {
+                            //adding a separator with a name of the group
+                            listYear.Items.Add(new YearListItem(group.name));
+                            //listYear.Items.Add();
+                            foreach (var year in groupYears)
+                            {
+                                YearListItem item;
+                                if (group.owner_id == tempUser.id)
+                                    item = new YearListItem(year.name, year.id, true, true);
+                                else
+                                    item = new YearListItem(year.name, year.id, true, false);
+
+                                listYear.Items.Add(item);
+                            }
+
                         }
-                      
+                    }
+                } //else: for displaying only years from common group
+                else {
+                    var groupYears = await years.GetYearsOfGroup(visitorGroupId);
+                    foreach (var year in groupYears)
+                    {
+                        listYear.Items.Add(new YearListItem(year.name, year.id, true, false));
                     }
                 }
 

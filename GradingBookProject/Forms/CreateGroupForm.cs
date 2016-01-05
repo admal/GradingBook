@@ -45,7 +45,7 @@ namespace GradingBookProject.Forms
             if (index >= 0 && index < usersBindingSource.Count) {
                UsersViewModel user =  usersBindingSource[index] as UsersViewModel;
                if (user != null) {
-                   var form = new MainForm(user.username);
+                   var form = new MainForm(user.username, currGroup.id);
                    form.ShowDialog();
                }
             }
