@@ -25,12 +25,13 @@ namespace GradingBookProject.Forms
         private HttpGroupDetailsRepository groupDetails;
         private bool isAdmin;
 
-        public YearInGroupForm(int _groupId, int _yearId, bool isAdmin)
+        public YearInGroupForm(int _groupId, int _yearId, bool _isAdmin)
         {
             InitializeComponent();  
             
             groupId = _groupId;
             yearId = _yearId;
+            isAdmin = _isAdmin;
 
             users = new HttpUsersRepository();
             years = new HttpYearsRepository();
@@ -39,10 +40,10 @@ namespace GradingBookProject.Forms
 
             UpdateTables();
 
-            btnAdd.Click += AddSubject;
+            btnAddSubject.Click += AddSubject;
             if (!isAdmin)
             {
-                btnAdd.Visible = false;
+                btnAddSubject.Visible = false;
             }
         }
 
@@ -64,7 +65,7 @@ namespace GradingBookProject.Forms
              PopulateSubjectsTable();        
         }
         private async void PopulateUserstable(){
-            tableUsers.Controls.Clear();
+            usersGridView.Controls.Clear();
             //tableUsers.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             var gds = await groupDetails.GetGroupDetailsForGroup(groupId);
 
@@ -77,8 +78,8 @@ namespace GradingBookProject.Forms
 
                 tempControl.LinkClicked += seeUsersProfile;
 
-                tableSubjects.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
-                tableUsers.Controls.Add(tempControl);
+                //usersGridView.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
+                usersGridView.Controls.Add(tempControl);
                 
             }
         }
@@ -95,7 +96,7 @@ namespace GradingBookProject.Forms
         }
 
         private async void PopulateSubjectsTable() {
-            tableSubjects.Controls.Clear();
+            subjectsGridView.Controls.Clear();
            // tableUsers.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 
             var subjectsList = await subjects.GetSubjects(await years.GetOne(yearId));
@@ -104,12 +105,15 @@ namespace GradingBookProject.Forms
                 var tempControl = new LinkLabel() { Text = sub.name };
                 tempControl.Tag = sub.id;
                 tempControl.Anchor = AnchorStyles.Left;
-                if (!isAdmin)
+                tempControl.LinkColor = Color.Black;
+                if (isAdmin)
                 {
+                    tempControl.LinkColor = Color.Blue;
+                    
                     tempControl.LinkClicked += EditSubject;
                 }
-                tableSubjects.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
-                tableSubjects.Controls.Add(tempControl);
+                //subjectsGridView.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
+                subjectsGridView.Controls.Add(tempControl);
             }
         }
 
@@ -124,6 +128,11 @@ namespace GradingBookProject.Forms
                 form.ShowDialog();
             }
         }
-        
+
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

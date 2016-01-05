@@ -315,6 +315,7 @@
     <None Include="Properties\DataSources\GradingBookProject.Models.Users.datasource" />
     <None Include="Properties\DataSources\GradingBookProject.Models.Years.datasource" />
     <None Include="Properties\DataSources\GradingBookProject.ViewModels.GroupsViewModel.datasource" />
+    <None Include="Properties\DataSources\GradingBookProject.ViewModels.SubjectsViewModel.datasource" />
     <None Include="Properties\DataSources\GradingBookProject.ViewModels.UsersViewModel.datasource" />
     <None Include="Properties\DataSources\GradingBookProject.ViewModels.YearsViewModel.datasource" />
     <None Include="Properties\Settings.settings">
