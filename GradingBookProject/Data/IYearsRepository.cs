@@ -30,6 +30,7 @@ namespace GradingBookProject.Data
         /// Returns single Year of given id
         /// </summary>
         /// <param name="yearid">Id of a requested year.</param>
+        /// <param name="userId">Id of a user.</param>
         /// <returns></returns>
         Years Year(int yearid, int userid);
 

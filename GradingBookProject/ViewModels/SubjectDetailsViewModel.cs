@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.ViewModels
 {
+    /// <summary>
+    /// Subject Details view model for Subject Details model.
+    /// </summary>
     public class SubjectDetailsViewModel : EntityViewModel
     {
         public int sub_id { get; set; }
@@ -15,7 +18,5 @@ namespace GradingBookProject.ViewModels
         public double grade_value { get; set; }
 
         public Nullable<int> user_id { get; set; }
-
-        //public virtual SubjectsViewModel Subjects { get; set; }
     }
 }

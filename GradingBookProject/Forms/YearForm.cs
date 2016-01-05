@@ -55,7 +55,6 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Loads data from given year to a form.
         /// <param name="year">Year to be displayed</param>
-        /// <param name="forGroup">indicates if we create year for a group</param>
         /// </summary>
         private async void LoadData(YearsViewModel year) {
 
