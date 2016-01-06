@@ -20,7 +20,7 @@ namespace GradingBookProject.Http
         /// <summary>
         /// Find all Subjects for a given Year.
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="year">Year we want subjects of.</param>
         /// <returns>List of subjects of a given Year, null if there is no such a Year.</returns>
         public async Task<ICollection<SubjectsViewModel>> GetSubjectsOfYear(YearsViewModel year)
         {

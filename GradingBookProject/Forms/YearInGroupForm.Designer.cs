@@ -63,7 +63,6 @@
             this.buttonPanel.Name = "buttonPanel";
             this.buttonPanel.Size = new System.Drawing.Size(620, 34);
             this.buttonPanel.TabIndex = 4;
-            this.buttonPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // btnDeleteYear
             // 

@@ -20,6 +20,8 @@ namespace GradingBookProject
         /// </summary>
         /// <param name="_name">Year name.</param>
         /// <param name="_id">Year id.</param>
+        /// <param name="_clickable">Determines wether this object can be clicked</param>
+        /// <param name="_owned">Determines wether this object belongs to the user</param>
         public YearListItem(string _name, int _id, bool _clickable = true, bool _owned = true) 
         {
             clickable = _clickable;
