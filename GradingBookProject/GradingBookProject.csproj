@@ -108,7 +108,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\GradesRepository.cs" />
     <Compile Include="Data\HttpGroupDetailsRepository.cs" />
     <Compile Include="Data\HttpRepository.cs" />
     <Compile Include="Data\HttpSubjectDetailsRepository.cs" />
@@ -116,13 +115,6 @@
     <Compile Include="Data\HttpGroupsRepository.cs" />
     <Compile Include="Data\HttpUsersRepository.cs" />
     <Compile Include="Data\HttpYearsRepository.cs" />
-    <Compile Include="Data\IGradesRepository.cs" />
-    <Compile Include="Data\ISubjectsRepository.cs" />
-    <Compile Include="Data\IUsersRepository.cs" />
-    <Compile Include="Data\IYearsRepository.cs" />
-    <Compile Include="Data\SubjectsRepository.cs" />
-    <Compile Include="Data\UsersRepository.cs" />
-    <Compile Include="Data\YearsRepository.cs" />
     <Compile Include="Forms\CreateGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>

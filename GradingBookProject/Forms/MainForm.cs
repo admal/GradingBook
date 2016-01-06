@@ -36,7 +36,7 @@ namespace GradingBookProject.Forms
 
         private bool visiting;
 
-        private bool toCloseApp = false;
+        private bool toCloseApp = true;
 
         /*-------------------------CONSTRUCTORS----------------------*/
         /// <summary>
@@ -228,6 +228,7 @@ namespace GradingBookProject.Forms
                 selectedYear = await years.GetOne(item.Id);
                 selectedYearListItem = new YearListItem(item.ToString(), item.Id, item.Clickable, item.Owned);
                 UpdateMainForm();
+                listYear.SelectedItem = selectedYearListItem;
             }
             
         }
@@ -379,7 +380,7 @@ namespace GradingBookProject.Forms
         private void versionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            MessageBox.Show("Current version: B1.3");
+            MessageBox.Show("Current version: B1.5");
         }
 
 
@@ -578,24 +579,16 @@ namespace GradingBookProject.Forms
 
         private void ExitClick(object sender, EventArgs e)
         {
-            //ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            //if(toCloseApp)
-            //    Application.Exit();
-            if (visiting)
-            {
-                toCloseApp = false;
-
-            }
-            else
-            {
-                toCloseApp = true;
-            }
-            this.Close();
+            toCloseApp = true;
+             Application.Exit();
         }
         private void ExitIconClick(object sender, FormClosedEventArgs e)
         {
-            //toCloseApp = true;
-            if(!visiting)
+            if (visiting)
+            {
+                toCloseApp = false;
+            }
+            if(!visiting && toCloseApp)
                 Application.Exit();
         }
 

@@ -149,9 +149,10 @@ namespace GradingBookProject.Forms
         {
             HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
             ICollection<GroupDetailsViewModel> listOfDetails = new List<GroupDetailsViewModel>();
-
+            var users = usersBindingSource.List.Cast<UsersViewModel>();
+            
             //checking if creator is added to the group
-            if (!usersBindingSource.Contains(Globals.CurrentUser)) //if not add him and proper communicate
+            if (users.Count(u => u.id == currGroup.id) == 0) //if not add him and proper communicate
             {
                 usersBindingSource.Add(Globals.CurrentUser);
                 MessageBox.Show("You removed yourself from the group, you were added to it automatically!","Warning",
