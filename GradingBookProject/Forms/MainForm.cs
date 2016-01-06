@@ -14,6 +14,7 @@ using GradingBookProject.Data;
 using GradingBookProject.Models;
 using Ninject.Parameters;
 using GradingBookProject.ViewModels;
+using GradingBookProject.Maths;
 
 namespace GradingBookProject.Forms
 {
@@ -22,6 +23,8 @@ namespace GradingBookProject.Forms
     /// </summary>
     public partial class MainForm : Form
     {
+        private AverageCalc avgCalc = new AverageCalc();
+
         private bool yearOwned = true;
         private YearsViewModel selectedYear = new YearsViewModel();
         private YearListItem selectedYearListItem;
@@ -286,7 +289,7 @@ namespace GradingBookProject.Forms
                                     gradesOfUser.Add(grade);
                             }
 
-                            var avg = CalculateAverage(gradesOfUser.ToArray());
+                            var avg = avgCalc.WeightedAverage(gradesOfUser.ToArray());
 
                             tableMarks.Controls.Add(new Label()
                                 {
@@ -315,30 +318,6 @@ namespace GradingBookProject.Forms
 
                 }
             }
-        }
-
-        /// <summary>
-        /// Calculates the weighted average from marks of a given subject.
-        /// </summary>
-        /// <param name="subject">Subject id.</param>
-        /// <returns>WeightAverage from marks</returns>
-        private double CalculateAverage(SubjectDetailsViewModel[] data)
-        {
-
-            if (data.Length != 0)
-            {
-                double sumTop = 0;
-                double sumBot = 0;
-                foreach (var grade in data)
-                {
-                    sumTop = sumTop + (grade.grade_value * grade.grade_weight);
-                    sumBot = sumBot + (grade.grade_weight);
-                }
-
-                return Math.Round((sumTop / sumBot), 2);
-            }
-
-            return 0;
         }
 
         private async void AddGradeClick(object sender, EventArgs e)

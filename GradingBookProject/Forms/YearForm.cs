@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Models;
 using GradingBookProject.ViewModels;
+using GradingBookProject.Maths;
 
 namespace GradingBookProject.Forms
 {
@@ -19,6 +20,10 @@ namespace GradingBookProject.Forms
     /// </summary>
     public partial class YearForm : Form
     {
+        /// <summary>
+        /// Comparator for comparing Years
+        /// </summary>
+        private Comparator comparator = new Comparator();
         /// <summary>
         /// Validator for checking user input.
         /// </summary>
@@ -69,7 +74,9 @@ namespace GradingBookProject.Forms
                 edit = true;
             }
         }
-
+        /// <summary>
+        /// Default constructor for Year Form
+        /// </summary>
         public YearForm()
         {
             InitializeComponent();
@@ -86,7 +93,6 @@ namespace GradingBookProject.Forms
         public YearForm(GroupsViewModel group) : this()
         {
             currGroup = group;
-
         }
         /// <summary>
         /// Saves either a new Year to database or edited existing.
@@ -107,6 +113,12 @@ namespace GradingBookProject.Forms
 
             yearLocal.start = DateTime.Parse(txtYearStart.Text);
             yearLocal.end_date = DateTime.Parse(txtYearEnd.Text);
+
+            if (!(yearLocal.end_date == comparator.isLater(yearLocal.start, yearLocal.end_date))) {
+                MessageBox.Show("Year end has to be later than the start", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             yearLocal.name = txtYearName.Text;
             yearLocal.year_desc = txtYearDesc.Text;
             
