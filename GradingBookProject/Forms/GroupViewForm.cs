@@ -65,6 +65,7 @@ namespace GradingBookProject.Forms
                 //show form
                 var form = new YearInGroupForm((int)year.group_id, year.id, isAdmin);
                 form.ShowDialog();
+                UpdateYearsSource();
             }
         }
         /// <summary>

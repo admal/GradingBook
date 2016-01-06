@@ -47,6 +47,8 @@ namespace GradingBookProject.Forms
             if (!isAdmin)
             {
                 btnAddSubject.Visible = false;
+                btnDeleteYear.Visible = false;
+                btnEditYear.Visible = false;
             }
         }
 
@@ -133,6 +135,27 @@ namespace GradingBookProject.Forms
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private async void  EditYearClick(object sender, EventArgs e)
+        {
+            var currYear = await years.GetOne(yearId);
+            var form = new YearForm(currYear);
+            form.ShowDialog();
+            await Globals.UpdateCurrentUser();
+        }
+
+        private async void DeleteYearClick(object sender, EventArgs e)
+        {
+
+            var result = MessageBox.Show("Are you sure you want to delete this year?","Delete year",
+                MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+                return;
+
+            await years.DeleteOne(await years.GetOne(yearId));
+            this.Close();
+            await Globals.UpdateCurrentUser();
         }
     }
 }
