@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.ViewModels
 {
-    /// <summary>
-    /// View Model for Years model.
-    /// </summary>
     public class YearsViewModel : EntityViewModel
     {
         public string name { get; set; }
@@ -18,9 +15,8 @@ namespace GradingBookProject.ViewModels
         public Nullable<int> user_id { get; set; }
         public Nullable<int> group_id { get; set; }
 
-        /// <summary>
-        /// Collection of Subjects.
-        /// </summary>
+        //public virtual GroupsViewModel Groups { get; set; }
         public virtual ICollection<SubjectsViewModel> Subjects { get; set; }
+        //public virtual UsersViewModel Users { get; set; }
     }
 }

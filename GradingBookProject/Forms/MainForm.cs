@@ -22,6 +22,7 @@ namespace GradingBookProject.Forms
     /// </summary>
     public partial class MainForm : Form
     {
+        private bool yearOwned = true;
         private YearsViewModel selectedYear = new YearsViewModel();
         private YearListItem selectedYearListItem;
         private string username;
@@ -60,7 +61,6 @@ namespace GradingBookProject.Forms
         /// Initializes the form updates repositories and list of years.
         /// </summary>
         /// <param name="visitingUsername">Determines the user other than logged in to be viewed</param>
-        /// <param name="_visitorGroupId">Determines the group id of a visitor</param>
         public MainForm(string visitingUsername, int _visitorGroupId) {
             InitializeComponent();
 
@@ -110,7 +110,8 @@ namespace GradingBookProject.Forms
 
             if ((yearsList != null && yearsList.Count != 0) || (groupDetailsList != null && groupDetailsList.Count != 0))
             {
-                //If it is not a visitor display all years from usr and groups otherwise otherwise display only years form a group it is being visited from
+                ///If it is not a visitor display all years from usr and groups otherwise
+                /// otherwise display only years form a group it is being visited from
                 if (!visiting)
                 {
                     listYear.Items.Add(new YearListItem("Users Years"));
@@ -220,6 +221,10 @@ namespace GradingBookProject.Forms
             
             if (item.Clickable)
             {
+                if (!item.Owned)
+                {
+                    yearOwned = false;
+                }
                 selectedYear = await years.GetOne(item.Id);
                 selectedYearListItem = new YearListItem(item.ToString(), item.Id, item.Clickable, item.Owned);
                 UpdateMainForm();
@@ -315,8 +320,8 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Calculates the weighted average from marks of a given subject.
         /// </summary>
-        /// <param name="data">Array of grades.</param>
-        /// <returns>WeightAverage from marks.</returns>
+        /// <param name="subject">Subject id.</param>
+        /// <returns>WeightAverage from marks</returns>
         private double CalculateAverage(SubjectDetailsViewModel[] data)
         {
 
@@ -473,7 +478,6 @@ namespace GradingBookProject.Forms
         private void SeeGroupsMenuClick(object sender, EventArgs e)
         {
             var groupForm = new YourGroupsForm();
-            groupForm.FormClosed += new FormClosedEventHandler(this.Form_Close);
             groupForm.Show();
         }
 

@@ -16,7 +16,7 @@ namespace GradingBookProject.Http
     /// Years, Subjects, Grades)</typeparam>
     public class  HttpRequestService <T>
     {
-        protected const string baseUrl = "http://localhost:53716/";
+        protected const string baseUrl = "http://www.gradingbook.hostingasp.pl/";
         protected string url;
 
         public HttpRequestService()

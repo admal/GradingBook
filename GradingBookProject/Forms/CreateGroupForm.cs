@@ -50,7 +50,7 @@ namespace GradingBookProject.Forms
             {
                 usersBindingSource.Add(Globals.CurrentUser);
             }
-            usersDataView.CellDoubleClick += SeeUsersProfile;
+            //usersDataView.CellDoubleClick += SeeUsersProfile;
         }
 
         private void SeeUsersProfile(object sender, DataGridViewCellEventArgs e)
