@@ -38,5 +38,28 @@ namespace GradingBookProject.Http
                 return null;
             }
         }
+        /// <summary>
+        /// Find all users of given group
+        /// </summary>
+        /// <param name="groupId">Id of a group we want users from.</param>
+        /// <returns>Collection of users belonging to the group.</returns>
+        public async Task<ICollection<UsersViewModel>> GetUsersByGroupId(int groupId) 
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(url + "GetByGroupId/" + groupId);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseUsers = await response.Content.ReadAsAsync<ICollection<UsersViewModel>>();
+                    return responseUsers;
+                }
+                return null;
+            }
+        }
     }
 }

@@ -142,13 +142,15 @@ namespace GradingBookProject.Forms
         /// Populates users table with data.
         /// </summary>
         private async void PopulateUserstable(){
-         
-            var gds = await groupDetails.GetGroupDetailsForGroup(groupId);
+
+
+            var usersList = await users.GetUsersOfGroup(groupId);
+           // var gds = await groupDetails.GetGroupDetailsForGroup(groupId);
 
             usersBindingSource.Clear();
-            foreach (var gd in gds)
+            foreach (var user in usersList)
             {
-                var user = await users.GetOne(gd.user_id);
+                //var user = await users.GetOne(gd.user_id);
 
                 usersBindingSource.Add(user);
             }

@@ -53,6 +53,35 @@ namespace GradingBookApi.Controllers
             return Ok(retUser);
         }
 
+        // GET: api/users/getbygroupid/4
+        /// <summary>
+        /// Gets users of a group.
+        /// </summary>
+        /// <param name="id">group we want users of.</param>
+        /// <returns>Collection of users of a group view models / null.</returns>
+        [HttpGet]
+        [Route("api/users/getbygroupid/{id:int}")]
+        [ActionName("getbygroupid")]
+        public async Task<ICollection<UsersViewModel>> GetUsersOfGroup(int id)
+        {
+
+            var group = await db.Groups.FirstOrDefaultAsync(g => g.id == id);
+            if (group == null)
+                return null;
+
+            var gds = group.GroupDetails;
+
+            if (gds == null)
+                return null;
+
+            List<Users> users = new List<Users>();
+            foreach (var gd in gds) {
+                users.Add(gd.Users);
+            }
+
+            return users.AsQueryable().ProjectTo<UsersViewModel>().ToList();
+
+        }
 
         // PUT: api/Users/5
         /// <summary>
