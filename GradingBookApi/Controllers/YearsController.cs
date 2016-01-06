@@ -38,7 +38,7 @@ namespace GradingBookApi.Controllers
         /// Sends a chosen Year from database.
         /// </summary>
         /// <param name="id">Years unique id</param>
-        /// <returns>Single Year.</returns>
+        /// <returns>Single Year view model / not found.</returns>
         [ResponseType(typeof(Years))]
         public async Task<IHttpActionResult> GetYears(int id)
         {
@@ -55,7 +55,7 @@ namespace GradingBookApi.Controllers
         /// Sends all Years of a given User.
         /// </summary>
         /// <param name="username">Username of a User we want years of.</param>
-        /// <returns>Years of a User.</returns>
+        /// <returns>Years of a User as view models / null.</returns>
         [ActionName("GetByUsername")]
         public async Task<ICollection<YearsViewModel>> GetYearsOfUsername(string username)
         {
@@ -73,7 +73,7 @@ namespace GradingBookApi.Controllers
         /// Sends all Years of a given Group.
         /// </summary>
         /// <param name="groupId">Group ID of a Group we want years of.</param>
-        /// <returns>Years of a Group.</returns>
+        /// <returns>Years of a Group as view models / null.</returns>
         [Route("api/years/getbygroupid/{id:int}")]
         [ActionName("GetByGroupId")]
         public async Task<ICollection<YearsViewModel>> GetYearsOfGroup(int id) {
@@ -92,7 +92,7 @@ namespace GradingBookApi.Controllers
         /// </summary>
         /// <param name="id">ID of a year to be updated.</param>
         /// <param name="years">Year to be updated.</param>
-        /// <returns></returns>
+        /// <returns>Updated year view model / not found / bad request.</returns>
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutYears(int id, YearsViewModel years)
         {
@@ -142,7 +142,7 @@ namespace GradingBookApi.Controllers
         /// Saves a given year.
         /// </summary>
         /// <param name="years">ID of a Year to be saved.</param>
-        /// <returns>Year to be saved</returns>
+        /// <returns>Year to be saved / bad request.</returns>
         [ResponseType(typeof(YearsViewModel))]
         public async Task<IHttpActionResult> PostYears(YearsViewModel years)
         {
@@ -171,7 +171,7 @@ namespace GradingBookApi.Controllers
         /// Deletes a Year.
         /// </summary>
         /// <param name="id">Id of a Year to be deleted.</param>
-        /// <returns></returns>
+        /// <returns>Deleted year / not found.</returns>
         [ResponseType(typeof(YearsViewModel))]
         public async Task<IHttpActionResult> DeleteYears(int id)
         {
@@ -189,7 +189,7 @@ namespace GradingBookApi.Controllers
         /// <summary>
         /// Disposes of database connection.
         /// </summary>
-        /// <param name="disposing">If positive -> dispose</param>
+        /// <param name="disposing">Determines wether the connection will be closed.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -202,7 +202,7 @@ namespace GradingBookApi.Controllers
         /// Checks if Year exists.
         /// </summary>
         /// <param name="id">Id of a Year.</param>
-        /// <returns>Wether a given year existts.</returns>
+        /// <returns>Wether a given year exists.</returns>
         private bool YearsExists(int id)
         {
             return db.Years.Count(e => e.id == id) > 0;
