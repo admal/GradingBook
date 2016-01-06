@@ -46,6 +46,10 @@ namespace GradingBookProject.Forms
         /// Username of a currently displayed user.
         /// </summary>
         private string username;
+        /// <summary>
+        /// Current user.
+        /// </summary>
+        private UsersViewModel currentUser;
 
         /*-------------------------CONSTRUCTORS----------------------*/
         /// <summary>
@@ -99,24 +103,26 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Updates Main Form.
         /// </summary>
-        private void UpdateMainForm() {
+        private async void UpdateMainForm() {
             UpdateRepositories();
-            UpdateYearList();
-            UpdateTable();
+            var updatedYearsList = await UpdateYearList();
+            UpdateTable(updatedYearsList);
         }
 
         /// <summary>
-        /// Updates list of years. And Enables/Disables buttons
+        /// Updates the list of years.
         /// </summary>
-        private async void UpdateYearList(){
+        /// <returns>Returns Collection of years.</returns>
+        private async Task<ICollection<YearsViewModel>> UpdateYearList(){
+            currentUser = await users.GetUser(username);
+
             listYear.Items.Clear();
             listYear.Sorted = false;
             //get list of years for user
             var yearsList = await years.GetYears(username);
 
-            //Get groups from groupDetails using a username
-            var tempUser = await users.GetUser(username);
-            var groupDetailsList = await groupDetails.GetGroupDetailsForUser(tempUser.id);
+            //Get groups from groupDetails
+            var groupDetailsList = await groupDetails.GetGroupDetailsForUser(currentUser.id);
 
             if ((yearsList != null && yearsList.Count != 0) || (groupDetailsList != null && groupDetailsList.Count != 0))
             {
@@ -131,15 +137,12 @@ namespace GradingBookProject.Forms
                         YearListItem item = new YearListItem(year.name, year.id);
                         listYear.Items.Add(item);
                     }
-                    List<GroupsViewModel> userGroups = new List<GroupsViewModel>();
-                    foreach (var groupDetail in groupDetailsList)
-                    {
-                        userGroups.Add(await groups.GetOne(groupDetail.group_id));
-                    }
 
+                    var userGroups = currentUser.Groups;
+                    
                     foreach (var group in userGroups)
                     {
-                        var groupYears = await years.GetYearsOfGroup(group.id);
+                        var groupYears = group.Years;
                         if (groupYears != null && groupYears.Count != 0)
                         {
                             //adding a separator with a name of the group
@@ -148,7 +151,7 @@ namespace GradingBookProject.Forms
                             foreach (var year in groupYears)
                             {
                                 YearListItem item;
-                                if (group.owner_id == tempUser.id)
+                                if (group.owner_id == currentUser.id)
                                     item = new YearListItem(year.name, year.id, true, true);
                                 else
                                     item = new YearListItem(year.name, year.id, true, false);
@@ -216,6 +219,7 @@ namespace GradingBookProject.Forms
                     btnAddYear.Enabled = false;
                 }
             }
+            return yearsList;
         }
         /*-----------------------------POPULATING FUNCTIONS-----------------------------*/
         /// <summary>
@@ -242,12 +246,11 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// updates the table of subjects and grades according to the chosen year
         /// </summary>
-        private async void UpdateTable()
+        private async void UpdateTable(ICollection<YearsViewModel> yearsList)
         {
             //clear table
             ClearTableMarks();
             tableMarks.AutoSize = true;
-            var yearsList = await years.GetYears(username);
             if (selectedYear != null)
             {
                 var subjectsList = await subjects.GetSubjects(selectedYear);
@@ -284,12 +287,11 @@ namespace GradingBookProject.Forms
                             CreateGradesLabels(subject);
 
                             //Get grades of a user to calculate the average
-                            var gradesList = await grades.GetSubjectDetails(subject);
+                            var gradesList = subject.SubjectDetails;
                             List<SubjectDetailsViewModel> gradesOfUser = new List<SubjectDetailsViewModel>();
-                            var currUser = await users.GetUser(username);
                             foreach (var grade in gradesList)
                             {
-                                if (grade.user_id == currUser.id)
+                                if (grade.user_id == currentUser.id)
                                     gradesOfUser.Add(grade);
                             }
 
@@ -486,15 +488,15 @@ namespace GradingBookProject.Forms
             panel.Name = "panel" + sub.id; //set name of the panel to: "panel+subId"
             panel.AutoSize = true;
             tableMarks.Controls.Add(panel); //add panel to tableMarks in proper position
-            //this.Controls.Add(panel);
+ 
             if (sub.SubjectDetails == null)
             {
                 return;
             }
-            var user =await users.GetUser(username);
+
             foreach (var grade in sub.SubjectDetails) //populate with labels panel
             {
-                if (grade.user_id == user.id)
+                if (grade.user_id == currentUser.id)
                 {
                     var lbl = new LinkLabel();
                     lbl.Name = grade.id.ToString();
