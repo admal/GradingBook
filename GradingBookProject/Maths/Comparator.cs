@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace GradingBookProject.Maths
 {
+    /// <summary>
+    /// Comparator of objects, returning the value as type given to compare.
+    /// </summary>
     public class Comparator
     {
-        public DateTime isLater(DateTime firstYear, DateTime secondYear) {
-            int x = firstYear.CompareTo(secondYear);
+        /// <summary>
+        /// Takes two dates and compares them.
+        /// </summary>
+        /// <param name="firstDate">First date.</param>
+        /// <param name="secondDate">Second date.</param>
+        /// <returns>Returns the date that is later as DateTime object.</returns>
+        public DateTime isLater(DateTime firstDate, DateTime secondDate) {
+            int x = firstDate.CompareTo(secondDate);
 
             if (x < 0)
-                return secondYear;
+                return secondDate;
             else
-                return firstYear;
+                return firstDate;
         }
     }
 }

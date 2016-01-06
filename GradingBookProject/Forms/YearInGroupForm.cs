@@ -15,16 +15,34 @@ using Ninject.Parameters;
 
 namespace GradingBookProject.Forms
 {
+    /// <summary>
+    /// Form displaying a year of a group. Displays two lists, one users and second subjects.
+    /// </summary>
     public partial class YearInGroupForm : Form
     {
+        /// <summary>
+        /// Id of a group the year belongs to.
+        /// </summary>
         private int groupId;
+        /// <summary>
+        /// Id of a selected year.
+        /// </summary>
         private int yearId;
         private HttpUsersRepository users;
         private HttpYearsRepository years;
         private HttpSubjectsRepository subjects;
         private HttpGroupDetailsRepository groupDetails;
+        /// <summary>
+        /// Determines wether the form is displayed by an admin.
+        /// </summary>
         private bool isAdmin;
 
+        /// <summary>
+        /// Constructor for YearInGroup form. Assings repositories, disables buttons for non admin users.
+        /// </summary>
+        /// <param name="_groupId">Id of a group the year belongs to.</param>
+        /// <param name="_yearId">Id of a selected year.</param>
+        /// <param name="_isAdmin">Determines wether the form is displayed by an admin.</param>
         public YearInGroupForm(int _groupId, int _yearId, bool _isAdmin)
         {
             InitializeComponent();  
@@ -51,7 +69,11 @@ namespace GradingBookProject.Forms
                 btnEditYear.Visible = false;
             }
         }
-
+        /// <summary>
+        /// Opens a form for editing the clicked subject.
+        /// </summary>
+        /// <param name="sender">Subjects grid view.</param>
+        /// <param name="e"></param>
         private void editSubject(object sender, DataGridViewCellEventArgs e)
         {
             if (isAdmin)
@@ -62,17 +84,18 @@ namespace GradingBookProject.Forms
 
                     SubjectsViewModel subject = subjectsBindingSource[idx] as SubjectsViewModel;
 
-                    if (subject.id != null)
-                    {
-                        var form = new SubjectForm(subject);
-                        form.FormClosed += new FormClosedEventHandler(this.Form_Close);
-                        form.ShowDialog();
-                    }
+                    var form = new SubjectForm(subject);
+                    form.FormClosed += new FormClosedEventHandler(this.Form_Close);
+                    form.ShowDialog();
 
                 }
             }
         }
-
+        /// <summary>
+        /// Opens a form to display requested user.
+        /// </summary>
+        /// <param name="sender">Users grid view.</param>
+        /// <param name="e"></param>
         private void seeUser(object sender, DataGridViewCellEventArgs e)
         {
             int idx = e.RowIndex;
@@ -87,7 +110,11 @@ namespace GradingBookProject.Forms
                 
             }
         }
-
+        /// <summary>
+        /// Opens a form for adding a subject.
+        /// </summary>
+        /// <param name="sender">Button for adding a subject</param>
+        /// <param name="e"></param>
         private void AddSubject(object sender, EventArgs e)
         {
             var subjectForm = Program.GetKernel().Get<SubjectForm>(new ConstructorArgument("yearid", yearId));
@@ -95,16 +122,25 @@ namespace GradingBookProject.Forms
             subjectForm.ShowDialog();
 
         }
-
+        /// <summary>
+        /// Closes the form.
+        /// </summary>
+        /// <param name="sender">Exit icon.</param>
+        /// <param name="e"></param>
         private void Form_Close(object sender, FormClosedEventArgs e)
         {
             UpdateTables();
         }
-
+        /// <summary>
+        /// Updates both Users and Subjects tables.
+        /// </summary>
         private void UpdateTables() {
              PopulateUserstable();
              PopulateSubjectsTable();        
         }
+        /// <summary>
+        /// Populates users table with data.
+        /// </summary>
         private async void PopulateUserstable(){
          
             var gds = await groupDetails.GetGroupDetailsForGroup(groupId);
@@ -118,7 +154,9 @@ namespace GradingBookProject.Forms
             }
             usersGridView.Update();
         }
-
+        /// <summary>
+        /// Populates subjects table with data.
+        /// </summary>
         private async void PopulateSubjectsTable() {
      
             subjectsBindingSource.Clear();
@@ -131,12 +169,11 @@ namespace GradingBookProject.Forms
             }
             subjectsGridView.Update();
         }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Opens a form for editing the clicked year.
+        /// </summary>
+        /// <param name="sender">Button for editing a year.</param>
+        /// <param name="e"></param>
         private async void  EditYearClick(object sender, EventArgs e)
         {
             var currYear = await years.GetOne(yearId);
@@ -144,7 +181,11 @@ namespace GradingBookProject.Forms
             form.ShowDialog();
             await Globals.UpdateCurrentUser();
         }
-
+        /// <summary>
+        /// Deletes Currently displayed year.
+        /// </summary>
+        /// <param name="sender">Button for deleting a year.</param>
+        /// <param name="e"></param>
         private async void DeleteYearClick(object sender, EventArgs e)
         {
 

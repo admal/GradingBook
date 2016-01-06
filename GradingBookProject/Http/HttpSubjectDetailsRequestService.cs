@@ -20,7 +20,7 @@ namespace GradingBookProject.Http
         /// <summary>
         /// Find all Grades for a given Subject.
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="subject">Subject we want grades of.</param>
         /// <returns>List of Grades of a given Subject, null if there is no such a Subject.</returns>
         public async Task<ICollection<SubjectDetailsViewModel>> GetSubjectDetailsOfSubject(SubjectsViewModel subject)
         {

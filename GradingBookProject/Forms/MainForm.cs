@@ -25,10 +25,8 @@ namespace GradingBookProject.Forms
     {
         private AverageCalc avgCalc = new AverageCalc();
 
-        private bool yearOwned = true;
         private YearsViewModel selectedYear = new YearsViewModel();
         private YearListItem selectedYearListItem;
-        private string username;
         private HttpYearsRepository years;
         private HttpSubjectsRepository subjects;
         private HttpSubjectDetailsRepository grades;
@@ -36,10 +34,18 @@ namespace GradingBookProject.Forms
         private HttpGroupsRepository groups;
         private HttpGroupDetailsRepository groupDetails;
         private int visitorGroupId;
-
+        /// <summary>
+        /// Determines wether the current viewer is a visitor or an owner.
+        /// </summary>
         private bool visiting;
-
+        /// <summary>
+        /// Determines wether the application should be closed entirely.
+        /// </summary>
         private bool toCloseApp = true;
+        /// <summary>
+        /// Username of a currently displayed user.
+        /// </summary>
+        private string username;
 
         /*-------------------------CONSTRUCTORS----------------------*/
         /// <summary>
@@ -64,6 +70,7 @@ namespace GradingBookProject.Forms
         /// Initializes the form updates repositories and list of years.
         /// </summary>
         /// <param name="visitingUsername">Determines the user other than logged in to be viewed</param>
+        /// <param name="_visitorGroupId">Determines the Group the user is visiting from.</param>
         public MainForm(string visitingUsername, int _visitorGroupId) {
             InitializeComponent();
 
@@ -113,8 +120,8 @@ namespace GradingBookProject.Forms
 
             if ((yearsList != null && yearsList.Count != 0) || (groupDetailsList != null && groupDetailsList.Count != 0))
             {
-                ///If it is not a visitor display all years from usr and groups otherwise
-                /// otherwise display only years form a group it is being visited from
+                //If it is not a visitor display all years from usr and groups otherwise
+                // otherwise display only years form a group it is being visited from
                 if (!visiting)
                 {
                     listYear.Items.Add(new YearListItem("Users Years"));
@@ -224,10 +231,6 @@ namespace GradingBookProject.Forms
             
             if (item.Clickable)
             {
-                if (!item.Owned)
-                {
-                    yearOwned = false;
-                }
                 selectedYear = await years.GetOne(item.Id);
                 selectedYearListItem = new YearListItem(item.ToString(), item.Id, item.Clickable, item.Owned);
                 UpdateMainForm();
@@ -320,7 +323,11 @@ namespace GradingBookProject.Forms
                 }
             }
         }
-
+        /// <summary>
+        /// Opens a form for adding a grade.
+        /// </summary>
+        /// <param name="sender">Button for adding a grade</param>
+        /// <param name="e"></param>
         private async void AddGradeClick(object sender, EventArgs e)
         {
             var btn = sender as Button;
@@ -503,8 +510,6 @@ namespace GradingBookProject.Forms
                 }
             }
         }
-
-
         /// <summary>
         /// Calls edit form for grade
         /// </summary>
@@ -555,12 +560,21 @@ namespace GradingBookProject.Forms
                 UpdateMainForm();
             }
         }
-
+        /// <summary>
+        /// Exits an application entirely.
+        /// </summary>
+        /// <param name="sender">Exit requested.</param>
+        /// <param name="e"></param>
         private void ExitClick(object sender, EventArgs e)
         {
             toCloseApp = true;
              Application.Exit();
         }
+        /// <summary>
+        /// Exits an application if appropriate.
+        /// </summary>
+        /// <param name="sender">Exit icon.</param>
+        /// <param name="e"></param>
         private void ExitIconClick(object sender, FormClosedEventArgs e)
         {
             if (visiting)
@@ -570,7 +584,11 @@ namespace GradingBookProject.Forms
             if(!visiting && toCloseApp)
                 Application.Exit();
         }
-
+        /// <summary>
+        /// Log out a current user.
+        /// </summary>
+        /// <param name="sender">Logout menu strip option.</param>
+        /// <param name="e"></param>
         private void LogoutClick(object sender, EventArgs e)
         {
             toCloseApp = false;
@@ -580,8 +598,5 @@ namespace GradingBookProject.Forms
             openForms.OfType<LoginForm>().First().Show(); //show login form
             this.Close();
         }
-
-
-
     }
 }
