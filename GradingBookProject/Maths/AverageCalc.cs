@@ -20,19 +20,24 @@ namespace GradingBookProject.Maths
         public double WeightedAverage(SubjectDetailsViewModel[] grades)
         {
 
-            if (grades.Length != 0)
+            if (grades != null)
             {
-                double sumTop = 0;
-                double sumBot = 0;
-                foreach (var grade in grades)
+                if (grades.Length != 0)
                 {
-                    sumTop = sumTop + (grade.grade_value * grade.grade_weight);
-                    sumBot = sumBot + (grade.grade_weight);
+                    double sumTop = 0;
+                    double sumBot = 0;
+                    foreach (var grade in grades)
+                    {
+                        if (grade == null)
+                            throw new Exception("There is no grade! (null)");
+
+                        sumTop = sumTop + (grade.grade_value*grade.grade_weight);
+                        sumBot = sumBot + (grade.grade_weight);
+                    }
+
+                    return Math.Round((sumTop/sumBot), 2);
                 }
-
-                return Math.Round((sumTop / sumBot), 2);
             }
-
             return 0;
         }
 
@@ -44,15 +49,20 @@ namespace GradingBookProject.Maths
         public double Average(SubjectDetailsViewModel[] grades) 
         {
             double sum = 0;
-            if (grades.Length != 0)
+            if (grades != null)
             {
-                foreach (var grade in grades)
+                if (grades.Length != 0)
                 {
-                    sum = sum + grade.grade_value;
+                    foreach (var grade in grades)
+                    {
+                        if(grade == null)
+                            throw new Exception("There is no grade! (null)");
+                        sum = sum + grade.grade_value;
+                    }
+                    return Math.Round((sum/grades.Length),2);
                 }
-                return Math.Round((sum/grades.Length));
             }
-           
+
             return 0;
         }
     }
