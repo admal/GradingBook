@@ -231,7 +231,7 @@ namespace GradingBookProject.Forms
                 selectedYear = await years.GetOne(item.Id);
                 selectedYearListItem = new YearListItem(item.ToString(), item.Id, item.Clickable, item.Owned);
                 UpdateMainForm();
-                listYear.SelectedItem = selectedYearListItem;
+                
             }
             
         }
