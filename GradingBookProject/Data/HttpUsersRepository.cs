@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using GradingBookProject.Http;
 using GradingBookProject.ViewModels;
 using GradingBookProject.Validation;
+using System.Collections.Generic;
 
 namespace GradingBookProject.Data
 {
@@ -59,6 +60,19 @@ namespace GradingBookProject.Data
         {
             var user = await requestService.GetUserByUsername(username);
             return user != null;
+        }
+        /// <summary>
+        /// Gets Users belonging to given group.
+        /// </summary>
+        /// <param name="groupId">Id of a group we want users from.</param>
+        /// <returns>Collection of users view models.</returns>
+        public async Task<ICollection<UsersViewModel>> GetUsersOfGroup(int groupId) 
+        {
+            var users = await requestService.GetUsersByGroupId(groupId);
+            if (users == null)
+                return null;
+
+            return users;
         }
     }
 }
