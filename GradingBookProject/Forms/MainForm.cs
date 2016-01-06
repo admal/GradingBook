@@ -156,6 +156,7 @@ namespace GradingBookProject.Forms
                     }
                 }
 
+
                 //Check if the form is being visited
                 if (visiting)
                 {
@@ -188,6 +189,7 @@ namespace GradingBookProject.Forms
                 {
                     
                     listYear.SelectedIndex = listYear.Items.IndexOf(selectedYearListItem);
+                    //listYear.Text = selectedYear.name;
                 }
                 else
                 {
@@ -588,7 +590,7 @@ namespace GradingBookProject.Forms
         private void ExitIconClick(object sender, FormClosedEventArgs e)
         {
             //toCloseApp = true;
-            if(toCloseApp)
+            if(!visiting)
                 Application.Exit();
         }
 
