@@ -478,6 +478,7 @@ namespace GradingBookProject.Forms
         private void SeeGroupsMenuClick(object sender, EventArgs e)
         {
             var groupForm = new YourGroupsForm();
+            groupForm.FormClosed += new FormClosedEventHandler(this.Form_Close);
             groupForm.Show();
         }
 
