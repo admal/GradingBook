@@ -16,17 +16,32 @@ using AutoMapper.QueryableExtensions;
 
 namespace GradingBookApi.Controllers
 {
+    /// <summary>
+    /// Api controller for managing grades(SubjectDetails).
+    /// </summary>
     public class SubjectDetailsController : ApiController
     {
+        /// <summary>
+        /// Database connection
+        /// </summary>
         private GradingBookDbEntities db = new GradingBookDbEntities();
 
         // GET: api/SubjectDetails
+        /// <summary>
+        /// Gets all grades.
+        /// </summary>
+        /// <returns>All grades.</returns>
         public IQueryable<SubjectDetailsViewModel> GetSubjectDetails()
         {
             return db.SubjectDetails.ProjectTo<SubjectDetailsViewModel>();
         }
 
         // GET: api/SubjectDetails/5
+        /// <summary>
+        /// Gets a certain grade.
+        /// </summary>
+        /// <param name="id">Id of a requested grade.</param>
+        /// <returns>Grades view model / not found.</returns>
         [ResponseType(typeof(SubjectDetailsViewModel))]
         public async Task<IHttpActionResult> GetSubjectDetails(int id)
         {
@@ -42,6 +57,11 @@ namespace GradingBookApi.Controllers
         }
 
         // GET: api/subjectDetails/getbysubjectid/4
+        /// <summary>
+        /// Gets grades of a given subject.
+        /// </summary>
+        /// <param name="id">Id of a subject we want grades from.</param>
+        /// <returns>Collection of grades as view models.</returns>
         [HttpGet]
         [Route("api/subjectDetails/getbysubjectid/{id:int}")]
         [ActionName("getbysubjectid")]
@@ -55,6 +75,12 @@ namespace GradingBookApi.Controllers
         }
 
         // PUT: api/SubjectDetails/5
+        /// <summary>
+        /// Updates a grade.
+        /// </summary>
+        /// <param name="id">Id of a grade to be updated.</param>
+        /// <param name="subjectDetails">Updated grade as a view model.</param>
+        /// <returns>Updated grade view model / not found/ bad request.</returns>
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutSubjectDetails(int id, SubjectDetailsViewModel subjectDetails)
         {
@@ -97,6 +123,11 @@ namespace GradingBookApi.Controllers
         }
 
         // POST: api/SubjectDetails
+        /// <summary>
+        /// Adds a grade.
+        /// </summary>
+        /// <param name="subjectDetails">Grade to be added</param>
+        /// <returns>Added grade / bad request.</returns>
         [ResponseType(typeof(SubjectDetailsViewModel))]
         public async Task<IHttpActionResult> PostSubjectDetails(SubjectDetailsViewModel subjectDetails)
         {
@@ -122,6 +153,11 @@ namespace GradingBookApi.Controllers
         }
 
         // DELETE: api/SubjectDetails/5
+        /// <summary>
+        /// Deletes a grade.
+        /// </summary>
+        /// <param name="id">Id of a grade to be deleted.</param>
+        /// <returns>Deleted grade / not found.</returns>
         [ResponseType(typeof(SubjectDetailsViewModel))]
         public async Task<IHttpActionResult> DeleteSubjectDetails(int id)
         {
@@ -136,7 +172,10 @@ namespace GradingBookApi.Controllers
             
             return Ok(Mapper.Map<SubjectDetailsViewModel>(subjectDetails));
         }
-
+        /// <summary>
+        /// Disposes of database connection.
+        /// </summary>
+        /// <param name="disposing">Determines wether the connection should be disposed.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -145,7 +184,11 @@ namespace GradingBookApi.Controllers
             }
             base.Dispose(disposing);
         }
-
+        /// <summary>
+        /// Checks if grade exists.
+        /// </summary>
+        /// <param name="id">Id of a grade.</param>
+        /// <returns>True if a grade exists, false otherwise.</returns>
         private bool SubjectDetailsExists(int id)
         {
             return db.SubjectDetails.Count(e => e.id == id) > 0;
