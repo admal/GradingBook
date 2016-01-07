@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookProject", "GradingBookProject\GradingBookProject.csproj", "{9252014E-701F-411C-A3BF-54F4C56F8C2B}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookApi", "GradingBookApi\GradingBookApi.csproj", "{791B8F6A-AA6B-4155-A652-9EE38AA157D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradingBookApi.Tests", "GradingBookApi.Tests\GradingBookApi.Tests.csproj", "{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradinBookWebApp", "GradinBookWebApp\GradinBookWebApp.csproj", "{A9E00DD4-2BEF-4E63-B8E8-709808D9719A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E16DC05-872E-4DF0-9E1C-DC97C8A5D74C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E00DD4-2BEF-4E63-B8E8-709808D9719A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E00DD4-2BEF-4E63-B8E8-709808D9719A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E00DD4-2BEF-4E63-B8E8-709808D9719A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E00DD4-2BEF-4E63-B8E8-709808D9719A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

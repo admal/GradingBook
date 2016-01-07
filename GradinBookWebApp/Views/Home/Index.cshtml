@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div id="bodyContainer" ng-app="GradingBookApp">
+    <div ng-controller="HomeController">
+        <p>{{hello}}</p>
+        <input type="text" name="username" value="user" ng-model="user"/>
+        <button class="btn btn-default" ng-click="findUser(user)">Find user!</button>
+        <p>{{getUser}}</p>
+    </div>
+</div>
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/bundles/ng-table")
+@Scripts.Render("~/ScriptsApp/Controllers/HomeController.js")

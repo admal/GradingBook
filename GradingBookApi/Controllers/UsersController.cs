@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -19,6 +20,7 @@ namespace GradingBookApi.Controllers
     /// <summary>
     /// Api controller to manage operations on groups.
     /// </summary>
+    [EnableCors(origins: "http://localhost:51849", headers: "*", methods: "*")]
     public class UsersController : ApiController
     {
         /// <summary>
@@ -192,15 +194,15 @@ namespace GradingBookApi.Controllers
         [HttpGet]
         [ActionName("GetByUsername")]
         [ResponseType(typeof(UsersViewModel))]
-        public async Task<IHttpActionResult> GetUserByUsername(string username )
+        public async Task<UsersViewModel> GetUserByUsername(string username )
         {
             var user = await db.Users.FirstOrDefaultAsync(u => u.username == username);
             if (user == null)
             {
-                return NotFound();
+                return null;
             }
             var retUser = Mapper.Map<UsersViewModel>(user);
-            return Ok(retUser);
+            return retUser;
         }
         /// <summary>
         /// Close connection to the database.
