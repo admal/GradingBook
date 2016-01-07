@@ -107,7 +107,6 @@ namespace GradingBookProject.Forms
                 var form = new MainForm(user.username, groupId);
                 form.ShowDialog();
                 
-                
             }
         }
         /// <summary>
@@ -134,14 +133,21 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Updates both Users and Subjects tables.
         /// </summary>
-        private void UpdateTables() {
-             PopulateUserstable();
-             PopulateSubjectsTable();        
+        private async void UpdateTables() {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                await PopulateUserstable();
+                await PopulateSubjectsTable();
+            }
+            finally {
+                this.Cursor = Cursors.Default;
+            }
         }
         /// <summary>
         /// Populates users table with data.
         /// </summary>
-        private async void PopulateUserstable(){
+        private async Task PopulateUserstable(){
 
 
             var usersList = await users.GetUsersOfGroup(groupId);
@@ -159,14 +165,13 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// Populates subjects table with data.
         /// </summary>
-        private async void PopulateSubjectsTable() {
+        private async Task PopulateSubjectsTable() {
      
             subjectsBindingSource.Clear();
 
             var subjectsList = await subjects.GetSubjects(await years.GetOne(yearId));
 
             foreach (var sub in subjectsList) {
-
                 subjectsBindingSource.Add(sub);
             }
             subjectsGridView.Update();
