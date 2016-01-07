@@ -99,9 +99,11 @@ namespace GradingBookProject.Forms
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void btnYearSave_Click(object sender, EventArgs e)
-        {            
+        {
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
             // Validating the dates.
-            if(!(validator.isValidDate(txtYearStart.Text)) || !(validator.isValidDate(txtYearEnd.Text))){
+            if (!(validator.isValidDate(txtYearStart.Text)) || !(validator.isValidDate(txtYearEnd.Text))){
                 MessageBox.Show("Incorrect date. Needs to be in form: \" year-month-day \"", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -152,7 +154,9 @@ namespace GradingBookProject.Forms
                      MessageBoxIcon.Error);
             
             }
-       
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
+
         }
 
         /// <summary>

@@ -52,6 +52,9 @@ namespace GradingBookProject.Forms
         /// <param name="e"></param>
         private async void SaveChangesClick(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
+
             var validator = Program.GetKernel().Get<IStringValidator>();
             //var currUser = Globals.CurrentUser;
 
@@ -120,6 +123,8 @@ namespace GradingBookProject.Forms
             {
                 MessageBox.Show(ex.Message);
             }
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
         }
     }
 }
