@@ -65,9 +65,8 @@ namespace GradingBookProject.Forms
 
             // Initialize repositories.
             UpdateRepositories();
-            
-            //populate the list of Years
-            UpdateYearList();
+
+            UpdateMainForm();
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace GradingBookProject.Forms
 
             UpdateRepositories();
 
-            UpdateYearList();
+            UpdateMainForm();
         }
         /*-----------------------------UPDATING FUNCTIONS-----------------------------*/
         /// <summary>
@@ -104,9 +103,17 @@ namespace GradingBookProject.Forms
         /// Updates Main Form.
         /// </summary>
         private async void UpdateMainForm() {
-            UpdateRepositories();
-            var updatedYearsList = await UpdateYearList();
-            UpdateTable(updatedYearsList);
+            try
+            {
+                this.Enabled = false;
+                this.Cursor = Cursors.WaitCursor;
+                var updatedYearsList = await UpdateYearList();
+                await UpdateTable(updatedYearsList);
+            }
+            finally {
+                this.Enabled = true;
+                this.Cursor = Cursors.Default;
+            }
         }
 
         /// <summary>
@@ -246,7 +253,7 @@ namespace GradingBookProject.Forms
         /// <summary>
         /// updates the table of subjects and grades according to the chosen year
         /// </summary>
-        private async void UpdateTable(ICollection<YearsViewModel> yearsList)
+        private async Task UpdateTable(ICollection<YearsViewModel> yearsList)
         {
             //clear table
             ClearTableMarks();

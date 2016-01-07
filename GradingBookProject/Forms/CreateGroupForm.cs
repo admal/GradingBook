@@ -81,14 +81,6 @@ namespace GradingBookProject.Forms
             
         }
 
-        //private async void RemoveUser(object sender, DataGridViewRowEventArgs e)
-        //{
-        //    HttpGroupDetailsRepository repo = new HttpGroupDetailsRepository();
-        //    int currId = usersDataView.CurrentRow.Index;
-        //    MessageBox.Show("Row: " + currId);
-        //    //UsersViewModel user = usersBindingSource[currId] as UsersViewModel;
-        //    //await repo.RemoveDetail(user.id, currGroup.id);
-        //}
         /// <summary>
         /// Saves and validates provided data.
         /// </summary>
@@ -106,6 +98,11 @@ namespace GradingBookProject.Forms
             HttpGroupsRepository groupRepo = new HttpGroupsRepository();
 
             currGroup.description = tbDesc.Text;
+            if (!validator.IsNotEmpty(tbTitle.Text))
+            {
+                MessageBox.Show("Group name can't be empty!","Error!",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                return;
+            }
             currGroup.name = tbTitle.Text;
 
             if (edit)

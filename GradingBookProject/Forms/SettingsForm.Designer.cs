@@ -97,6 +97,7 @@
             // 
             // tbUsername
             // 
+            this.tbUsername.Enabled = false;
             this.tbUsername.Location = new System.Drawing.Point(108, 9);
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.Size = new System.Drawing.Size(181, 20);
@@ -134,9 +135,9 @@
             this.lblUsername.AutoSize = true;
             this.lblUsername.Location = new System.Drawing.Point(6, 12);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(96, 13);
+            this.lblUsername.Size = new System.Drawing.Size(58, 13);
             this.lblUsername.TabIndex = 0;
-            this.lblUsername.Text = "Change username:";
+            this.lblUsername.Text = "Username:";
             // 
             // panel1
             // 

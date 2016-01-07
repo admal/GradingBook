@@ -47,6 +47,9 @@ namespace GradingBookProject.Forms
         /// <param name="e">Event arguments</param>
         private async void ValidateData(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
+
             IStringValidator val =  Program.GetKernel().Get<IStringValidator>();
             
             var username = tbUsername.Text;
@@ -88,6 +91,8 @@ namespace GradingBookProject.Forms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
         }
     }
 }

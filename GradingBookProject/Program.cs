@@ -41,7 +41,6 @@ namespace GradingBookProject
             CreateBindings();
             
             Globals.CurrentUser = null;
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(_kernel.Get<LoginForm>());

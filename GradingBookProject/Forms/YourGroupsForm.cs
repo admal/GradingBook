@@ -38,6 +38,7 @@ namespace GradingBookProject.Forms
         /// </summary>
         public async void UpdateGridView()
         {
+            Application.UseWaitCursor = true;
             currUser = Globals.CurrentUser;
             var repo = new HttpGroupsRepository();
             groupsBindingSource.Clear();
@@ -47,6 +48,7 @@ namespace GradingBookProject.Forms
                 groupsBindingSource.Add(group);
             }
             groupsGridView.Update();
+            Application.UseWaitCursor = false;
         }
 
         /// <summary>

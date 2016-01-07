@@ -85,6 +85,9 @@ namespace GradingBookProject.Forms
  
         private async void btnSubjectSave_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
+
             Validator validator = new Validator();
             subjectLocal.name = txtSubjectName.Text;
             subjectLocal.teacher_mail = txtSubjectEmail.Text;
@@ -128,6 +131,8 @@ namespace GradingBookProject.Forms
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
             }
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
 
         }
         /// <summary>
@@ -146,6 +151,9 @@ namespace GradingBookProject.Forms
         /// <param name="e"></param>
         private async void btnSubjectDelete_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
+
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the currently selected Subject?", "Delete a Subject", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
@@ -164,6 +172,9 @@ namespace GradingBookProject.Forms
             {
                 //do nothing
             }
+
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
         }
     }
 }

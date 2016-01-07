@@ -72,13 +72,18 @@ namespace GradingBookProject.Forms
         /// <param name="e"></param>
         private async void DeleteClick(object sender, EventArgs e)
         {
-             DialogResult result = MessageBox.Show("Are you sure you want to delete given grade?","Delete grade?",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
+
+            DialogResult result = MessageBox.Show("Are you sure you want to delete given grade?","Delete grade?",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
                 await grades.DeleteOne(grade);
                 this.Close();
             }
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
         }
         /// <summary>
         /// Button cick handler, it saves all provided changes and create all edit grade
@@ -87,6 +92,9 @@ namespace GradingBookProject.Forms
         /// <param name="e"></param>
         private async void SaveClick(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
+
             Validator validator = new Validator();
             var g = grade;
             try
@@ -143,6 +151,8 @@ namespace GradingBookProject.Forms
                     return;
                 }
             }
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
         }
     }
 }
