@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GradingBookProject.Data;
@@ -73,6 +68,7 @@ namespace GradingBookProject.Forms
         /// </summary>
         public async void UpdateYearsSource()
         {
+            Application.UseWaitCursor = true;
             await SyncGroup();
             yearsBindingSource.Clear();
             foreach (var year in currGroup.Years)
@@ -80,6 +76,7 @@ namespace GradingBookProject.Forms
                 yearsBindingSource.Add(year);
             }
             yearsGridView.Update();
+            Application.UseWaitCursor = false;
         }
         /// <summary>
         /// Synchronizes current group with actual group from database.

@@ -37,6 +37,9 @@ namespace GradingBookProject.Forms
         /// <param name="e"></param>
         private async void LoginUser(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
+
             var username = tbLogin.Text;
             var passwd = tbPasswd.Text;
 
@@ -46,20 +49,6 @@ namespace GradingBookProject.Forms
 
             if (await userRepo.LoginUser(username, passwd)) //login success
             {
-
-                ////TMP
-                //// Mapper.CreateMap<Users, UsersViewModel>();
-                //var tmp = AutoMapper.Mapper.Map<UsersViewModel>(Globals.CurrentUser);
-                //var s = "";
-                //foreach (var d in (await tmp.Details()))
-                //{
-                //    s += "Group: " + d.group_id + "; User: " + d.user_id + ";\n";
-                //}
-                //MessageBox.Show(s);
-
-                ////end tmp
-
-
                 var mainForm = Program.GetKernel().Get<MainForm>();
                 this.Hide();
                 mainForm.Show();
@@ -71,6 +60,8 @@ namespace GradingBookProject.Forms
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
             }
+            this.Cursor = Cursors.Default;
+            this.Enabled = true;
         }
     }
 }
