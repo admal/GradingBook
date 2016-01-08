@@ -1,7 +1,43 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "User years";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+
+<div id="bodyContainer" ng-app="GradingBookApp">
+    <div ng-controller="HomeController">
+
+        <input type="text" name="username" value="user" ng-model="user" />
+        <button class="btn btn-default" ng-click="findUser(user)">Find user!</button>
+        <div ng-if="isLoading">
+            <p class="ng-animate">LOADING...</p>
+
+        </div>
+        <p>{{getUser}}</p>
+        <ul>
+            <li ng-repeat="year in getYears">
+                <span>{{year.name}} : {{year.year_desc}}</span>
+                <ul>
+                    <li ng-repeat="subject in year.Subjects">
+                        <span>{{subject.name}} : </span>
+                        <span>{{subject.description}}</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+
+        <table ng-table="yearsTable" class="table table-striped">
+            <tr ng-repeat="year in data">
+                <td title="'Name'" sortable="'name'">
+                    {{year.name}}
+                </td>
+                <td title="'Description'" sortable="'year_desc'">
+                    {{year.year_desc}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/bundles/ng-table")
+@Scripts.Render("~/ScriptsApp/Controllers/HomeController.js")
