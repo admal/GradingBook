@@ -105,13 +105,11 @@ namespace GradingBookProject.Forms
         private async void UpdateMainForm() {
             try
             {
-                this.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
                 var updatedYearsList = await UpdateYearList();
                 await UpdateTable(updatedYearsList);
             }
             finally {
-                this.Enabled = true;
                 this.Cursor = Cursors.Default;
             }
         }
@@ -473,6 +471,7 @@ namespace GradingBookProject.Forms
         }
         private void SeeGroupsMenuClick(object sender, EventArgs e)
         {
+            this.Enabled = true;
             var groupForm = new YourGroupsForm();
             groupForm.FormClosed += new FormClosedEventHandler(this.Form_Close);
             groupForm.Show();
