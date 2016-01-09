@@ -1,0 +1,12 @@
+﻿body {
+    background: url(../../Content/Images/bg.jpg);
+    background-size: cover;
+}
+.login {
+    background: rgba(85, 37, 37, 0.83);
+    border: solid 0.1em black;
+    border-radius: 2%;
+    color: white;
+    padding: 3em;
+    margin-top: 30%;
+}
