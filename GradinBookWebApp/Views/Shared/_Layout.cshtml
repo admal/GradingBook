@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/ng-table.css")
+    @Styles.Render("~/Content/Custom/GradingBook.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="sidebar col-xs-2">
+            <div>
+                <span class="username col-xs-9">
+                    Username
+                </span>
+                <span class="back-arrow col-xs-3">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                </span>
+            </div>
+            <div>
+                <ul class="menu-list">
+                    <li>
+                        @Html.ActionLink("Your years", "Index", "Home")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Groups", "Index", "Home")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Settings", "Index", "Home")
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-offset-2 col-xs-10">
+            @*<div class="container body-content ">*@
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>
+            @*</div>*@
+        </div>
+        
+    </div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+@RenderSection("scripts", required: false)
+</body>
+</html>
