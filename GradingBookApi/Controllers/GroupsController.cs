@@ -1,9 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -15,6 +17,7 @@ namespace GradingBookApi.Controllers
     /// <summary>
     /// Api controller to manage operations on groups.
     /// </summary>
+    [EnableCors(origins: "http://localhost:51849", headers: "*", methods: "*")]
     public class GroupsController : ApiController
     {
         /// <summary>
@@ -48,6 +51,20 @@ namespace GradingBookApi.Controllers
                 return NotFound();
             }
             var retGroup = Mapper.Map<GroupsViewModel>(group);
+            return Ok(retGroup);
+        }
+
+        [ResponseType(typeof(ICollection<GroupsViewModel>))]
+        [Route("api/groups/getbyusername/{username}")]
+        public async Task<IHttpActionResult> GetGroupsByUsername(string username)
+        {
+            var owner = await db.Users.FirstAsync(u => u.username == username);
+            var groups = db.Groups.Where(g => g.owner_id == owner.id);
+            if (groups == null)
+            {
+                return NotFound();
+            }
+            var retGroup = groups.ProjectTo<GroupsViewModel>();
             return Ok(retGroup);
         }
 

@@ -12,44 +12,49 @@
 
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="sidebar col-xs-2">
-            <div>
-                <span class="username col-xs-9">
-                    Username
-                </span>
-                <span class="back-arrow col-xs-3">
-                    <span class="glyphicon glyphicon-arrow-left"></span>
-                </span>
-            </div>
-            <div>
-                <ul class="menu-list">
-                    <li>
-                        @Html.ActionLink("Your years", "Index", "Home")
-                    </li>
-                    <li>
-                        @Html.ActionLink("Groups", "Index", "Home")
-                    </li>
-                    <li>
-                        @Html.ActionLink("Settings", "Index", "Home")
-                    </li>
-                </ul>
-            </div>
+    <div class="col-xs-1" style="position: fixed; left: 0; top: 0; margin: 0; padding: 0;">
+        <div class="back-arrow hidden col-xs-6" id="showButton">
+            <span class="glyphicon glyphicon-arrow-right"></span>
         </div>
-        <div class="col-xs-offset-2 col-xs-10">
-            @*<div class="container body-content ">*@
-                @RenderBody()
-                <hr />
-                <footer>
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-                </footer>
-            @*</div>*@
-        </div>
-        
     </div>
+<div class="container-fluid">
+    <div class="sidebar col-xs-2">
+        <div>
+            <span class="username col-xs-9">
+                    @ViewBag.username
+                </span>
+            <span class="back-arrow col-xs-3">
+                    <span class="glyphicon glyphicon-arrow-left" id="collapseBtn"></span>
+                </span>
+        </div>
+        <div>
+            <ul class="menu-list">
+                <li>
+                    @Html.ActionLink("Years", "Index", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Groups", "Index", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Settings", "Index", "Home")
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-xs-offset-2 col-xs-10">
+        @*<div class="container body-content ">*@
+        @RenderBody()
+        <hr/>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+        @*</div>*@
+    </div>
+
+</div>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
-
+@Scripts.Render("~/ScriptsApp/MenuCollapse.js")
 @RenderSection("scripts", required: false)
 </body>
 </html>

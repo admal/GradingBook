@@ -194,6 +194,8 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="ScriptsApp\Controllers\HomeController.js" />
+    <Content Include="ScriptsApp\MenuCollapse.js" />
+    <Content Include="ScriptsApp\ModalsTemplates\AddYearModal.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1035,6 +1037,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ScriptsApp\Modules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using GradingBookProject.Models;
 using AutoMapper;
@@ -19,6 +21,7 @@ namespace GradingBookApi.Controllers
     /// <summary>
     /// Controller containing all Year methods.
     /// </summary>
+    [EnableCors(origins: "http://localhost:51849", headers: "*", methods: "*")]
     public class YearsController : ApiController
     {
         private GradingBookDbEntities db = new GradingBookDbEntities();
@@ -86,6 +89,23 @@ namespace GradingBookApi.Controllers
             return group.Years.AsQueryable().ProjectTo<YearsViewModel>().ToList();
         }
 
+        [Route("api/years/getallbyusername/{username}")]
+        [ActionName("GetAllByUsername")]
+        public async Task<ICollection<YearsViewModel>> GetAllYearsForUsername(string username)
+        {
+            var user = await db.Users.FirstOrDefaultAsync(u => u.username == username);
+            var groups = user.Groups;
+            var years = user.Years;
+            foreach (var group in groups)
+            {
+                foreach (var year in group.Years)
+                {
+                    years.Add(year);
+                }
+            }
+            var retYears = years.AsQueryable().ProjectTo<YearsViewModel>();
+            return retYears.ToList();
+        }
         // PUT: api/Years/5
         /// <summary>
         /// Updates a given year.
