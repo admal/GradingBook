@@ -1,47 +1,76 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "User years";
 }
-<script>
-    var currUser = @ViewBag.username
-</script>
+
 
 <div id="bodyContainer" ng-app="GradingBookApp" ng-controller="HomeController">
+
+
+    <div ng-if="errorMsg">
+        <div class="alert alert-danger" role="alert">
+            {{errorMsg}}
+        </div>
+    </div>
     <input type="hidden" name="username" value="currUser" ng-bind="username"/>
     {{username}}
     <div ng-init="findUser('Adam')">
         @*<input type="text" name="username" value="user" ng-model="user" />
-            <button class="btn btn-default" ng-click="findUser(user)">Find user!</button>*@
+        <button class="btn btn-default" ng-click="findUser(user)">Find user!</button>*@
         <div ng-if="isLoading">
             <p class="ng-animate">LOADING...</p>
         </div>
-        <p>{{getUser}}</p>
-        <ul>
-            <li ng-repeat="year in getYears">
-                <span>{{year.name}} : {{year.year_desc}}</span>
-                <ul>
-                    <li ng-repeat="subject in year.Subjects">
-                        <span>{{subject.name}} : </span>
-                        <span>{{subject.description}}</span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
 
-
-        <table ng-table="yearsTable" class="table table-striped">
-            <tr ng-repeat="year in data">
-                <td title="'Name'" sortable="'name'">
-                    {{year.name}}
-                </td>
-                <td title="'Description'" sortable="'year_desc'">
-                    {{year.year_desc}}
-                </td>
-            </tr>
-        </table>
+        <div class="col-xs-10 form-group-lg">
+            <select class="form-control" ng-model="currYear"
+                    ng-options="year.name group by year.group_id for year in getYears track by year.id "
+                    style="width: 100%; max-width: 100%;"
+                    ng-change="changeYear(year.id)"></select>
+        </div>
+        <div class="col-xs-2">
+            <div class="row">
+                <div class="btn-group btn-group-lg dropdown-toggle " data-toggle="collapse">
+                    <button class="btn btn-default" ng-click="showAddYearModal()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <button class="btn btn-default">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button class="btn btn-default">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <table ng-table="yearsTable" class="table table-striped">
+                <tr ng-repeat="subject in data">
+                    <td title="'Name'" sortable="'name'">
+                        <span class="btn-group  pull-left btn-group-sm">
+                            <button class="btn btn-default">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                            <button class="btn btn-default">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                        </span>
+                        <span style="margin-left: 1em;">
+                            {{subject.name}}
+                        </span>
+                    </td>
+                    <td title="'Grades'">
+                        <span ng-repeat="grade in subject.SubjectDetails">{{grade.grade_value + ' '}}</span>
+                        <button class="btn btn-default pull-right" ng-click="addGrade(grade.sub_id)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 @Scripts.Render("~/bundles/angular")
 @Scripts.Render("~/bundles/ng-table")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap.js")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap-tpls.js")
 @Scripts.Render("~/ScriptsApp/Controllers/HomeController.js")
 
