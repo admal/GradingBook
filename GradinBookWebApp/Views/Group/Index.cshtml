@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Groups";
+}
+
+<h2 class="page-header">Your groups</h2>
+
+<div id="bodyContainer" ng-app="GradingBookApp" ng-controller="HomeController" ng-init="username='@ViewBag.username'">
+    <div ng-if="errorMsg">
+        <div class="alert alert-danger" role="alert">
+            {{errorMsg}}
+        </div>
+    </div>
+    <div ng-init="loadGroups(username)">
+        <div ng-if="isLoading">
+            <p class="ng-animate">LOADING...</p>
+        </div>
+    </div>
+    <div class="group-container" ng-repeat="group in groups">
+        <div class="group-name">
+            {{group.name}}
+        </div>
+        Users:
+        <div class="group-users">
+            <div ng-repeat="user in group.GroupDetails">
+                {{user.user_id}}
+            </div>
+        </div>
+        <div ng-repeat="year in group.Years">
+            {{year.name}}
+        </div>
+         : {{group.ownerName}} ;
+    </div>
+</div>
+
+
+
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/bundles/ng-table")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap.js")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap-tpls.js")
+@Scripts.Render("~/ScriptsApp/Controllers/GroupController.js")

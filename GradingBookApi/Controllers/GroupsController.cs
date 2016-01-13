@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -8,7 +9,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using AutoMapper;
+using AutoMapper.Internal;
 using AutoMapper.QueryableExtensions;
+using GradingBookApi.ApiViewModels;
 using GradingBookProject.ViewModels;
 using GradingBookProject.Models;
 
@@ -65,6 +68,24 @@ namespace GradingBookApi.Controllers
                 return NotFound();
             }
             var retGroup = groups.ProjectTo<GroupsViewModel>();
+            return Ok(retGroup);
+        }
+
+        [ResponseType(typeof(ICollection<GroupsViewModel>))]
+        [Route("api/groups/getusersgroups/{username}")]
+        public async Task<IHttpActionResult> GetGroupsUserMember(string username)
+        {
+            var user = await db.Users.FirstAsync(u => u.username == username);
+            //var groups = db.Groups.Where(g => g.owner_id == owner.id);
+            var details = db.GroupDetails.Where(d => d.user_id == user.id);
+
+            var groups = new List<Groups>();
+            foreach (var detail in details)
+            {
+                groups.Add(detail.Groups);
+            }
+
+            var retGroup = groups.AsQueryable().ProjectTo<ShowGroupViewModel>();
             return Ok(retGroup);
         }
 

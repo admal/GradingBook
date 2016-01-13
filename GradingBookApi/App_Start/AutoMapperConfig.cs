@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GradingBookApi.ApiViewModels;
 using GradingBookProject.Models;
 using GradingBookProject.ViewModels;
 
@@ -22,6 +23,9 @@ namespace GradingBookApi.App_Start
                 config.CreateMap<Years, YearsViewModel>();
                 config.CreateMap<Subjects, SubjectsViewModel>();
                 config.CreateMap<SubjectDetails, SubjectDetailsViewModel>();
+
+                config.CreateMap<Groups, ShowGroupViewModel>()
+                    .ForMember(dest => dest.ownerName, opt => opt.MapFrom(src => src.Users.name));
             });
         }
     }

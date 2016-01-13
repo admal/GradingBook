@@ -1,19 +1,15 @@
 ﻿@{
-    ViewBag.Title = "User years";
+    ViewBag.Title = "User's years";
 }
 
 
-<div id="bodyContainer" ng-app="GradingBookApp" ng-controller="HomeController">
-
-
+<div id="bodyContainer" ng-app="GradingBookApp" ng-controller="HomeController" ng-init="username='@ViewBag.username'">
     <div ng-if="errorMsg">
         <div class="alert alert-danger" role="alert">
             {{errorMsg}}
         </div>
     </div>
-    <input type="hidden" name="username" value="currUser" ng-bind="username"/>
-    {{username}}
-    <div ng-init="findUser('Adam')">
+    <div ng-init="findUser(username)">
         @*<input type="text" name="username" value="user" ng-model="user" />
         <button class="btn btn-default" ng-click="findUser(user)">Find user!</button>*@
         <div ng-if="isLoading">
@@ -73,4 +69,5 @@
 @Scripts.Render("~/Scripts/angular-ui/ui-bootstrap.js")
 @Scripts.Render("~/Scripts/angular-ui/ui-bootstrap-tpls.js")
 @Scripts.Render("~/ScriptsApp/Controllers/HomeController.js")
+
 
