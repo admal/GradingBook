@@ -57,16 +57,29 @@ ul.menu-list li a{
   width: 0;
 }
 
+.alert-container {
+    position: fixed;
+    margin: 1em auto 0 auto;
+    top: 0;
+    width: 60%;
+}
+
 /*Groups Controller*/
 .group-container {
-    
+    margin-top: 1.5em;
+    padding: 2em;
 }
-.group-name{
-    
+
+ul.group-elements {
+    list-style: none;
+    padding-left: 0;
+    margin: 0.5em 0 0.5em 0;
 }
-.group-years {
-    
+.group-element {
+    padding: 1em;
+    border: dotted #515151 thin;
 }
-.group-users {
-    
+input.ng-invalid
+{
+    border: solid red 2px;
 }

@@ -25,7 +25,10 @@ namespace GradingBookApi.App_Start
                 config.CreateMap<SubjectDetails, SubjectDetailsViewModel>();
 
                 config.CreateMap<Groups, ShowGroupViewModel>()
-                    .ForMember(dest => dest.ownerName, opt => opt.MapFrom(src => src.Users.name));
+                    .ForMember(dest => dest.ownerName, opt => opt.MapFrom(src => src.Users.username));
+
+                config.CreateMap<GroupDetails, ShowGroupDetailViewModel>()
+                    .ForMember(dest => dest.username, opt => opt.MapFrom(src => src.Users.username));
             });
         }
     }

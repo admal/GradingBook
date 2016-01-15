@@ -10,9 +10,10 @@ namespace GradingBookApi.ApiViewModels
     {
         public ShowGroupViewModel()
         {
-            GroupDetails = new List<GroupDetailsViewModel>();
+            GroupDetails = new List<ShowGroupDetailViewModel>();
             Years = new List<YearsViewModel>();
         }
+        public int id { get; set; }
         /// <summary>
         /// Name of the grouop
         /// </summary>
@@ -36,7 +37,7 @@ namespace GradingBookApi.ApiViewModels
         /// <summary>
         /// All members of the group.
         /// </summary>
-        public virtual ICollection<GroupDetailsViewModel> GroupDetails { get; set; }
+        public virtual ICollection<ShowGroupDetailViewModel> GroupDetails { get; set; }
         /// <summary>
         /// Years common for all users in the group.
         /// </summary>

@@ -166,6 +166,46 @@ namespace GradingBookApi.Controllers
             return CreatedAtRoute("DefaultApi", new { id = newGroup.id }, retGroup);
         }
 
+        /// <summary>
+        /// Add new group to the database.
+        /// </summary>
+        /// <param name="groups">Group to be added (CreateGroupViewModel)</param>
+        /// <returns>Added group view model, bad request response.</returns>
+        [HttpPost]
+        [ResponseType(typeof(GroupsViewModel))]
+        [Route("api/groups/creategroup")]
+        public async Task<IHttpActionResult> CreateGroup([FromBody]CreateGroupViewModel group)
+        {
+            var owner = await db.Users.FirstOrDefaultAsync(u => u.username == group.ownerName);
+            if (owner == null)
+                return BadRequest("User can not be found!");
+            var newGroup = new Groups()
+            {
+                name = group.name,
+                created_at = group.createdAt,
+                description = group.description,
+                owner_id = owner.id,
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Groups.Add(newGroup);
+            await db.SaveChangesAsync();
+            //add user to db
+            newGroup.GroupDetails.Add(new GroupDetails()
+            {
+                user_id = owner.id,
+                group_id = newGroup.id
+            });
+            await db.SaveChangesAsync();
+            var retGroup = Mapper.Map<GroupsViewModel>(newGroup);
+            return Ok(retGroup);
+        }
+
+
         // DELETE: api/Groups/5
         /// <summary>
         /// Deletes group with given id.
