@@ -4,7 +4,7 @@
 
 <h2 class="page-header">Your groups</h2>
 
-<div id="bodyContainer" ng-app="GradingBookApp" ng-controller="HomeController" ng-init="username='@ViewBag.username'">
+<div id="bodyContainer" ng-app="GradingBookApp" ng-controller="GroupController" ng-init="username='@ViewBag.username'">
     <div ng-if="errorMsg">
         <div class="alert alert-danger" role="alert">
             {{errorMsg}}
@@ -25,7 +25,6 @@
                         ng-options="group.name for group in groups"
                         style="width: 100%; max-width: 100%;"></select>
             </div>
-
             <div class="col-xs-2">
                 <div class="row">
                     <div class="btn-group btn-group-lg dropdown-toggle " data-toggle="collapse">
@@ -34,27 +33,49 @@
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <button class="btn btn-default" uib-popover="Delete/leave the group."
-                                popover-trigger="mouseenter">
+                                popover-trigger="mouseenter" ng-click="leaveDeleteGroupClick()">
                             <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <button ng-show="isAdmin()" class="btn btn-default" uib-popover="Edit the group."
+                                popover-trigger="mouseenter" ng-click="editGroup()">
+                            <span class="glyphicon glyphicon-edit"></span>
                         </button>
                     </div>
                 </div>
             </div>
-
         </div>
+
         <div class="group-container">
             <div class="row">
                 <div class="col-xs-4">
                     Admin: <b> {{currGroup.ownerName}}</b>
                 </div>
-                <div class="col-xs-8 pull-right">
-                    <button class="btn btn-default btn-sm" ng-click="editDesc()"> <span class="glyphicon glyphicon-edit"></span></button>
-                     Description:
-                    <p ng-show="!isEditing">
-                        {{currGroup.description}}
-                    </p>
-                    <textarea ng-show="isEditing" class="form-control" ng-model="currGroup.description"></textarea>
-                </div>
+                <form name="editGroupForm" class="col-xs-8" novalidate>
+                    <div class="col-xs-12" ng-show="isEditing">
+                        <div class="text-right form-group">
+                            <label style="margin-right: 1em;" for="groupEditName">New name:</label>
+                            <input type="text" class="form-control pull-right" id="groupEditName" name="groupEditName"
+                                   ng-model="currGroup.name"
+                                   uib-popover="Enter new name of the group!" popover-trigger="focus"
+                                   ng-required="true"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 text-right">
+                        <div class="form-group">
+                            <label style="margin-right: 1em;" for="groupEditDesc">Description:</label>
+                            <textarea id="groupEditDesc" class="form-control pull-right" ng-model="currGroup.description"
+                                      ng-disabled="!isEditing"
+                                      uib-popover="Edit the description of the group!" popover-trigger="focus"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" style="margin-top: 1em;" ng-show="isEditing">
+                        <button class="btn btn-info pull-right"
+                                ng-disabled="editGroupForm.$invalid"
+                                ng-click="saveEditForm()">
+                            Save changes
+                        </button>
+                    </div>
+                </form>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
@@ -63,7 +84,8 @@
                         <li ng-repeat="user in currGroup.GroupDetails" class="group-element">
                             {{user.username}}
                             <span class="pull-right" ng-if="isAdmin() && user.username!=currUser">
-                                <button ng-click="deleteItem()" uib-popover="Remove user from the group!" popover-trigger="mouseenter"
+                                <button ng-click="removeUser(user)" uib-popover="Remove user from the group!" 
+                                        popover-trigger="mouseenter"
                                         class="btn btn-danger">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
@@ -71,7 +93,14 @@
 
                         </li>
                         <li ng-if="isAdmin()">
-                            <a style="cursor: pointer">Add user...</a>
+                            <a style="cursor: pointer" ng-click="toggleSection(2)">Add user...</a>
+                            <form class="form-inline" ng-show="showSections[2]">
+                                <input type="text" name="addUsername" ng-model="newUser" value="" class="form-control"/>
+                                <button ng-click="addUser(newUser)"
+                                        class="btn btn-primary">
+                                    Add
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -79,24 +108,25 @@
                     Years:
                     <ul class="group-elements">
                         <li ng-repeat="year in currGroup.Years" class="group-element">
-                            {{year.name}}
+                            {{year.name}} 
                             <span class="pull-right" ng-if="isAdmin() && user.username!=currUser">
-                                <button ng-click="deleteItem()" uib-popover="Delete year!" popover-trigger="mouseenter"
-                                        class="btn btn-danger">
+                                <button uib-popover="Delete year!" popover-trigger="mouseenter"
+                                        class="btn btn-danger" ng-click="deleteYear(year)">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
                             </span>
                         </li>
                         <li ng-show="isAdmin()">
-                            <a style="cursor: pointer">Add new year...</a>
+                            <a style="cursor: pointer" ng-click="toggleSection(3)">Add new year...</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    @*Create new group section*@
     <div ng-show="showSections[1]">
-        <form name="createGroupForm" novalidate >
+        <form name="createGroupForm" novalidate>
             <div class="form-group">
                 <label for="groupName">Group name</label>
                 <input type="text" class="form-control" id="groupName" name="name" placeholder="My group..."
@@ -111,31 +141,41 @@
             <button class="btn btn-info" ng-click="showMainForm()">Cancel</button>
         </form>
     </div>
+    @*Create new year section*@
+    <div class="col-xs-12" ng-show="showSections[3]">
+        <h3 class="page-header">New year</h3>
+        <form name="newYearForm" class="form-horizontal" novalidate>
+            <div class="form-group col-xs-12 col-sm-6">
+                <label for="newYearName">Name</label>
+                <input type="text" id="newYearName" name="newYearName" ng-model="newYear.name" value=""
+                       class="form-control" ng-required="true" ng-model="newYear.name"
+                       placeholder="My year..."/>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6">
+                <label for="yearDesc">Description</label>
+                <textarea ng-model="newYear.year_desc" class="form-control" rows="4" id="yearDesc" placeholder="My year is..."></textarea>
+            </div>
+            <div class="form-group  col-xs-12 col-sm-6">
+                <label for="startDate" class="col-xs-12">Start</label>
+                <div style="display: inline-block; min-height: 290px;">
+                    <uib-datepicker id="startDate" ng-model="newYear.start" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                </div>
+            </div>
+            <div class="form-group  col-xs-12 col-sm-6">
+                <label for="endDate" class="col-xs-12">End</label>
+                <div style="display: inline-block; min-height: 290px;">
+                    <uib-datepicker id="endDate" ng-model="newYear.end_date" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <button ng-click="createYear()" ng-disabled="newYearForm.$invalid" class="btn btn-primary">
+                    Add
+                </button>
+                <button class="btn btn-default" ng-click="toggleSection(3)">Close</button>
+            </div>
+        </form>
+    </div>
 </div>
-@*<form name="personForm2" ng-submit="submitData(person2, 'ajaxSubmitResult1')" novalidate>
-    <label for="firstNameEdit2">First name:</label>
-    <input id="firstNameEdit2" type="text" name="firstName" ng-model="person2.firstName" required /><br />
-    <label for="lastNameEdit2">Last name:</label>
-    <input id="lastNameEdit2" type="text" name="lastName" ng-model="person2.lastName" required /><br />
-    <br />
-    <button type="submit"
-            ng-disabled="personForm2.$invalid">
-        Submit
-    </button>
-</form>*@
-@*<form name="personForm3" novalidate>
-    <label for="firstNameEdit3">First name:</label>
-    <input id="firstNameEdit3" type="text" name="firstName" ng-model="person3.firstName" required /><br />
-    <label for="lastNameEdit3">Last name:</label>
-    <input id="lastNameEdit3" type="text" name="lastName" ng-model="person3.lastName" required /><br />
-    <br />
-    <button type="submit"
-            ng-click="submitData(person3, 'ajaxSubmitResult2')"
-            ng-disabled="personForm3.$invalid">
-        Submit
-    </button>
-</form>*@
-
 
 @Scripts.Render("~/bundles/angular")
 @Scripts.Render("~/Scripts/angular-animate.js")
@@ -143,3 +183,5 @@
 @Scripts.Render("~/Scripts/angular-ui/ui-bootstrap.js")
 @Scripts.Render("~/Scripts/angular-ui/ui-bootstrap-tpls.js")
 @Scripts.Render("~/ScriptsApp/Controllers/GroupController.js")
+@Scripts.Render("~/ScriptsApp/Services/modalService.js")
+
