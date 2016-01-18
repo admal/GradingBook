@@ -56,3 +56,30 @@ ul.menu-list li a{
   transition: width 0.35s ease;
   width: 0;
 }
+
+.alert-container {
+    position: fixed;
+    margin: 1em auto 0 auto;
+    top: 0;
+    width: 60%;
+}
+
+/*Groups Controller*/
+.group-container {
+    margin-top: 1.5em;
+    padding: 2em;
+}
+
+ul.group-elements {
+    list-style: none;
+    padding-left: 0;
+    margin: 0.5em 0 0.5em 0;
+}
+.group-element {
+    padding: 1em;
+    border: dotted #515151 thin;
+}
+input.ng-invalid
+{
+    border: solid red 2px;
+}

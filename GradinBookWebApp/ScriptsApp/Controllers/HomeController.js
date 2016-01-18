@@ -1,5 +1,4 @@
-﻿
-angular.module('GradingBookApp', ["ngTable", "ui.bootstrap"])
+﻿angular.module('GradingBookApp', ["ngTable", "ui.bootstrap"])
     .controller('HomeController', function ($scope, $http, ngTableParams, $uibModal) {
         $scope.getUser = '';
         $scope.isLoading = false;

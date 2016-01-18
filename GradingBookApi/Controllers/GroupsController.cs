@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -8,7 +9,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using AutoMapper;
+using AutoMapper.Internal;
 using AutoMapper.QueryableExtensions;
+using GradingBookApi.ApiViewModels;
 using GradingBookProject.ViewModels;
 using GradingBookProject.Models;
 
@@ -65,6 +68,24 @@ namespace GradingBookApi.Controllers
                 return NotFound();
             }
             var retGroup = groups.ProjectTo<GroupsViewModel>();
+            return Ok(retGroup);
+        }
+
+        [ResponseType(typeof(ICollection<GroupsViewModel>))]
+        [Route("api/groups/getusersgroups/{username}")]
+        public async Task<IHttpActionResult> GetGroupsUserMember(string username)
+        {
+            var user = await db.Users.FirstAsync(u => u.username == username);
+            //var groups = db.Groups.Where(g => g.owner_id == owner.id);
+            var details = db.GroupDetails.Where(d => d.user_id == user.id);
+
+            var groups = new List<Groups>();
+            foreach (var detail in details)
+            {
+                groups.Add(detail.Groups);
+            }
+
+            var retGroup = groups.AsQueryable().ProjectTo<ShowGroupViewModel>();
             return Ok(retGroup);
         }
 
@@ -144,6 +165,46 @@ namespace GradingBookApi.Controllers
             var retGroup = Mapper.Map<GroupsViewModel>(newGroup);
             return CreatedAtRoute("DefaultApi", new { id = newGroup.id }, retGroup);
         }
+
+        /// <summary>
+        /// Add new group to the database.
+        /// </summary>
+        /// <param name="groups">Group to be added (CreateGroupViewModel)</param>
+        /// <returns>Added group view model, bad request response.</returns>
+        [HttpPost]
+        [ResponseType(typeof(GroupsViewModel))]
+        [Route("api/groups/creategroup")]
+        public async Task<IHttpActionResult> CreateGroup([FromBody]CreateGroupViewModel group)
+        {
+            var owner = await db.Users.FirstOrDefaultAsync(u => u.username == group.ownerName);
+            if (owner == null)
+                return BadRequest("User can not be found!");
+            var newGroup = new Groups()
+            {
+                name = group.name,
+                created_at = group.createdAt,
+                description = group.description,
+                owner_id = owner.id,
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Groups.Add(newGroup);
+            await db.SaveChangesAsync();
+            //add user to db
+            newGroup.GroupDetails.Add(new GroupDetails()
+            {
+                user_id = owner.id,
+                group_id = newGroup.id
+            });
+            await db.SaveChangesAsync();
+            var retGroup = Mapper.Map<GroupsViewModel>(newGroup);
+            return Ok(retGroup);
+        }
+
 
         // DELETE: api/Groups/5
         /// <summary>
