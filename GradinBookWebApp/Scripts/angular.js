@@ -21514,7 +21514,7 @@ var inputType = {
              }]);
          </script>
            <form name="myForm" ng-controller="ExampleController">
-             <label>Email:
+             <label>Username:
                <input type="email" name="input" ng-model="email.text" required>
              </label>
              <div role="alert">

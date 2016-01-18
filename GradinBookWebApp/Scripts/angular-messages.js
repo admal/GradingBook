@@ -106,7 +106,7 @@ var jqLite = angular.element;
  *
  * <form name="myForm">
  *   <label>
- *     Email address
+ *     Username address
  *     <input type="email"
  *            id="email"
  *            name="myEmail"
@@ -142,7 +142,7 @@ var jqLite = angular.element;
  * ```html
  * <form name="myForm">
  *   <label>
- *     Email address
+ *     Username address
  *     <input type="email"
  *            name="myEmail"
  *            ng-model="email"
@@ -164,7 +164,7 @@ var jqLite = angular.element;
  *
  * ```html
  *   <label>
- *     Email address
+ *     Username address
  *     <input type="email"
  *            ng-model="data.email"
  *            name="myEmail"
