@@ -4,22 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bafdadefffa9470b8723cd19102a466e" Name="Diagram1">
-        <EntityTypeShape EntityType="GradingBook.Models.GroupDetails" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GradingBook.Models.Groups" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GradingBook.Models.SubjectDetails" Width="1.5" PointX="12.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="GradingBook.Models.Subjects" Width="1.5" PointX="10.5" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="GradingBook.Models.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GradingBook.Models.Users" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GradingBook.Models.Years" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="GradingBook.Models.FK__GroupDeta__group__300424B4" ManuallyRouted="false" />
-        <AssociationConnector Association="GradingBook.Models.FK__GroupDeta__user___2F10007B" ManuallyRouted="false" />
-        <AssociationConnector Association="GradingBook.Models.FK__Groups__owner_id__2A4B4B5E" ManuallyRouted="false" />
-        <AssociationConnector Association="GradingBook.Models.FK__Years__group_id__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="GradingBook.Models.FK__SubjectDe__sub_i__1273C1CD" ManuallyRouted="false" />
-        <AssociationConnector Association="GradingBook.Models.FK__SubjectDe__user___31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="GradingBook.Models.FK__Subjects__year_i__1367E606" ManuallyRouted="false" />
-        <AssociationConnector Association="GradingBook.Models.FK__Years__user_id__145C0A3F" ManuallyRouted="false" />
+      <Diagram DiagramId="0789971696404c3a9172b453b80b6652" Name="Diagram1">
+        <EntityTypeShape EntityType="GradingBookProject.Models.AspNetRoles" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.AspNetUsers" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.GroupDetails" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.Groups" Width="1.5" PointX="7.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.SubjectDetails" Width="1.5" PointX="17.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.Subjects" Width="1.5" PointX="15" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.Users" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GradingBookProject.Models.Years" Width="1.5" PointX="12.75" PointY="9.25" IsExpanded="true" />
+        <AssociationConnector Association="GradingBookProject.Models.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK_Users_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__GroupDeta__group__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__GroupDeta__user___59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__Groups__owner_id__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__Years__group_id__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__SubjectDe__sub_i__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__SubjectDe__user___5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__Subjects__year_i__1B0907CE" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.FK__Years__user_id__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="GradingBookProject.Models.AspNetUserRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

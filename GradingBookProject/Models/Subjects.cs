@@ -12,18 +12,18 @@ namespace GradingBookProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Subjects
+    public partial class Subjects : DataEntity
     {
         public Subjects()
         {
             this.SubjectDetails = new HashSet<SubjectDetails>();
         }
     
-        public int id { get; set; }
         public string name { get; set; }
         public string sub_desc { get; set; }
         public int year_id { get; set; }
         public string teacher_mail { get; set; }
+        public Nullable<double> final_grade { get; set; }
     
         public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }
         public virtual Years Years { get; set; }

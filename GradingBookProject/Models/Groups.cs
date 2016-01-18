@@ -11,8 +11,8 @@ namespace GradingBookProject.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Groups
+
+    public partial class Groups : DataEntity
     {
         public Groups()
         {
@@ -20,7 +20,6 @@ namespace GradingBookProject.Models
             this.Years = new HashSet<Years>();
         }
     
-        public int id { get; set; }
         public string name { get; set; }
         public int owner_id { get; set; }
         public System.DateTime created_at { get; set; }

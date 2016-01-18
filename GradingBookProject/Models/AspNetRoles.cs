@@ -11,13 +11,17 @@ namespace GradingBookProject.Models
 {
     using System;
     using System.Collections.Generic;
-
-    public partial class GroupDetails : DataEntity
-    {
-        public int user_id { get; set; }
-        public int group_id { get; set; }
     
-        public virtual Groups Groups { get; set; }
-        public virtual Users Users { get; set; }
+    public partial class AspNetRoles
+    {
+        public AspNetRoles()
+        {
+            this.AspNetUsers = new HashSet<AspNetUsers>();
+        }
+    
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

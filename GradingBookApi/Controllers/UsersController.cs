@@ -111,7 +111,6 @@ namespace GradingBookApi.Controllers
             userToEdit.email = users.email;
             userToEdit.name = users.name;
             userToEdit.surname = users.surname;
-            userToEdit.passwd = users.passwd;
             
             db.Entry(userToEdit).State = EntityState.Modified;
 
@@ -145,6 +144,7 @@ namespace GradingBookApi.Controllers
         {
             Users newUser = new Users()
             {
+                id = users.id,
                 name = users.name,
                 surname = users.surname,
                 username = users.username,

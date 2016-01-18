@@ -7,13 +7,15 @@ using Microsoft.AspNet.Identity;
 
 namespace GradinBookWebApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        //[Authorize] add this when we do have created login and register
+         //add this when we do have created login and register
+        [Authorize]
         public ActionResult Index()
         {
 
-            string username = "Adam"; //put here: User.Identity.GetUserName(); (when registration and logging is made)
+            string username = User.Identity.GetUserName();// "Adam"; //put here: User.Identity.GetUserName(); (when registration and logging is made)
             ViewBag.username = username;
             return View();
         }
