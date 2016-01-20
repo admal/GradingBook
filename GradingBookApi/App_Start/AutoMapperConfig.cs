@@ -20,7 +20,9 @@ namespace GradingBookApi.App_Start
                 config.CreateMap<Users, UsersViewModel>();
                 config.CreateMap<GroupDetails, GroupDetailsViewModel>();
                 config.CreateMap<Groups, GroupsViewModel>();
-                config.CreateMap<Years, YearsViewModel>();
+                config.CreateMap<Years, YearsViewModel>()
+                    .ForMember(dest => dest.groupName, 
+                    opt => opt.MapFrom(src => src.Groups==null? null : src.Groups.name ));
                 config.CreateMap<Subjects, SubjectsViewModel>();
                 config.CreateMap<SubjectDetails, SubjectDetailsViewModel>();
 

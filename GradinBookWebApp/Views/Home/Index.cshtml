@@ -26,14 +26,9 @@
     </div>
     <div name="mainViewSection" >
         <div ng-init="findUser(username)">
-            @*<input type="text" name="username" value="user" ng-model="user" />
-            <button class="btn btn-default" ng-click="findUser(user)">Find user!</button>*@
-            @*<div ng-if="isLoading">
-                <p class="ng-animate">LOADING...</p>
-            </div>*@
             <div class="col-xs-10 form-group-lg" style="margin-top:15px">
                 <select class="form-control" ng-model="currYear"
-                        ng-options="year.name group by year.group_id for year in getYears track by year.id "
+                        ng-options="year.name group by year.groupName for year in getYears track by year.id "
                         style="width: 100%; max-width: 100%;"
                         ng-change="changeYear(year.id)"></select>
             </div>
