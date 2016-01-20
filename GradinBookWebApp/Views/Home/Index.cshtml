@@ -30,13 +30,13 @@
             <div class="col-xs-2" style="margin-top:15px">
                 <div class="row">
                     <div class="btn-group btn-group-lg dropdown-toggle " data-toggle="collapse">
-                        <button class="btn btn-default" ng-click="showAddYearSection()">
+                        <button class="btn btn-default" ng-click="showAddYearSection()" uib-popover="Add a new year." popover-trigger="mouseenter">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
-                        <button class="btn btn-default" ng-click="deleteYear()">
+                        <button class="btn btn-default" ng-click="deleteYear()" uib-popover="Delete the selected year.!" popover-trigger="mouseenter">
                             <span class="glyphicon glyphicon-minus"></span>
                         </button>
-                        <button class="btn btn-default">
+                        <button class="btn btn-default" uib-popover="Edit the selected year." popover-trigger="mouseenter">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
                     </div>
@@ -52,10 +52,10 @@
                     <tr ng-repeat="subject in data">
                         <td title="'Name'" sortable="'name'">
                             <span class="btn-group  pull-left btn-group-sm">
-                                <button class="btn btn-default">
+                                <button class="btn btn-default" ng-click="deleteSubject(subject)" uib-popover="Remove this subject." popover-trigger="mouseenter">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
-                                <button class="btn btn-default">
+                                <button class="btn btn-default" uib-popover="Edit this subject." popover-trigger="mouseenter">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>
                             </span>
@@ -65,7 +65,7 @@
                         </td>
                         <td title="'Grades'">
                             <span ng-repeat="grade in subject.SubjectDetails">{{grade.grade_value + ' '}}</span>
-                            <button class="btn btn-default pull-right" ng-click="showAddGradeSection()">
+                            <button class="btn btn-default pull-right" ng-click="showAddGradeSection(subject)" uib-popover="Add a new grade to this subject." popover-trigger="mouseenter">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
                         </td>
@@ -142,13 +142,13 @@
                     <form name="newGradeForm" class="form-horizontal" novalidate>
                         <div class="form-group col-xs-12 col-sm-2">
                             <label for="newGradeValue">Grade</label>
-                            <input type="number" min="2" max="5" id="newGradeValue" name="newGradeValue" ng-model="newGrade.grade_value"
-                                   class="form-control" ng-required="true" />
+                            <input type="number" min="2" max="5" id="newGradeValue" name="newGradeValue" ng-model="newGrade.grade_value" value=''
+                                   class="form-control" ng-required="true" uib-popover="Enter a grade between 2 and 5." popover-trigger="mouseenter" />
                         </div>
                         <div class="form-group col-xs-12 col-sm-2">
                             <label for="newGradeWeight">Grade Weight</label>
-                            <input type="number" min="1" max="10" id="newGradeWeight" name="newGradeWeight" ng-model="newGrade.grade_weight" value="1"
-                                   class="form-control" ng-required="true" />
+                            <input type="number" min="1" max="10" id="newGradeWeight" name="newGradeWeight" ng-model="newGrade.grade_weight" value='1'
+                                   class="form-control" ng-required="true" uib-popover="Enter a value between 1 and 10." popover-trigger="mouseenter" />
                         </div>
                         <div class="form-group col-xs-12 col-sm-4">
                             <label for="gradeDesc">Description</label>
