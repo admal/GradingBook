@@ -1,18 +1,30 @@
 ﻿var baseUrl = 'http://localhost:53716/';
 angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
-    .controller('HomeController', function ($scope, $http, ngTableParams, $uibModal) {
+    .controller('HomeController', function ($scope, $http, modalService, ngTableParams, $uibModal) {
         $scope.getUser = '';
         $scope.user_id = {};
         $scope.isAdmin = true;
         $scope.isLoading = false;
         $scope.data = [];
+        $scope.alerts = [];
         $scope.currYear = {};
+        $scope.currSubject = {};
         $scope.errorMsg = '';
         $scope.groups = [];
         $scope.getYears = [];
         $scope.showSections = [true, false, false, false]; // [0]=main, [1]=year, [2]=subject, [3]=grade
         //$scope.usersGroups = [];
         
+        /*///////////////////////-------------------------FUNCTIONS-----------------------/////////////////////////*/
+
+        /*-----------ALERT MANAGEMENT-----------*/
+        $scope.addAlert = function (type, msg) {
+            $scope.alerts.push({ type: type, msg: msg });
+        };
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
+
         //Sections management
         $scope.showSection = function (idx) {
             if (idx < $scope.showSections.length && idx >= 0)
