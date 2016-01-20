@@ -97,9 +97,10 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         }
         //end chnageYear()
         /*--------------------GRADE PART------------------------*/
-        $scope.showAddGradeSection = function () {
+        $scope.showAddGradeSection = function (subject) {
             $scope.hideAllSections();
             $scope.showSection(3);
+            $scope.currSubject = subject;
         }
 
         $scope.newGrade = {
@@ -108,9 +109,31 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             grade_date: new Date(),
             grade_desc: '',
         };
+        //CREATE GRADE
+        $scope.createGrade = function () {
+            $scope.isLoading = true;
 
-        $scope.addGrade = function(subId) {
-            
+            var grade = {
+                grade_value: $scope.newGrade.grade_value,
+                grade_weight: $scope.newGrade.grade_weight,
+                grade_desc: $scope.newGrade.grade_desc,
+                grade_date: $scope.newGrade.grade_date,
+                sub_id: $scope.currSubject.id,
+                user_id: $scope.user_id,
+            };
+            $scope.showGradesTable();
+            $http.post(baseUrl + 'api/SubjectDetails/', grade).success(function () {
+                $scope.isLoading = false;
+                $scope.currSubject.SubjectDetails.push($scope.newGrade);
+                $scope.addAlert('success', 'Grade was added successfuly!');
+                $scope.hideSection(2);
+                console.log(angular.toJson(grade));
+            }).error(function () {
+                $scope.errorMsg = 'Oops sth went wrong...';
+                $scope.isLoading = false;
+                //after error reload page
+                $scope.findUser($scope.getUser);
+            });
         }
         //end addGrade()
         /*--------------------SUBJECT PART------------------------*/
@@ -140,7 +163,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.currYear.Subjects.push($scope.newSubject);
                 $scope.addAlert('success', 'Subject was added successfuly!');
                 $scope.hideSection(2);
-                console.log(angular.toJson(year));
+                console.log(angular.toJson(subject));
             }).error(function () {
                 $scope.errorMsg = 'Oops sth went wrong...';
                 $scope.isLoading = false;
@@ -148,8 +171,30 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.findUser($scope.getUser);
             });
         }
+        //REMOVE SUBJECT
+        $scope.deleteSubject = function (subject) {
+            var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Delete subject',
+                headerText: 'Delete ' + subject.name + '?',
+                bodyText: 'Are you sure you want to delete this subject?'
+            };
 
-
+            modalService.showModal({}, modalOptions).then(function (result) {
+                $http.delete(baseUrl + 'api/subjects/' + subject.id, null).success(
+                    function (data, status, headers, config) {
+                        $scope.isLoading = false;
+                        $scope.findUser($scope.getUser);
+                        $scope.addAlert('success', 'Subject was succesfully deleted!');
+                    }).error(function () {
+                        $scope.errorMsg = 'Oops sth went wrong...';
+                        $scope.errorMsg += status;
+                        $scope.isLoading = false;
+                        //after error reload page
+                        $scope.findUser($scope.username);
+                    });
+            });
+        }
         /*--------------------YEAR PART------------------------*/
         $scope.showAddYearSection = function () {
             $scope.hideAllSections();
@@ -180,6 +225,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.addAlert('success', 'Year was added successfuly!');
                 $scope.hideSection(1);
                 console.log(angular.toJson(year));
+                $scope.findUser($scope.getUser);
             }).error(function () {
                 $scope.errorMsg = 'Oops sth went wrong...';
                 $scope.isLoading = false;
