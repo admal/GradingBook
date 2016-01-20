@@ -200,6 +200,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="ScriptsApp\Controllers\GroupController.js" />
     <Content Include="ScriptsApp\Controllers\HomeController.js" />
+    <Content Include="ScriptsApp\Controllers\SettingsController.js" />
     <Content Include="ScriptsApp\MenuCollapse.js" />
     <Content Include="ScriptsApp\ModalsTemplates\AddYearModal.html" />
     <Content Include="ScriptsApp\ModalsTemplates\YesNoModal.html" />
@@ -1024,8 +1025,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -1045,10 +1044,10 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\ng-table.min.js.map" />
     <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ScriptsApp\Modules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

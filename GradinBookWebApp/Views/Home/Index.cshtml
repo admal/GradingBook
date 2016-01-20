@@ -14,13 +14,23 @@
             {{errorMsg}}
         </div>
     </div>
+    <div ng-if="isLoading" class="overlay">
+        @*<p class="ng-animate">LOADING...</p>*@
+        <div class="overlay-body">
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+    </div>
     <div name="mainViewSection" >
         <div ng-init="findUser(username)">
             @*<input type="text" name="username" value="user" ng-model="user" />
             <button class="btn btn-default" ng-click="findUser(user)">Find user!</button>*@
-            <div ng-if="isLoading">
+            @*<div ng-if="isLoading">
                 <p class="ng-animate">LOADING...</p>
-            </div>
+            </div>*@
             <div class="col-xs-10 form-group-lg" style="margin-top:15px">
                 <select class="form-control" ng-model="currYear"
                         ng-options="year.name group by year.group_id for year in getYears track by year.id "

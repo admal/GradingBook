@@ -13,12 +13,12 @@ namespace GradinBookWebApp.Controllers
          //add this when we do have created login and register
         [Authorize]
         [HttpGet]
-        public ActionResult Index(string otherUserName = null, int? groupId = null)
+        public ActionResult Index(string username = null, int? groupId = null)
         {
             //if (otherUserName == null && groupId == null)
             {
-                string username = User.Identity.GetUserName();// "Adam"; //put here: User.Identity.GetUserName(); (when registration and logging is made)
-                ViewBag.username = username;
+                string currUser = User.Identity.GetUserName();// "Adam"; //put here: User.Identity.GetUserName(); (when registration and logging is made)
+                ViewBag.username = currUser;
                 ViewBag.groupId = null;
             }
            // else
@@ -29,17 +29,9 @@ namespace GradinBookWebApp.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Settings()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.username = User.Identity.GetUserName();
             return View();
         }
     }

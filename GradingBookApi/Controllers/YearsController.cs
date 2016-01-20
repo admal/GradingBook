@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -181,7 +182,22 @@ namespace GradingBookApi.Controllers
             }
 
             db.Years.Add(newYear);
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var error in e.EntityValidationErrors)
+                {
+                    foreach (var er in error.ValidationErrors)
+                    {
+                         string em = er.ErrorMessage;
+                    }
+                }
+                throw;
+            }
+            
 
             return CreatedAtRoute("DefaultApi", new { id = years.id }, newYear);
         }
