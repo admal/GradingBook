@@ -10,22 +10,21 @@ namespace GradinBookWebApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-         //add this when we do have created login and register
         [Authorize]
         [HttpGet]
         public ActionResult Index(string username = null, int? groupId = null)
         {
-            //if (otherUserName == null && groupId == null)
+            if (username == null && groupId == null) //it means user is looking into his own profile
             {
                 string currUser = User.Identity.GetUserName();// "Adam"; //put here: User.Identity.GetUserName(); (when registration and logging is made)
                 ViewBag.username = currUser;
                 ViewBag.groupId = null;
             }
-           // else
-            //{
-            //    ViewBag.username = otherUserName;
-            //    ViewBag.groupId = groupId;
-            //}
+            else //user is watching other user's prfile
+            {
+                ViewBag.username = username;
+                ViewBag.groupId = groupId;
+            }
             return View();
         }
 

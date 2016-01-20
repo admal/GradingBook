@@ -6,7 +6,7 @@ namespace GradinBookWebApp.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Username")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
@@ -54,7 +54,7 @@ namespace GradinBookWebApp.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Username")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
         
         [Required]
@@ -77,7 +77,7 @@ namespace GradinBookWebApp.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Username")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]

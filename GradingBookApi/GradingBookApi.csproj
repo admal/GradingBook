@@ -104,8 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiViewModels\CreateGroupViewModel.cs" />
+    <Compile Include="ApiViewModels\GroupInYearViewModel.cs" />
     <Compile Include="ApiViewModels\ShowGroupDetailViewModel.cs" />
     <Compile Include="ApiViewModels\ShowGroupViewModel.cs" />
+    <Compile Include="ApiViewModels\ShowYearViewModel.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupDetailsController.cs" />

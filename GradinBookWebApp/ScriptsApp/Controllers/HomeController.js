@@ -3,6 +3,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
     .controller('HomeController', function ($scope, $http, modalService, ngTableParams, $uibModal) {
         $scope.getUser = '';
         $scope.user_id = {};
+        $scope.group_id;
         $scope.isAdmin = true;
         $scope.isLoading = false;
         $scope.data = [];
@@ -15,6 +16,19 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         $scope.showSections = [true, false, false, false]; // [0]=main, [1]=year, [2]=subject, [3]=grade
         //$scope.usersGroups = [];
         
+        //returns true if given year is created by user 
+        //(does not matter if user is group admin and there the year was created or it his private year)
+        $scope.isYearsOwner = function(year) {
+            if (year.group != null) //it is public year (created in group)
+            {
+                return year.group.ownerName == $scope.getUser;
+            }
+            return true;
+        }
+
+
+
+
         /*///////////////////////-------------------------FUNCTIONS-----------------------/////////////////////////*/
 
         /*-----------ALERT MANAGEMENT-----------*/
@@ -54,20 +68,38 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         }
 
         $scope.findUser = function (username) {
-            $scope.getUserId(username);
             $scope.isLoading = true;
-            $http.get(baseUrl + "api/years/getallbyusername/" + username).success(
-                function (data, status, headers, config) {
-                    $scope.getYears = data;
-                    //$scope.usersGroups = data.GroupDetails;
-                    $scope.currYear = data[0];
+            if ($scope.isAdmin) { //we are watching our profile so we load all years
+                $scope.getUserId(username);
+                $http.get(baseUrl + "api/years/getallbyusername/" + username).success(
+                    function(data, status, headers, config) {
+                        $scope.getYears = data;
+                        //$scope.usersGroups = data.GroupDetails;
+                        $scope.currYear = data[0];
+                        $scope.isLoading = false;
+                        $scope.changeYear(data[0].id);
+                        $scope.getUser = username;
+                    }).error(function(data, status, headers, config) {
                     $scope.isLoading = false;
-                    $scope.changeYear(data[0].id);
-                    $scope.getUser = username;
-                }).error(function (data, status, headers, config) {
-                    $scope.isLoading = false;
-                    $scope.errorMsg= "Oops... something went wrong";
+                    $scope.errorMsg = "Oops... something went wrong";
                 });
+            } else { //we are watching other user's profile so we can see only grades of years in the group
+                if ($scope.group_id == null) {
+                    $scope.errorMsg = "Error occured!";
+                    return;
+                }
+                $http.get(baseUrl + "api/years/getbygroupid/" + $scope.group_id).success(
+                    function (data, status, headers, config) {
+                        $scope.getYears = data;
+                        $scope.currYear = data[0];
+                        $scope.isLoading = false;
+                        $scope.changeYear(data[0].id);
+                        $scope.getUser = username;
+                    }).error(function (data, status, headers, config) {
+                        $scope.isLoading = false;
+                        $scope.errorMsg = "Oops... something went wrong";
+                    });
+            }
         }
 
         $scope.getUserId = function (username) {
@@ -90,8 +122,8 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             }, {
                 total: $scope.getYears.length,
                 getData: function ($defer, params) {
-                    $scope.data = $scope.currYear.Subjects;
-                    $defer.resolve($scope.data);
+                    //$scope.data = $scope.currYear.Subjects;
+                    $defer.resolve($scope.currYear.Subjects);
                 }
             });
         }

@@ -1,9 +1,17 @@
 ﻿@{
     ViewBag.Title = "User's years";
+
+    bool isAdmin = ViewBag.groupId == null; @*isAdmin means that user is watching his own profile*@
+    
 }
 
 
 <div id="bodyContainer" ng-app="GradingBookApp" ng-controller="HomeController" ng-init="username='@ViewBag.username'">
+    <span ng-init="isAdmin='@isAdmin'"></span>
+    @if (!isAdmin)
+    {
+        <span ng-init="group_id = '@ViewBag.groupId'"></span>
+    }
     <div class="col-xs-12 text-center" style="background-color:indianred; border-radius:5px">
         <div class=" page-header">
             <h1>Grading Book</h1>
@@ -28,20 +36,24 @@
         <div ng-init="findUser(username)">
             <div class="col-xs-10 form-group-lg" style="margin-top:15px">
                 <select class="form-control" ng-model="currYear"
-                        ng-options="year.name group by year.groupName for year in getYears track by year.id "
+                        ng-options="year.name group by year.group.groupName for year in getYears"
                         style="width: 100%; max-width: 100%;"
                         ng-change="changeYear(year.id)"></select>
             </div>
             <div class="col-xs-2" style="margin-top:15px">
                 <div class="row">
-                    <div class="btn-group btn-group-lg dropdown-toggle " data-toggle="collapse">
+                    <div class="btn-group btn-group-lg dropdown-toggle " ng-show="isAdmin" data-toggle="collapse">
                         <button class="btn btn-default" ng-click="showAddYearSection()" uib-popover="Add a new year." popover-trigger="mouseenter">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
-                        <button class="btn btn-default" ng-click="deleteYear()" uib-popover="Delete the selected year.!" popover-trigger="mouseenter">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                        <button class="btn btn-default" uib-popover="Edit the selected year." popover-trigger="mouseenter">
+                            <button class="btn btn-default" ng-click="deleteYear()"
+                                    uib-popover="Delete the selected year.!" popover-trigger="mouseenter"
+                                    ng-show="isYearsOwner(currYear)">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        <button class="btn btn-default" uib-popover="Edit the selected year."
+                                popover-trigger="mouseenter"
+                                ng-show="isYearsOwner(currYear)">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
                     </div>
@@ -49,18 +61,22 @@
             </div>
             <div ng-show="showSections[0]" class="col-xs-12" name="gradesTable">
                 <div ng-if="getYears">
-                    <button ng-click="showAddSubjectSection()" class="btn btn-primary" style="margin: 5px; background-color: indianred">
+                    <button ng-show="isYearsOwner(currYear) && isAdmin" ng-click="showAddSubjectSection()" 
+                            class="btn btn-primary" style="margin: 5px; background-color: indianred">
                         Add Subject
                     </button>
                 </div>
                 <table ng-table="yearsTable" class="table table-striped">
-                    <tr ng-repeat="subject in data">
+                    <tr ng-repeat="subject in currYear.Subjects">
                         <td title="'Name'" sortable="'name'">
-                            <span class="btn-group  pull-left btn-group-sm">
-                                <button class="btn btn-default" ng-click="deleteSubject(subject)" uib-popover="Remove this subject." popover-trigger="mouseenter">
+                            <span class="btn-group  pull-left btn-group-sm" ng-show="isAdmin">
+                                <button class="btn btn-default" ng-click="deleteSubject(subject)"
+                                        uib-popover="Remove this subject." popover-trigger="mouseenter"
+                                        ng-show="isYearsOwner(currYear)">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
-                                <button class="btn btn-default" uib-popover="Edit this subject." popover-trigger="mouseenter">
+                                <button class="btn btn-default" uib-popover="Edit this subject." popover-trigger="mouseenter"
+                                        ng-show="isYearsOwner(currYear)">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>
                             </span>
@@ -70,7 +86,10 @@
                         </td>
                         <td title="'Grades'">
                             <span ng-repeat="grade in subject.SubjectDetails">{{grade.grade_value + ' '}}</span>
-                            <button class="btn btn-default pull-right" ng-click="showAddGradeSection(subject)" uib-popover="Add a new grade to this subject." popover-trigger="mouseenter">
+                            <button class="btn btn-default pull-right"
+                                    ng-click="showAddGradeSection(subject)"
+                                    uib-popover="Add a new grade to this subject." popover-trigger="mouseenter"
+                                    ng-show="isAdmin">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
                         </td>

@@ -15,6 +15,7 @@ using System.Web.Http.Description;
 using GradingBookProject.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using GradingBookApi.ApiViewModels;
 using GradingBookProject.ViewModels;
 
 namespace GradingBookApi.Controllers
@@ -92,11 +93,12 @@ namespace GradingBookApi.Controllers
 
         [Route("api/years/getallbyusername/{username}")]
         [ActionName("GetAllByUsername")]
-        public async Task<ICollection<YearsViewModel>> GetAllYearsForUsername(string username)
+        public async Task<ICollection<ShowYearViewModel>> GetAllYearsForUsername(string username)
         {
             var user = await db.Users.FirstOrDefaultAsync(u => u.username == username);
             var groups = user.Groups;
             var years = user.Years;
+            var details = user.GroupDetails;
             foreach (var group in groups)
             {
                 foreach (var year in group.Years)
@@ -104,7 +106,17 @@ namespace GradingBookApi.Controllers
                     years.Add(year);
                 }
             }
-            var retYears = years.AsQueryable().ProjectTo<YearsViewModel>();
+            foreach (var detail in details)
+            {
+                foreach (var year in detail.Groups.Years)
+                {
+                    if (detail.Groups.owner_id != user.id)
+                    {
+                        years.Add(year);
+                    }
+                }
+            }
+            var retYears = years.AsQueryable().ProjectTo<ShowYearViewModel>();
             return retYears.ToList();
         }
         // PUT: api/Years/5
