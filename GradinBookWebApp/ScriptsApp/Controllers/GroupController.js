@@ -310,6 +310,8 @@ angular.module('GradingBookApp', ['ngAnimate', "ui.bootstrap"])
                 $scope.addAlert('success', 'Year was added successfuly!');
                 $scope.hideSection(3);
                 console.log(angular.toJson(year));
+                $scope.newYear = {};
+                $scope.loadGroups($scope.currGroup);
             }).error(function() {
                 $scope.errorMsg = 'Oops sth went wrong...';
                 $scope.isLoading = false;

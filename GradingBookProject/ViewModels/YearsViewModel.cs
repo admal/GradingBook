@@ -35,6 +35,10 @@ namespace GradingBookProject.ViewModels
         /// Id of a group the year belongs to.
         /// </summary>
         public Nullable<int> group_id { get; set; }
+        /// <summary>
+        /// Name of the group that year belongs to (null if it does not belong)
+        /// </summary>
+        public string groupName { get; set; }
 
         /// <summary>
         /// Collection of subjects belonging to the year.
