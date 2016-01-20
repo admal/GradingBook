@@ -13,12 +13,14 @@ using GradingBookProject.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using GradingBookProject.ViewModels;
+using System.Web.Http.Cors;
 
 namespace GradingBookApi.Controllers
 {
     /// <summary>
     /// Api controller to manage Subjects.
     /// </summary>
+    [EnableCors(origins: "http://localhost:51849", headers: "*", methods: "*")]
     public class SubjectsController : ApiController
     {
         /// <summary>
