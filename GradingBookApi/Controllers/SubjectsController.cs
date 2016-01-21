@@ -13,12 +13,14 @@ using GradingBookProject.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using GradingBookProject.ViewModels;
+using System.Web.Http.Cors;
 
 namespace GradingBookApi.Controllers
 {
     /// <summary>
     /// Api controller to manage Subjects.
     /// </summary>
+    [EnableCors(origins: "http://localhost:51849", headers: "*", methods: "*")]
     public class SubjectsController : ApiController
     {
         /// <summary>
@@ -84,10 +86,11 @@ namespace GradingBookApi.Controllers
         public async Task<IHttpActionResult> PutSubjects(int id, SubjectsViewModel subjects)
         {
             Subjects updatedSubject = await db.Subjects.FindAsync(id); 
-                updatedSubject.name = subjects.name;
-                updatedSubject.sub_desc = subjects.sub_desc;
-                updatedSubject.teacher_mail = subjects.teacher_mail;
-                updatedSubject.year_id = subjects.year_id;
+            updatedSubject.name = subjects.name;
+            updatedSubject.sub_desc = subjects.sub_desc;
+            updatedSubject.teacher_mail = subjects.teacher_mail;
+            updatedSubject.year_id = subjects.year_id;
+            updatedSubject.final_grade = subjects.final_grade;
 
             if (!ModelState.IsValid)
             {
@@ -135,6 +138,7 @@ namespace GradingBookApi.Controllers
                 sub_desc = subjects.sub_desc,
                 teacher_mail = subjects.teacher_mail,
                 year_id = subjects.year_id,
+                final_grade = subjects.final_grade,
 
             };
 

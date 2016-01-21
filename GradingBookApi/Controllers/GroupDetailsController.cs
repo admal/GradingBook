@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -16,6 +17,7 @@ namespace GradingBookApi.Controllers
     /// <summary>
     /// Api controller to manage operations on GroupDetails (they are members of the group)
     /// </summary>
+    [EnableCors(origins: "http://localhost:51849", headers: "*", methods: "*")]
     public class GroupDetailsController : ApiController
     {
         /// <summary>
@@ -52,6 +54,32 @@ namespace GradingBookApi.Controllers
                 return NotFound();
             }
             db.GroupDetails.Remove(detail);
+            await db.SaveChangesAsync();
+            return Ok(detail);
+        }
+        /// <summary>
+        /// Removes detail with specyfied user and group.
+        /// </summary>
+        /// <param name="groupId">id of the group to which detail belongs</param>
+        /// <param name="username">id of user in the group</param>
+        /// <returns>Removed detail. Not found call if there was not such detail.</returns>
+        [HttpDelete]
+        [ActionName("RemoveDetailByUsername")]
+        [Route("api/GroupDetails/RemoveDetailByUsername/{groupId:int}/{username}")]
+        public async Task<IHttpActionResult> RemoveDetailByUsername(int groupId, string username)
+        {
+            var user = await db.Users.FirstOrDefaultAsync(u => u.username == username);
+            if (user == null)
+            {
+                return BadRequest("User does not exist!");
+            }
+            var detail = await db.GroupDetails.FirstOrDefaultAsync(d => d.group_id == groupId && d.user_id == user.id);
+            if (detail == null)
+            {
+                return NotFound();
+            }
+            db.GroupDetails.Remove(detail);
+            await db.SaveChangesAsync();
             return Ok(detail);
         }
 
@@ -100,6 +128,7 @@ namespace GradingBookApi.Controllers
             var details = db.GroupDetails.ProjectTo<GroupDetailsViewModel>();
             return details;
         }
+
 
         // GET: api/GroupDetails/5
         /// <summary>

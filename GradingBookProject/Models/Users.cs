@@ -11,8 +11,8 @@ namespace GradingBookProject.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Users
+
+    public partial class Users : DataEntity
     {
         public Users()
         {
@@ -22,13 +22,13 @@ namespace GradingBookProject.Models
             this.Years = new HashSet<Years>();
         }
     
-        public int id { get; set; }
         public string username { get; set; }
         public string passwd { get; set; }
         public string email { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
     
+        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual ICollection<GroupDetails> GroupDetails { get; set; }
         public virtual ICollection<Groups> Groups { get; set; }
         public virtual ICollection<SubjectDetails> SubjectDetails { get; set; }

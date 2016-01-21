@@ -11,15 +11,14 @@ namespace GradingBookProject.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Years
+
+    public partial class Years : DataEntity
     {
         public Years()
         {
             this.Subjects = new HashSet<Subjects>();
         }
     
-        public int id { get; set; }
         public string name { get; set; }
         public System.DateTime start { get; set; }
         public System.DateTime end_date { get; set; }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace GradingBookProject.Data
 {
-    class HttpUsersRepository : HttpRepository<UsersViewModel, HttpUserRequestService>
+    public class HttpUsersRepository : HttpRepository<UsersViewModel, HttpUserRequestService>
     {
         /// <summary>
         /// Login user with provided data. Method sends request to server and checks data corectness.

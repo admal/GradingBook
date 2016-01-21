@@ -113,8 +113,8 @@ namespace GradingBookApi.Controllers
 
             groupToEdit.name = groups.name;
             groupToEdit.description= groups.description;
-            groupToEdit.created_at = groups.created_at;
-            groupToEdit.owner_id = groups.owner_id;
+            //groupToEdit.created_at = groups.created_at; //if any error occured delete uncomment these 2 lines
+            //groupToEdit.owner_id = groups.owner_id;
 
             db.Entry(groupToEdit).State = EntityState.Modified;
 

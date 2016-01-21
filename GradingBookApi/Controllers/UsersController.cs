@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -111,7 +113,6 @@ namespace GradingBookApi.Controllers
             userToEdit.email = users.email;
             userToEdit.name = users.name;
             userToEdit.surname = users.surname;
-            userToEdit.passwd = users.passwd;
             
             db.Entry(userToEdit).State = EntityState.Modified;
 
@@ -145,6 +146,7 @@ namespace GradingBookApi.Controllers
         {
             Users newUser = new Users()
             {
+                id = users.id,
                 name = users.name,
                 surname = users.surname,
                 username = users.username,
@@ -156,9 +158,23 @@ namespace GradingBookApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            db.Users.Add(newUser);
-            await db.SaveChangesAsync();
+            try
+            {
+                db.Users.Add(newUser);
+                await db.SaveChangesAsync();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", 
+                                                validationError.PropertyName, 
+                                                validationError.ErrorMessage);
+                    }
+                }
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = users.id }, users);
         }

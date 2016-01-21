@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using GradinBookWebApp.Models;
+using GradingBookProject.ViewModels;
+using GradingBookProject.Data;
+using GradingBookProject.Models;
 
 namespace GradinBookWebApp.Controllers
 {
@@ -57,10 +60,11 @@ namespace GradinBookWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.Email, model.Password);
+                var user = await UserManager.FindAsync(model.Username, model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+
                     return RedirectToLocal(returnUrl);
                 }
                 else
@@ -90,10 +94,40 @@ namespace GradinBookWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                //var user = new ApplicationUser() { UserName = model.Username, Username = model.Username };
+                var user = new ApplicationUser()
+                {
+                    UserName = model.Username,
+                    Email = model.Email
+                };
+                
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    ////adding user to custom Users table
+                    UsersViewModel userViewModel = new UsersViewModel()
+                    {
+                        id = user.Id,
+                        username = user.UserName,
+                        email = user.Email,
+                        passwd = "tmp"
+                    };
+                    HttpUsersRepository repo = new HttpUsersRepository();
+
+                    await repo.AddOne(userViewModel);
+                   // ====
+                    //Users newUser = new Users()
+                    //{
+                    //    id=user.Id,
+                    //    username = user.UserName,
+                    //    email = user.Username,
+                    //    passwd = user.PasswordHash,
+                        
+                    //};
+                    //GradingBookDbEntities db = new GradingBookDbEntities();
+                    //db.Users.Add(newUser);
+                    //db.SaveChanges();
+                    //
                     await SignInAsync(user, isPersistent: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -117,7 +151,7 @@ namespace GradinBookWebApp.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(int userId, string code)
         {
             if (userId == null || code == null) 
             {
@@ -238,10 +272,10 @@ namespace GradinBookWebApp.Controllers
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
         {
             ManageMessageId? message = null;
-            IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId<int>(), new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
                 await SignInAsync(user, isPersistent: false);
                 message = ManageMessageId.RemoveLoginSuccess;
             }
@@ -280,10 +314,10 @@ namespace GradinBookWebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
-                        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
                         await SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                     }
@@ -304,7 +338,7 @@ namespace GradinBookWebApp.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId<int>(), model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
@@ -377,7 +411,7 @@ namespace GradinBookWebApp.Controllers
             {
                 return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
             }
-            IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId<int>(), loginInfo.Login);
             if (result.Succeeded)
             {
                 return RedirectToAction("Manage");
@@ -418,7 +452,7 @@ namespace GradinBookWebApp.Controllers
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
+                        // SendEmail(user.Username, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
                         
                         return RedirectToLocal(returnUrl);
                     }
@@ -451,7 +485,7 @@ namespace GradinBookWebApp.Controllers
         [ChildActionOnly]
         public ActionResult RemoveAccountList()
         {
-            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
+            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId<int>());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
@@ -481,7 +515,8 @@ namespace GradinBookWebApp.Controllers
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
+            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, 
+                await user.GenerateUserIdentityAsync(UserManager));
         }
 
         private void AddErrors(IdentityResult result)
@@ -494,7 +529,7 @@ namespace GradinBookWebApp.Controllers
 
         private bool HasPassword()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
             if (user != null)
             {
                 return user.PasswordHash != null;

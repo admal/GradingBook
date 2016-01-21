@@ -9,7 +9,7 @@ using GradingBookProject.ViewModels;
 
 namespace GradingBookProject.Http
 {
-    class HttpUserRequestService : HttpRequestService<UsersViewModel>
+    public class HttpUserRequestService : HttpRequestService<UsersViewModel>
     {
         public HttpUserRequestService() : base()
         {

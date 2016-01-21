@@ -20,7 +20,9 @@ namespace GradingBookApi.App_Start
                 config.CreateMap<Users, UsersViewModel>();
                 config.CreateMap<GroupDetails, GroupDetailsViewModel>();
                 config.CreateMap<Groups, GroupsViewModel>();
-                config.CreateMap<Years, YearsViewModel>();
+                config.CreateMap<Years, YearsViewModel>()
+                    .ForMember(dest => dest.groupName, 
+                    opt => opt.MapFrom(src => src.Groups==null? null : src.Groups.name ));
                 config.CreateMap<Subjects, SubjectsViewModel>();
                 config.CreateMap<SubjectDetails, SubjectDetailsViewModel>();
 
@@ -29,6 +31,14 @@ namespace GradingBookApi.App_Start
 
                 config.CreateMap<GroupDetails, ShowGroupDetailViewModel>()
                     .ForMember(dest => dest.username, opt => opt.MapFrom(src => src.Users.username));
+
+                config.CreateMap<Groups, GroupInYearViewModel>()
+                    .ForMember(dest => dest.groupName, opt => opt.MapFrom(src => src.name))
+                    .ForMember(dest => dest.ownerName, opt => opt.MapFrom(src => src.Users.username));
+
+                config.CreateMap<Years, ShowYearViewModel>()
+                    .ForMember(dest => dest.group, opt => opt.MapFrom(src => src.Groups))
+                    .ForMember(dest => dest.Subjects, opt => opt.MapFrom(dest => dest.Subjects));
             });
         }
     }

@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+}
+
+<div ng-app="GradingBookApp" ng-controller="SettingsController">
+
+
+<div class="alert-container">
+    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+</div>
+<div ng-if="isLoading" class="overlay">
+    @*<p class="ng-animate">LOADING...</p>*@
+    <div class="overlay-body">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+</div>
+
+    <div class="jumbotron" ng-init="loadUser('@ViewBag.username')">
+
+        <div class="container text-center">
+            <div ng-if="errorMsg">
+                <div class="alert alert-danger" role="alert">
+                    {{errorMsg}}
+                </div>
+            </div>
+            <p>We want to know you better! Go ahead and enter additional credentials!</p>
+            <form name="credentialsForm" class="form-inline" novalidate>
+                <input class="form-control input-lg" type="text" name="name" id="name" placeholder="Name"
+                       ng-model="currUser.name" ng-required="true" />
+                <input class="form-control input-lg" type="text" name="surname" id="surname" placeholder="Surname"
+                       ng-model="currUser.surname" ng-required="true" />
+                <button class="btn btn-success btn-lg" ng-click="saveCredentials()"
+                        ng-disabled="credentialsForm.$invalid">
+                    Save!
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/Scripts/angular-animate.js")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap.js")
+@Scripts.Render("~/Scripts/angular-ui/ui-bootstrap-tpls.js")
+@Scripts.Render("~/ScriptsApp/Controllers/SettingsController.js")

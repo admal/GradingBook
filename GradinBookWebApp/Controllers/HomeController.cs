@@ -7,28 +7,30 @@ using Microsoft.AspNet.Identity;
 
 namespace GradinBookWebApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        //[Authorize] add this when we do have created login and register
-        public ActionResult Index()
+        [Authorize]
+        [HttpGet]
+        public ActionResult Index(string username = null, int? groupId = null)
         {
-
-            string username = "Adam"; //put here: User.Identity.GetUserName(); (when registration and logging is made)
-            ViewBag.username = username;
+            if (username == null && groupId == null) //it means user is looking into his own profile
+            {
+                string currUser = User.Identity.GetUserName();// "Adam"; //put here: User.Identity.GetUserName(); (when registration and logging is made)
+                ViewBag.username = currUser;
+                ViewBag.groupId = null;
+            }
+            else //user is watching other user's prfile
+            {
+                ViewBag.username = username;
+                ViewBag.groupId = groupId;
+            }
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Settings()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.username = User.Identity.GetUserName();
             return View();
         }
     }

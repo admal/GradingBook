@@ -28,6 +28,7 @@ namespace GradingBookProject.ViewModels
         /// Subject teacher's email address.
         /// </summary>
         public string teacher_mail { get; set; }
+        public Nullable<double> final_grade { get; set; }
 
         /// <summary>
         /// Collection of grades belonging to the subject.

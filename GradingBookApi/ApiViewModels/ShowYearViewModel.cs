@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using GradingBookProject.ViewModels;
 
-namespace GradingBookProject.ViewModels
+namespace GradingBookApi.ApiViewModels
 {
-    /// <summary>
-    /// View Model that represents Years entity from database.
-    /// </summary>
-    public class YearsViewModel : EntityViewModel
+    public class ShowYearViewModel
     {
+        public int id { get; set; }
         /// <summary>
         /// Name of the year.
         /// </summary>
@@ -31,14 +29,15 @@ namespace GradingBookProject.ViewModels
         /// Id of a user the year belongs to.
         /// </summary>
         public Nullable<int> user_id { get; set; }
-        /// <summary>
-        /// Id of a group the year belongs to.
-        /// </summary>
-        public Nullable<int> group_id { get; set; }
+
+        ///// <summary>
+        ///// Id of a group the year belongs to.
+        ///// </summary>
+        //public Nullable<int> group_id { get; set; }
         /// <summary>
         /// Name of the group that year belongs to (null if it does not belong)
         /// </summary>
-        public string groupName { get; set; }
+        public GroupInYearViewModel group { get; set; }
 
         /// <summary>
         /// Collection of subjects belonging to the year.

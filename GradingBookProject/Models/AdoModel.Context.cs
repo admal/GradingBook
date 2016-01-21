@@ -25,6 +25,10 @@ namespace GradingBookProject.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<GroupDetails> GroupDetails { get; set; }
         public virtual DbSet<Groups> Groups { get; set; }
         public virtual DbSet<SubjectDetails> SubjectDetails { get; set; }
