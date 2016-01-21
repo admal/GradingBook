@@ -132,6 +132,26 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             });
         }
         /*--------------------GRADE PART------------------------*/
+        $scope.currGrade = function(grade) {
+            $scope.gradePopover = {
+                gradeVal: grade.grade_value,
+                gradeWeight: grade.grade_weight,
+                gradeDesc: grade.grade_desc,
+                templateUrl: '/ScriptsApp/ModalsTemplates/GradePopOver.html',
+                title: 'Edit grade'
+            };
+        }
+
+        $scope.gradePopover = {
+            gradeVal: 2,
+            gradeWeight: 2,
+            gradeDesc: "LELEL",
+            gradeDate: new Date(),
+            templateUrl: '/ScriptsApp/ModalsTemplates/GradePopOver.html',
+            title: 'Edit grade'
+        };
+
+
         $scope.showAddGradeSection = function (subject) {
             $scope.hideAllSections();
             $scope.showSection(3);

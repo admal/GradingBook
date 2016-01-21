@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -203,6 +204,7 @@
     <Content Include="ScriptsApp\Controllers\SettingsController.js" />
     <Content Include="ScriptsApp\MenuCollapse.js" />
     <Content Include="ScriptsApp\ModalsTemplates\AddYearModal.html" />
+    <Content Include="ScriptsApp\ModalsTemplates\GradePopOver.html" />
     <Content Include="ScriptsApp\ModalsTemplates\YesNoModal.html" />
     <Content Include="ScriptsApp\Services\modalService.js" />
     <Content Include="Scripts\angular-animate.js" />
