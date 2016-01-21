@@ -81,7 +81,7 @@
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>
                             </span>
-                            <span style="margin-left: 1em;" uib-popover="{{subject.teacher_mail}} {{subject.sub_desc}}" popover-trigger="mouseenter">
+                            <span style="margin-left: 1em;" uib-popover="{{subject.teacher_mail }}{{subject.sub_desc}}" popover-trigger="mouseenter">
                                 {{subject.name}}
                             </span>
                         </td>
@@ -100,6 +100,9 @@
                                     ng-show="isAdmin">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
+                        </td>
+                        <td title="'average'">
+                            <p class="text-center"> {{calculateAverage(subject.SubjectDetails)}}</p>
                         </td>
                         <td title="'final'">
                             <p class="text-center"> {{subject.final_grade}}</p>

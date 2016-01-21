@@ -14,6 +14,8 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         $scope.errorMsg = '';
         $scope.groups = [];
         $scope.getYears = [];
+        $scope.sumTop = 0;
+        $scope.sumBot = 0;
         $scope.showSections = [true, false, false, false, false, false]; // [0]=main, [1]=year, [2]=subject, [3]=grade, [4]=edit year, [5]=edit subject
         //$scope.usersGroups = [];
         //returns true if given year is created by user 
@@ -27,7 +29,28 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         }
 
         /*///////////////////////-------------------------FUNCTIONS-----------------------/////////////////////////*/
+        /*-----------AVERAGE COUNTER------------*/
+        $scope.calculateAverage = function (grades) {
+            if (grades != null)
+            {
+                if (grades.length != 0)
+                {
+                    sumTop = 0;
+                    sumBot = 0;
+                    for(var i=0; i<grades.length; i++)
+                    {
+                        if (grades[i] == null)
+                            throw new Exception("There is no grade! (null)");
 
+                        sumTop = sumTop + (grades[i].grade_value*grades[i].grade_weight);
+                        sumBot = sumBot + (grades[i].grade_weight);
+                    }
+
+                    return Math.round((sumTop/sumBot) * 100)/100;
+                }
+            }
+            return null;
+        }
         /*-----------ALERT MANAGEMENT-----------*/
         $scope.addAlert = function (type, msg) {
             $scope.alerts.push({ type: type, msg: msg });
