@@ -51,7 +51,9 @@
                                     ng-show="isYearsOwner(currYear)">
                             <span class="glyphicon glyphicon-minus"></span>
                         </button>
-                        <button class="btn btn-default" ng-click="showEditYearSection()" uib-popover="Edit the selected year." popover-trigger="mouseenter">
+                        <button class="btn btn-default" ng-click="showEditYearSection()"
+                                uib-popover="Edit the selected year." popover-trigger="mouseenter"
+                                ng-show="isYearsOwner(currYear)">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
                     </div>
@@ -65,13 +67,17 @@
                     </button>
                 </div>
                 <table ng-table="yearsTable" class="table table-striped">
-                    <tr ng-repeat="subject in data">
+                    <tr ng-repeat="subject in currYear.Subjects">
                         <td title="'Name'" sortable="subject.name">
                             <span class="btn-group  pull-left btn-group-sm">
-                                <button class="btn btn-default" ng-click="deleteSubject(subject)" uib-popover="Remove this subject." popover-trigger="mouseenter">
+                                <button class="btn btn-default" ng-click="deleteSubject(subject)"
+                                        uib-popover="Remove this subject." popover-trigger="mouseenter"
+                                        ng-show="isYearsOwner(currYear) && isAdmin">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
-                                <button class="btn btn-default" ng-click="showEditSubjectSection(subject)" uib-popover="Edit this subject." popover-trigger="mouseenter">
+                                <button class="btn btn-default" ng-click="showEditSubjectSection(subject)"
+                                        uib-popover="Edit this subject." popover-trigger="mouseenter"
+                                        ng-show="isYearsOwner(currYear) && isAdmin">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>
                             </span>
