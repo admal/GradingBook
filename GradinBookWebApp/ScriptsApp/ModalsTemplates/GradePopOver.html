@@ -1,9 +1,9 @@
 ﻿<div class="form-group">
     <form name="gradeForm" novalidate>
-        <input type="number" ng-model="gradePopover.gradeVal" class="form-control" ng-required>
-        <input type="number" name="name" ng-model="gradePopover.gradeWeight " class="form-control" ng-required />
-        <input type="text" name="name" ng-model="gradePopover.gradeDesc" class="form-control"  />
-        <button class="btn btn-success" ng-click="clickSaveGrade()" ng-disabled="gradeForm.$invalid">Save</button>
-        <button class="btn btn-danger" ng-click="clickDeleteGrade()">Delete</button>
+        <input ng-disabled="!isAdmin" type="number" ng-model="gradePopover.gradeVal" class="form-control" ng-required>
+        <input ng-disabled="!isAdmin" type="number" name="name" ng-model="gradePopover.gradeWeight " class="form-control" ng-required />
+        <input  ng-disabled="!isAdmin" type="text" name="name" ng-model="gradePopover.gradeDesc" class="form-control"  />
+        <button ng-disabled="!isAdmin" class="btn btn-success" ng-click="clickSaveGrade()" ng-disabled="gradeForm.$invalid">Save</button>
+        <button ng-disabled="!isAdmin" class="btn btn-danger" ng-click="clickDeleteGrade()">Delete</button>
     </form>
 </div>
