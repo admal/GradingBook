@@ -13,7 +13,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         $scope.errorMsg = '';
         $scope.groups = [];
         $scope.getYears = [];
-        $scope.showSections = [true, false, false, false]; // [0]=main, [1]=year, [2]=subject, [3]=grade
+        $scope.showSections = [true, false, false, false, false, false]; // [0]=main, [1]=year, [2]=subject, [3]=grade, [4]=edit year, [5]=edit subject
         //$scope.usersGroups = [];
         
         //returns true if given year is created by user 
@@ -57,6 +57,8 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             $scope.hideSection(1);
             $scope.hideSection(2);
             $scope.hideSection(3);
+            $scope.hideSection(4);
+            $scope.hideSection(5);
             $scope.showSection(0);
         }
 
@@ -65,6 +67,8 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             $scope.hideSection(1);
             $scope.hideSection(2);
             $scope.hideSection(3);
+            $scope.hideSection(4);
+            $scope.hideSection(5);
         }
 
         $scope.findUser = function (username) {
@@ -127,7 +131,6 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 }
             });
         }
-        //end chnageYear()
         /*--------------------GRADE PART------------------------*/
         $scope.showAddGradeSection = function (subject) {
             $scope.hideAllSections();
@@ -159,6 +162,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.currSubject.SubjectDetails.push($scope.newGrade);
                 $scope.addAlert('success', 'Grade was added successfuly!');
                 $scope.hideSection(2);
+                $scope.findUser($scope.getUser);
                 console.log(angular.toJson(grade));
             }).error(function () {
                 $scope.errorMsg = 'Oops sth went wrong...';
@@ -167,17 +171,23 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.findUser($scope.getUser);
             });
         }
-        //end addGrade()
         /*--------------------SUBJECT PART------------------------*/
         $scope.showAddSubjectSection = function () {
             $scope.hideAllSections();
             $scope.showSection(2);
         }
+        $scope.showEditSubjectSection = function (subject) {
+            $scope.hideAllSections();
+            $scope.showSection(5);
+            $scope.currSubject = subject;
+        }
 
         $scope.newSubject = {
             name: '',
             sub_desc: '',
-            teacher_mail: ''
+            teacher_mail: '',
+            final_grade: '',
+            
         };
         //CREATE SUBJECT
         $scope.createSubject = function () {
@@ -188,6 +198,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 sub_desc: $scope.newSubject.sub_desc,
                 teacher_mail: $scope.newSubject.teacher_mail,
                 year_id: $scope.currYear.id,
+                final_grade: $scope.currYear.final_grade,
             };
             $scope.showGradesTable();
             $http.post(baseUrl + 'api/Subjects/', subject).success(function () {
@@ -195,6 +206,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.currYear.Subjects.push($scope.newSubject);
                 $scope.addAlert('success', 'Subject was added successfuly!');
                 $scope.hideSection(2);
+                $scope.findUser($scope.getUser);
                 console.log(angular.toJson(subject));
             }).error(function () {
                 $scope.errorMsg = 'Oops sth went wrong...';
@@ -227,12 +239,43 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                     });
             });
         }
+        //UPDATE SUBJECT
+        $scope.updateSubject = function () {
+            $scope.isLoading = true;
+
+            var subject = {
+                id: $scope.currSubject.id,
+                name: $scope.currSubject.name,
+                sub_desc: $scope.currSubject.sub_desc,
+                year_id: $scope.currSubject.year_id,
+                teacher_mail: $scope.currSubject.teacher_mail,
+                final_grade: $scope.currSubject.final_grade,
+            };
+
+            $http.put(baseUrl + 'api/subjects/' + $scope.currSubject.id, subject).success(
+                function (data, status, headers, config) {
+                    $scope.isLoading = false;
+                    $scope.showGradesTable();
+                    $scope.addAlert('success', 'Subject was succesfully edited!');
+                }).error(function () {
+                    $scope.errorMsg = 'Oops sth went wrong...';
+                    $scope.errorMsg += status;
+                    $scope.isLoading = false;
+                    //after error reload page
+                    $scope.findUser($scope.getUser);
+                });
+        }
         /*--------------------YEAR PART------------------------*/
+        //visibility management
         $scope.showAddYearSection = function () {
             $scope.hideAllSections();
             $scope.showSection(1);
         }
-       
+        $scope.showEditYearSection = function () {
+            $scope.hideAllSections();
+            $scope.showSection(4);
+        }
+
         $scope.newYear = {
             name: '',
             start: new Date(),
@@ -293,20 +336,48 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                         } else {
                             $scope.currYear = $scope.getYears[0];
                         }
-
+                        $scope.findUser($scope.getUser);
                         $scope.addAlert('success', 'Year was succesfully deleted!');
                     }).error(function () {
                         $scope.errorMsg = 'Oops sth went wrong...';
                         $scope.errorMsg += status;
                         $scope.isLoading = false;
                         //after error reload page
-                        $scope.findUser($scope.username);
+                        $scope.findUser($scope.getUser);
                     });
             });
         }
+        //UPDATE YEAR
+        $scope.updateYear = function () {
+            $scope.isLoading = true;
+
+            var year = {
+                id: $scope.currYear.id,
+                name: $scope.currYear.name,
+                year_desc: $scope.currYear.year_desc,
+                start: $scope.currYear.start,
+                end_date: $scope.currYear.end_date,
+                user_id: $scope.currYear.user_id,
+                group_id: $scope.currYear.group_id
+            };
+
+            $http.put(baseUrl + 'api/years/' + $scope.currYear.id, year).success(
+                function (data, status, headers, config) {
+                    $scope.isLoading = false;
+                    $scope.findUser($scope.getUser);
+                    $scope.showGradesTable();
+                    $scope.addAlert('success', 'Year was succesfully edited!');
+                }).error(function () {
+                    $scope.errorMsg = 'Oops sth went wrong...';
+                    $scope.errorMsg += status;
+                    $scope.isLoading = false;
+                    //after error reload page
+                    $scope.findUser($scope.getUser);
+                });
+        }
 
 
-        //DATEPICKER
+        //--------//DATEPICKER
 
         $scope.dateOptions = {
             formatYear: 'yy',

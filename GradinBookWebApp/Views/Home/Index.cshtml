@@ -49,11 +49,9 @@
                             <button class="btn btn-default" ng-click="deleteYear()"
                                     uib-popover="Delete the selected year.!" popover-trigger="mouseenter"
                                     ng-show="isYearsOwner(currYear)">
-                                <span class="glyphicon glyphicon-minus"></span>
-                            </button>
-                        <button class="btn btn-default" uib-popover="Edit the selected year."
-                                popover-trigger="mouseenter"
-                                ng-show="isYearsOwner(currYear)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <button class="btn btn-default" ng-click="showEditYearSection()" uib-popover="Edit the selected year." popover-trigger="mouseenter">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
                     </div>
@@ -67,16 +65,13 @@
                     </button>
                 </div>
                 <table ng-table="yearsTable" class="table table-striped">
-                    <tr ng-repeat="subject in currYear.Subjects">
-                        <td title="'Name'" sortable="'name'">
-                            <span class="btn-group  pull-left btn-group-sm" ng-show="isAdmin">
-                                <button class="btn btn-default" ng-click="deleteSubject(subject)"
-                                        uib-popover="Remove this subject." popover-trigger="mouseenter"
-                                        ng-show="isYearsOwner(currYear)">
+                    <tr ng-repeat="subject in data">
+                        <td title="'Name'" sortable="subject.name">
+                            <span class="btn-group  pull-left btn-group-sm">
+                                <button class="btn btn-default" ng-click="deleteSubject(subject)" uib-popover="Remove this subject." popover-trigger="mouseenter">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
-                                <button class="btn btn-default" uib-popover="Edit this subject." popover-trigger="mouseenter"
-                                        ng-show="isYearsOwner(currYear)">
+                                <button class="btn btn-default" ng-click="showEditSubjectSection(subject)" uib-popover="Edit this subject." popover-trigger="mouseenter">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>
                             </span>
@@ -93,10 +88,14 @@
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
                         </td>
+                        <td title="'final'">
+                            <p class="text-center"> {{subject.final_grade}}</p>
+                        </td>
                     </tr>
                 </table>
             </div>
-            @*Section for Forms - first Year*@
+            @*----------------------------Section for Creation Forms------------------------------*@ 
+            @*first create Year*@
             <div ng-show="showSections[1]" name="yearFormSection" class="col-xs-12">
                 <div class="col-xs-12">
                     <h3 class="page-header">New year</h3>
@@ -131,7 +130,7 @@
                     </form>
                 </div>
             </div>
-            @*second subjects*@
+            @*second create Subject*@
             <div ng-show="showSections[2]" name="subjectFormSection" class="col-xs-12">
                 <div class="col-xs-12">
                     <h3 class="page-header">New Subject</h3>
@@ -159,7 +158,7 @@
                     </form>
                 </div>
             </div>
-            @*third grades*@
+            @*third create Grade*@
             <div ng-show="showSections[3]" name="gradeFormSection" class="col-xs-12">
                 <div class="col-xs-12">
                     <h3 class="page-header">New Grade</h3>
@@ -187,6 +186,75 @@
                         <div class="col-xs-12">
                             <button ng-click="createGrade()" ng-disabled="newGradeForm.$invalid" class="btn btn-primary">
                                 Add
+                            </button>
+                            <button class="btn btn-default" ng-click="showGradesTable()">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @*----------------------------Section for Edition forms.------------------------*@
+            @*fourth edit Year*@
+            <div ng-show="showSections[4]" name="yearEditSection" class="col-xs-12">
+                <div class="col-xs-12">
+                    <h3 class="page-header">Edit year</h3>
+                    <form name="editYearForm" class="form-horizontal" novalidate>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="editYearName">Name</label>
+                            <input type="text" id="editYearName" name="editYearName" ng-model="currYear.name" value=""
+                                   class="form-control" ng-required="true" placeholder="My year..." />
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="yearDesc">Description</label>
+                            <textarea ng-model="currYear.year_desc" class="form-control" rows="4" id="yearDesc" placeholder="My year is..."></textarea>
+                        </div>
+                        <div class="form-group  col-xs-12 col-sm-6">
+                            <label for="startDate" class="col-xs-12">Start</label>
+                            <div style="display: inline-block; min-height: 290px;">
+                                <uib-datepicker id="startDate" ng-model="currYear.start" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 col-sm-6">
+                            <label for="endDate" class="col-xs-12">End</label>
+                            <div style="display: inline-block; min-height: 290px;">
+                                <uib-datepicker id="endDate" ng-model="currYear.end_date" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <button ng-click="updateYear()" ng-disabled="editYearForm.$invalid" class="btn btn-primary">
+                                Update
+                            </button>
+                            <button class="btn btn-default" ng-click="showGradesTable()">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @*fifth edit Subject*@
+            <div ng-show="showSections[5]" name="subjectEditSection" class="col-xs-12">
+                <div class="col-xs-12">
+                    <h3 class="page-header">New Subject</h3>
+                    <form name="editSubjectForm" class="form-horizontal" novalidate>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="editSubjectName">Name</label>
+                            <input type="text" id="editSubjectName" name="editSubjectName" ng-model="currSubject.name" value=""
+                                   class="form-control" ng-required="true" placeholder="My subject..." />
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="subjectDesc">Description</label>
+                            <textarea ng-model="currSubject.year_desc" class="form-control" rows="4" id="subjectDesc" placeholder="My subject is..."></textarea>
+                        </div>
+                        <div class="form-group  col-xs-12 col-sm-4">
+                            <label for="editSubjectMail">Teacher's email</label>
+                            <input type="text" id="editSubjectMail" name="editSubjectMail" ng-model="currSubject.teacher_mail" value=""
+                                   class="form-control" placeholder="My subject lecturer's' email'..." />
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-2">
+                            <label for="editSubjectFinalGrade">Grade</label>
+                            <input type="number" min="2" max="5" id="editSubjectFinalGrade" name="editSubjectFinalGrade" ng-model="currSubject.final_grade" value=''
+                                   class="form-control" uib-popover="Enter a grade between 2 and 5." popover-trigger="mouseenter" />
+                        </div>
+                        <div class="col-xs-12">
+                            <button ng-click="updateSubject()" ng-disabled="editSubjectForm.$invalid" class="btn btn-primary">
+                                Update
                             </button>
                             <button class="btn btn-default" ng-click="showGradesTable()">Close</button>
                         </div>

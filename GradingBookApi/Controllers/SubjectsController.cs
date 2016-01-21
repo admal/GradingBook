@@ -90,7 +90,7 @@ namespace GradingBookApi.Controllers
             updatedSubject.sub_desc = subjects.sub_desc;
             updatedSubject.teacher_mail = subjects.teacher_mail;
             updatedSubject.year_id = subjects.year_id;
-            //updatedSubject.final_grade = subjects.final_grade;
+            updatedSubject.final_grade = subjects.final_grade;
 
             if (!ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace GradingBookApi.Controllers
                 sub_desc = subjects.sub_desc,
                 teacher_mail = subjects.teacher_mail,
                 year_id = subjects.year_id,
-                //final_grade = subjects.final_grade
+                final_grade = subjects.final_grade,
 
             };
 
