@@ -87,7 +87,10 @@
                         </td>
                         <td title="'Grades'">
                             <span ng-repeat="grade in subject.SubjectDetails">
-                                <span ng-click="currGrade(grade)" class="btn btn-default" uib-popover-template="gradePopover.templateUrl" popover-title="{{gradePopover.title}}">
+                                <span ng-click="currGrade(grade)" class="btn btn-default" 
+                                      uib-popover-template="gradePopover.templateUrl" 
+                                      popover-title="{{gradePopover.title}}"
+                                      popover-placement="bottom">
                                     {{grade.grade_value + ' '}}
                                 </span>
                             </span>

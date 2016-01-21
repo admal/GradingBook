@@ -131,18 +131,43 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         /*--------------------GRADE PART------------------------*/
         $scope.currGrade = function(grade) {
             $scope.gradePopover = {
+                gradeId: grade.id,
                 gradeVal: grade.grade_value,
                 gradeWeight: grade.grade_weight,
                 gradeDesc: grade.grade_desc,
                 templateUrl: '/ScriptsApp/ModalsTemplates/GradePopOver.html',
-                title: 'Edit grade'
+                title: 'Edit grade',
+                user_id: grade.user_id,
+                sub_id: grade.sub_id,
+                grade_date: grade.grade_date
             };
+        }
+        $scope.clickSaveGrade = function()
+        {
+            $scope.currGrade.grade_value = $scope.gradePopover.gradeVal;
+            $scope.currGrade.grade_weight = $scope.gradePopover.gradeWeight;
+            $scope.currGrade.grade_desc = $scope.gradePopover.gradeDesc;
+            $scope.currGrade.id = $scope.gradePopover.gradeId;
+            $scope.currGrade.user_id = $scope.gradePopover.user_id;
+            $scope.currGrade.sub_id = $scope.gradePopover.sub_id;
+            $scope.currGrade.grade_date = $scope.gradePopover.grade_date;
+            $scope.updateGrade();
+        }
+        $scope.clickDeleteGrade = function() {
+            $scope.currGrade.grade_value = $scope.gradePopover.gradeVal;
+            $scope.currGrade.grade_weight = $scope.gradePopover.gradeWeight;
+            $scope.currGrade.grade_desc = $scope.gradePopover.gradeDesc;
+            $scope.currGrade.id = $scope.gradePopover.gradeId;
+            $scope.currGrade.user_id = $scope.gradePopover.user_id;
+            $scope.currGrade.sub_id = $scope.gradePopover.sub_id;
+            $scope.currGrade.grade_date = $scope.gradePopover.grade_date;
+            $scope.deleteGrade();
         }
 
         $scope.gradePopover = {
-            gradeVal: 2,
-            gradeWeight: 2,
-            gradeDesc: "LELEL",
+            gradeVal: -1,
+            gradeWeight: -1,
+            gradeDesc: "tmp",
             gradeDate: new Date(),
             templateUrl: '/ScriptsApp/ModalsTemplates/GradePopOver.html',
             title: 'Edit grade'
@@ -239,6 +264,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 function (data, status, headers, config) {
                     $scope.isLoading = false;
                     $scope.showGradesTable();
+                    $scope.findUser($scope.getUser);
                     $scope.addAlert('success', 'Grade was succesfully edited!');
                 }).error(function () {
                     $scope.errorMsg = 'Oops sth went wrong...';
