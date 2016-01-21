@@ -30,7 +30,7 @@
                 <select class="form-control" ng-model="currYear"
                         ng-options="year.name group by year.groupName for year in getYears track by year.id "
                         style="width: 100%; max-width: 100%;"
-                        ng-change="changeYear(year.id)"></select>
+                        ng-change="changeYear(year.id)" uib-popover="{{currYear.year_desc}} " popover-trigger="mouseenter"></select>
             </div>
             <div class="col-xs-2" style="margin-top:15px">
                 <div class="row">
@@ -64,12 +64,12 @@
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>
                             </span>
-                            <span style="margin-left: 1em;">
+                            <span style="margin-left: 1em;" uib-popover="{{subject.teacher_mail}} {{subject.sub_desc}}" popover-trigger="mouseenter">
                                 {{subject.name}}
                             </span>
                         </td>
                         <td title="'Grades'">
-                            <span ng-repeat="grade in subject.SubjectDetails">{{grade.grade_value + ' '}}</span>
+                            <span ng-repeat="grade in subject.SubjectDetails" uib-popover="weight: {{grade.grade_weight}}  {{grade.grade_desc}}" popover-trigger="mouseenter">{{grade.grade_value + ' '}}</span>
                             <button class="btn btn-default pull-right" ng-click="showAddGradeSection(subject)" uib-popover="Add a new grade to this subject." popover-trigger="mouseenter">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
@@ -226,7 +226,7 @@
                         </div>
                         <div class="form-group col-xs-12 col-sm-4">
                             <label for="subjectDesc">Description</label>
-                            <textarea ng-model="currSubject.year_desc" class="form-control" rows="4" id="subjectDesc" placeholder="My subject is..."></textarea>
+                            <textarea ng-model="currSubject.sub_desc" class="form-control" rows="4" id="subjectDesc" placeholder="My subject is..."></textarea>
                         </div>
                         <div class="form-group  col-xs-12 col-sm-4">
                             <label for="editSubjectMail">Teacher's email</label>

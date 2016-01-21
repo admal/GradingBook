@@ -9,12 +9,13 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
         $scope.alerts = [];
         $scope.currYear = {};
         $scope.currSubject = {};
+        $scope.currGrade = {},
         $scope.errorMsg = '';
         $scope.groups = [];
         $scope.getYears = [];
         $scope.showSections = [true, false, false, false, false, false]; // [0]=main, [1]=year, [2]=subject, [3]=grade, [4]=edit year, [5]=edit subject
         //$scope.usersGroups = [];
-        
+        $scope.endline = '\n';
         /*///////////////////////-------------------------FUNCTIONS-----------------------/////////////////////////*/
 
         /*-----------ALERT MANAGEMENT-----------*/
@@ -139,6 +140,66 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.findUser($scope.getUser);
             });
         }
+        //DELETE GRADE
+        $scope.deleteGrade = function () {
+            var grade = {
+                id: $scope.currGrade.id,
+                sub_id: $scope.currGrade.sub_id,
+                grade_desc: $scope.currGrade.grade_desc,
+                grade_weight: $scope.currGrade.grade_weight,
+                grade_date: $scope.currGrade.grade_date,
+                grade_value: $scope.currGrade.grade_value,
+                user_id: $scope.currGrade.user_id,
+            };
+            var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Delete grade',
+                headerText: 'Delete ' + grade.value + '?',
+                bodyText: 'Are you sure you want to delete this grade?' + '\n ' + grade.grade_desc,
+            };
+
+            modalService.showModal({}, modalOptions).then(function (result) {
+                $http.delete(baseUrl + 'api/SubjectDetails/' + grade.id).success(
+                    function (data, status, headers, config) {
+                        $scope.isLoading = false;
+                        $scope.findUser($scope.getUser);
+                        $scope.addAlert('success', 'Grade was succesfully deleted!');
+                    }).error(function () {
+                        $scope.errorMsg = 'Oops sth went wrong...';
+                        $scope.errorMsg += status;
+                        $scope.isLoading = false;
+                        //after error reload page
+                        $scope.findUser($scope.username);
+                    });
+            });
+        }
+        //UPDATE GRADE
+        $scope.updateGrade= function () {
+            $scope.isLoading = true;
+
+            var grade = {
+                id: $scope.currGrade.id,
+                sub_id: $scope.currGrade.sub_id,
+                grade_desc: $scope.currGrade.grade_desc,
+                grade_weight: $scope.currGrade.grade_weight,
+                grade_date: $scope.currGrade.grade_date,
+                grade_value: $scope.currGrade.grade_value,
+                user_id: $scope.currGrade.user_id,
+            };
+
+            $http.put(baseUrl + 'api/SubjectDetails/' + $scope.currGrade.id, grade).success(
+                function (data, status, headers, config) {
+                    $scope.isLoading = false;
+                    $scope.showGradesTable();
+                    $scope.addAlert('success', 'Grade was succesfully edited!');
+                }).error(function () {
+                    $scope.errorMsg = 'Oops sth went wrong...';
+                    $scope.errorMsg += status;
+                    $scope.isLoading = false;
+                    //after error reload page
+                    $scope.findUser($scope.getUser);
+                });
+        }
         /*--------------------SUBJECT PART------------------------*/
         $scope.showAddSubjectSection = function () {
             $scope.hideAllSections();
@@ -155,7 +216,6 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             sub_desc: '',
             teacher_mail: '',
             final_grade: '',
-            
         };
         //CREATE SUBJECT
         $scope.createSubject = function () {
@@ -183,7 +243,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
                 $scope.findUser($scope.getUser);
             });
         }
-        //REMOVE SUBJECT
+        //DELETE SUBJECT
         $scope.deleteSubject = function (subject) {
             var modalOptions = {
                 closeButtonText: 'Cancel',
@@ -193,7 +253,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             };
 
             modalService.showModal({}, modalOptions).then(function (result) {
-                $http.delete(baseUrl + 'api/subjects/' + subject.id, null).success(
+                $http.delete(baseUrl + 'api/subjects/' + subject.id).success(
                     function (data, status, headers, config) {
                         $scope.isLoading = false;
                         $scope.findUser($scope.getUser);
@@ -286,7 +346,7 @@ angular.module('GradingBookApp', ["ngAnimate", "ngTable", "ui.bootstrap"])
             };
 
             modalService.showModal({}, modalOptions).then(function (result) {
-                $http.delete(baseUrl + 'api/years/' + $scope.currYear.id, null).success(
+                $http.delete(baseUrl + 'api/years/' + $scope.currYear.id).success(
                     function (data, status, headers, config) {
                         $scope.isLoading = false;
 
